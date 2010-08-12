@@ -33,27 +33,27 @@
 #ifndef USARTMULTI_H_
 #define USARTMULTI_H_
 
-int usartMultiSetBaudRate(USART_Port_t port, uint32_t baudRate);
-int usartMultiSetNumBit(USART_Port_t port, USART_NumBits_t numBit);
-int usartMultiSetParity(USART_Port_t port, USART_Parity_t partity);
-int usartMultiSetStopBit(USART_Port_t port, USART_StopBit_t stopBit);
-int usartMultiSetMode(USART_Port_t port, USART_Mode_t mode);
+int usartmultisetbaudrate(Usart_portt port, uint32t baudrate);
+int usartmultisetnumbit(Usart_portt port, Usart_numbitst numbit);
+int usartmultisetparity(Usart_portt port, Usart_parityt partity);
+int usartmultisetstopbit(Usart_portt port, Usart_stopbitt stopbit);
+int usartmultisetmode(Usart_portt port, Usart_modet mode);
 
-int usartMultiEnableRx(USART_Port_t port, _Bool enable);
-int usartMultiEnableTx(USART_Port_t port, _Bool enable);
+int usartmultienablerx(Usart_portt port, Bool enable);
+int usartmultienabletx(Usart_portt port, Bool enable);
 
-int usartMultiPutc(USART_Port_t port, char data);
-int usartMultiPuts(USART_Port_t port, char data);
-int usartMultiGetc(USART_Port_t port, char *data);
+int usartmultiputc(Usart_portt port, char data);
+int usartmultiputs(Usart_portt port, char data);
+int usartmultigetc(Usart_portt port, char *data);
 
-_Bool usartMultiIsTx(USART_Port_t port);
+_bool usartmultiistx(Usartportt port);
 
-int usartMultiEnableRxInt(USART_Port_t port, _Bool enable);
-int usartMultiEnableTxBufInt(USART_Port_t port, _Bool enable);
-int usartMultiEnableTxCmpInt(USART_Port_t port, _Bool enable);
+int usartmultienablerxint(Usart_portt port, Bool enable);
+int usartmultienabletxbufint(Usart_portt port, Bool enable);
+int usartmultienabletxcmpint(Usart_portt port, Bool enable);
 
-int usartMultiputcISR(USART_Port_t port, char data);
-int usartMultigetcISR(USART_Port_t port, char *data);
+int usartmultiputcisr(Usart_portt port, char data);
+int usartmultigetcisr(Usart_portt port, char *data);
 
 
 #endif /* USARTMULTI_H_ */

@@ -35,25 +35,25 @@
 
 #include <stdint.h>
 
-int usartSingleSetBaudRate(uint32_t baudRate);
-int usartSingleSetNumBit(USART_NumBits_t numBit);
-int usartSingleSetParity(USART_Parity_t partity);
-int usartSingleSetStopBit(USART_StopBit_t stopBit);
-int usartSingleSetMode(USART_Mode_t mode);
+int usart_single_set_baud_rate(uint32_t baudRate);
+int usart_single_set_num_bit(USART_NumBits_t numBit);
+int usart_single_set_parity(USART_Parity_t partity);
+int usart_single_set_stop_bit(USART_StopBit_t stopBit);
+int usart_single_set_mode(USART_Mode_t mode);
 
-int usartSingleEnableRx(_Bool enable);
-int usartSingleEnableTx(_Bool enable);
+int usart_single_enable_rx(_Bool enable);
+int usart_single_enable_tx(_Bool enable);
 
-int usartSinglePutc(char data);
-int usartSingleGetc(char* data);
+int usart_single_putc(char data);
+int usart_single_getc(char* data);
 
-_Bool usartSingleIsTx(void);
+_Bool usart_single_is_tx(void);
 
-int usartSingleEnableRxInt(_Bool enable);
-int usartSingleEnableTxBufInt(_Bool enable);
-int usartSingleEnableTxCmpInt(_Bool enable);
+int usart_single_enable_rx_int(_Bool enable);
+int usart_single_enable_tx_buf_int(_Bool enable);
+int usart_single_enable_tx_cmp_int(_Bool enable);
 
-int usartSinglePutcISR(char data);
-int usartSingleGetcISR(char *data);
+int usart_single_putcISR(char data);
+int usart_single_getcISR(char *data);
 
 #endif /* USARTSINGLE_H_ */

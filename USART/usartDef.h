@@ -40,62 +40,53 @@
 #include "usartCoreSelection.h"
 
 #if defined(__DOXYGEN__)
-typedef enum USART_Port_e /*!< Enum of available port. */
+typedef enum usart_port_e /*!< Enum of available port. */
 {
-	USART_Port_0,		/*!< USART port 0. */
-	USART_Port_1,		/*!< USART port 1. */
-	USART_Port_2,		/*!< USART port 2. */
-	USART_Port_3,		/*!< USART port 3. */
-	USART_Port_Last		/*!< Last element detection. */
-}USART_Port_t; /*!< Typedef of #USART_Port_e. */
+    usart_port_0,		/*!< USART port 0. */
+	usart_port_1,		/*!< USART port 1. */
+	usart_port_2,		/*!< USART port 2. */
+	usart_port_3,		/*!< USART port 3. */
+}usart_port_t; /*!< Typedef of #usart_port_e. */
 #else
-typedef enum USART_Port_e
+typedef enum usart_port_e
 {
-	USART_Port_0,
+    usart_port_0,
 #if USART_NUM_PORT > 1
-	USART_Port_1,
-	USART_Port_Last = USART_Port_1
+    usart_port_1,
 #elif USART_NUM_PORT == 4
-	USART_Port_2,
-	USART_Port_3,
-	USART_Port_Last = USART_Port_3
-#else
-	USART_Port_Last = USART_Port_0
+    usart_port_2,
+    usart_port_3,
 #endif
-}USART_Port_t;
+}usart_port_t;
 #endif
 
-typedef enum USART_NumBits_e /*!< Number of bits used by the USART module. */
+typedef enum usart_bit_e /*!< Number of bits used by the USART module. */
 {
-	USART_NumBits_5,	/*!< USART use 5 bits. */
-	USART_NumBits_6,	/*!< USART use 6 bits. */
-	USART_NumBits_7,	/*!< USART use 7 bits. */
-	USART_NumBits_8,	/*!< USART use 8 bits. */
-	USART_NumBits_9,	/*!< USART use 9 bits. */
-	USART_NumBits_Last = USART_NumBits_9 	/*!< Limit detection. */
-}USART_NumBits_t; /*!< Typedef of #USART_NumBits_e. */
+    usart_bit_5,	/*!< USART use 5 bits. */
+	usart_bit_6,	/*!< USART use 6 bits. */
+	usart_bit_7,	/*!< USART use 7 bits. */
+	usart_bit_8,	/*!< USART use 8 bits. */
+	usart_bit_9,	/*!< USART use 9 bits. */
+}usart_bit_t; /*!< Typedef of #usart_bit_e. */
 
-typedef enum USART_Parity_e /*!< Parity bit that will be added to frame. */
+typedef enum usart_parity_e /*!< Parity bit that will be added to frame. */
 {
-	USART_Parity_None, /*!< No parity bit. */
-	USART_Parity_Even, /*!< Use even parity bit. */
-	USART_Parity_Odd, /*!< Use odd parity bit. */
-	USART_Parity_Last = USART_Parity_Odd /*!< Limit detection. */
-}USART_Parity_t; /*!< Typedef for #USART_Parity_e. */
+    usart_parity_None, /*!< No parity bit. */
+	usart_parity_Even, /*!< Use even parity bit. */
+	usart_parity_Odd /*!< Use odd parity bit. */
+}usart_parity_t; /*!< Typedef for #usart_parity_e. */
 
-typedef enum USART_StopBit_e /*!< How many stop bit will be added to frame. */
+typedef enum usart_stop_bit_e /*!< How many stop bit will be added to frame. */
 {
-	USART_StopBit_1, /*!< Add one stop bit. */
-	USART_StopBit_2, /*!< Add two stop bit. */
-	USART_StopBit_Last = USART_StopBit_2 /*!< Limit detection. */
-}USART_StopBit_t; /*!< Typedef for #USART_StopBit_e. */
+    usart_stop_bit_1, /*!< Add one stop bit. */
+    usart_stop_bit_2, /*!< Add two stop bit. */
+}usart_stop_bit_t; /*!< Typedef for #usart_stop_bit_e. */
 
-typedef enum USART_Mode_e /*!< Mode into witch USART will be configured. */
+typedef enum usart_mode_e /*!< Mode into witch USART will be configured. */
 {
-	USART_Mode_Async, /*!< Asynchronous, Most likely what you need. */
-	USART_Mode_SyncMaster, /*!< Synchronous mode. We are the clock source. */
-	USART_Mode_SyncSlave, /*!< Synchronous mode. Clock source must be provided. */
-	USART_Mode_Last = USART_Mode_SyncSlave
-}USART_Mode_t;/*!< Typedef for USART_Mode_e. */
+    usart_mode_async, /*!< Asynchronous, Most likely what you need. */
+    usart_mode_sync_master, /*!< Synchronous mode. We are the clock source. */
+    usart_mode_sync_slave, /*!< Synchronous mode. Clock source must be provided. */
+}usart_mode_t;/*!< Typedef for #usart_mode_e. */
 
 #endif /* USARTDEF_H_ */
