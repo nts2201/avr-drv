@@ -116,12 +116,12 @@ do
   echo -n "Making ADC librairy for" $name
   mkdir -p deliver/lib/$name
   MCU=$name OUTDIR=../deliver/lib/$name make -s -C ADC clean
-  MCU=$name OUTDIR=../deliver/lib/$name make -s -C ADC 2> /dev/null
+  MCU=$name OUTDIR=../deliver/lib/$name make -s -C ADC &> /dev/null
   code=$?
   if (( code )); then
     echo -e '\E[31m'"\tFAIL"; tput sgr0
     echo "||"$name"||FAIL||" | tr [:lower:] [:upper:] | sed 's/MEGA/mega/' | sed 's/TINY/tiny/' >> buildDir/avr-drv-adcoutput
-    
+
   else
     echo -e '\E[32m'"\tPASS"; tput sgr0
     echo "||"$name"||PASS||" | tr [:lower:] [:upper:] | sed 's/MEGA/mega/' | sed 's/TINY/tiny/' >> buildDir/avr-drv-adcoutput
