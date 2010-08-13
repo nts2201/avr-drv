@@ -32,6 +32,8 @@
 #ifndef TMR_CNT_5_H_
 #define TMR_CNT_5_H_
 
+#include <stdbool.h>
+
 typedef enum tmrcnt5_clk_select_e
 {
     tmrcnt5_clk_src_halted = 0,
@@ -63,6 +65,21 @@ typedef enum tmrcnt5_wgm_e
     tmrcnt5_wgm_fast_pwm_ocr5a_top_top
 } tmrcnt5_wgm_t;
 
+typedef enum tmrcnt5_com_e
+{
+    tmrcnt5_com_port_disconnected = 0,
+    tmrcnt5_com_normal_toggle_oc0a_compare_match = 1,
+    tmrcnt5_com_ctc_toggle_oc0a_compare_match = 1,
+    tmrcnt5_com_normal_clear_oc0a_compare_match = 2,
+    tmrcnt5_com_pwm_phase_correct_clear_oc0a_upcounting_set_oc0a_downcounting = 2,
+    tmrcnt5_com_ctc_clear_oc0a_compare_match = 2,
+    tmrcnt5_com_fast_pwm_clear_oc0a_compare_match_set_oc0a_top = 2,
+    tmrcnt5_com_normal_set_oc0a_compare_match = 3,
+    tmrcnt5_com_pwm_phase_correct_set_oc0a_upcounting_clear_oc0a_downcounting = 3,
+    tmrcnt5_com_ctc_set_oc0a_compare_match = 3,
+    tmrcnt5_com_fast_pwm_set_oc0a_compare_match_clear_oc0a_top = 3,
+} tmrcnt5_com_t;
+
 typedef enum tmrcnt5_ouput_compare_channel_e
 {
     tmrcnt5_ouput_compare_channel_a = 0,
@@ -70,27 +87,28 @@ typedef enum tmrcnt5_ouput_compare_channel_e
     tmrcnt5_ouput_compare_channel_c
 } tmrcnt5_ouput_compare_channel_t;
 
-void tmrcnt2_init (tmrcnt5_wgm_t mode, tmrcnt5_clk_select_t prescale);
+void tmrcnt5_init (tmrcnt5_wgm_t mode, tmrcnt5_clk_select_t prescale);
 
-void timerCounterSetOuputComparePin5 (TimerOuputCompareChannel_Type1 channel, uint8_t mode);
+void tmrcnt5_set_ouput_compare_pin_mode (tmrcnt5_ouput_compare_channel_t channel, tmrcnt5_com_t mode);
+void tmrcnt5_set_ouput_compare_pin_as_ouput (tmrcnt5_ouput_compare_channel_t channel, _Bool isOutput);
+void tmrcnt5_force_ouput_compare (tmrcnt5_ouput_compare_channel_t channel);
 
-void timerCounterForceOuputCompare5 (TimerOuputCompareChannel_Type1 channel);
+uint16_t tmrcnt5_get_timer(void);
+void tmrcnt5_set_timer(uint16_t value);
 
-uint16_t timerCounterReadTimer5 (void);
-void timerCounterSetTimer5 (uint16_t value);
+uint16_t tmrcnt5_get_output_compare (tmrcnt5_ouput_compare_channel_t channel);
+void tmrcnt5_set_output_compare (tmrcnt5_ouput_compare_channel_t channel, uint16_t value);
 
-uint16_t timerCounterReadOutputCompare5 (TimerOuputCompareChannel_Type1 channel);
-void timerCounterSetOutputCompare5 (TimerOuputCompareChannel_Type1 channel, uint16_t value);
+uint16_t tmrcnt5_get_input_capture (void);
 
-uint16_t timerCounterReadInputCapture5 (void);
+void tmrcnt5_input_compare_match_int_enable (void);
+void tmrcnt5_input_compare_match_int_disable (void);
 
-void timerCounterEnableInputCaptureInt5 (void);
-void timerCounterDisableInputCaptureInt5 (void);
+void tmrcnt5_output_compare_match_int_enable (tmrcnt5_ouput_compare_channel_t channel);
+void tmrcnt5_output_compare_match_int_disable (tmrcnt5_ouput_compare_channel_t channel);
 
-void timerCounterEnableOutputCompareMatchInt5 (TimerOuputCompareChannel_Type1 channel);
-void timerCounterEnableDisableCompareMatchInt5 (TimerOuputCompareChannel_Type1 channel);
-
-void timerCounterEnableOverflowInt5 (void);
-void timerCounterDisableOverfloweInt5 (void);
+void tmrcnt5_enable_overflow_int(void);
+void tmrcnt5_disable_overflow_int(void);
+_Bool tmrcnt5_is_overflow_int_flag_set(void);
 
 #endif /* TMR_CNT_5_H_ */

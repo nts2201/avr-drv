@@ -29,393 +29,337 @@
    (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-#include <assert.h>
-#include <avr/io.h>
-#include <stdlib.h>
 #include <stdint.h>
+#include <stdlib.h>
+#include <avr/io.h>
 
-#include "timerCounter1_16BitSync.h"
+#include <io_pin/io_pin.h>
 
-#define TCCRnA   TCCR1A
-#define TCCRnB   TCCR1B
-#define TCCRnC   TCCR1C
-#define TCNTn    TCNT1
-#define OCRnA    OCR1A
-#define OCRnB    OCR1B
-#define OCRnC    OCR1C
-#define ICRn     ICR1
-#define TIMSKn   TIMSK1
+#include "tmrcnt1.h"
 
-#define CSx0     CS10
-#define CSx1     CS11
-#define CSx2     CS12
-
-#define WGMx0    WGM10
-#define WGMx1    WGM11
-#define WGMx2    WGM12
-#define WGMx3    WGM13
-
-#define COMxA0   COM1A0
-#define COMxA1   COM1A1
-#define COMxB0   COM1B0
-#define COMxB1   COM1B1
-#define COMxC0   COM1C0
-#define COMxC1   COM1C1
-
-#define FOCxA    FOC1A
-#define FOCxB    FOC1B
-#define FOCxC    FOC1C
-
-#define ICIEx    ICIE1
-
-#define OCIExA   OCIE1A
-#define OCIExB   OCIE1B
-#define OCIExC   OCIE1C
-
-#define TOIEx    TOIE1
-
-void
-timerCounterInit1 (TimerWaveformGenMode_Type2 mode, PrescalerForSyncTimer prescale)
+void tmrcnt1_init(tmrcnt1_wgm_t mode, tmrcnt1_clk_select_t prescale)
 {
-  // Argument check, bypass with NDEBUG
-  assert (mode < TWGM2_InvalidTimerWaveformGenMode_Type2);
-  assert (prescale < InvalidPrescalerForSyncTimer);
+    // Force timer to stop
+    TCCR1B &= ~(_BV(CS12) | _BV(CS11) | _BV(CS10));
 
-  // Force timer to stop
-  TCCRnB &= ~((1 << CSx2) | (1 << CSx1) | (1 << CSx0));
-
-  switch (mode)
+    switch (mode)
     {
-    case TWGM2_Normal:
-      TCCRnB &= ~((1 << WGMx3) | (1 << WGMx2));
-      TCCRnA &= ~((1 << WGMx1) | (1 << WGMx0));
-      break;
+    case tmrcnt1_wgm_normal_ffff_imd_max:
+        TCCR1B &= ~(_BV(WGM13) | _BV(WGM12));
+        TCCR1A &= ~(_BV(WGM11) | _BV(WGM10));
+        break;
 
-    case TWGM2_PWMPhaseCorrect_8bits:
-      TCCRnB &= ~((1 << WGMx3) | (1 << WGMx2));
-      TCCRnA &= ~(1 << WGMx1);
-      TCCRnA |= (1 << WGMx0);
-      break;
+    case tmrcnt1_wgm_pwm_phase_correct_8bit_00ff_top_btm:
+        TCCR1B &= ~(_BV(WGM13) | _BV(WGM12));
+        TCCR1A &= ~_BV(WGM11);
+        TCCR1A |= _BV(WGM10);
+        break;
 
-    case TWGM2_PWMPhaseCorrect_9bits:
-      TCCRnB &= ~((1 << WGMx3) | (1 << WGMx2));
-      TCCRnA |= (1 << WGMx1);
-      TCCRnA &= ~(1 << WGMx0);
-      break;
+    case tmrcnt1_wgm_pwm_phase_correct_9bit_01ff_top_btm:
+        TCCR1B &= ~(_BV(WGM13) | _BV(WGM12));
+        TCCR1A |= _BV(WGM11);
+        TCCR1A &= ~_BV(WGM10);
+        break;
 
-    case TWGM2_PWMPhaseCorrect_10bits:
-      TCCRnB &= ~((1 << WGMx3) | (1 << WGMx2));
-      TCCRnA |= ((1 << WGMx1) | (1 << WGMx0));
-      break;
+    case tmrcnt1_wgm_pwm_phase_correct_10bit_03ff_top_btm:
+        TCCR1B &= ~(_BV(WGM13) | _BV(WGM12));
+        TCCR1A |= (_BV(WGM11) | _BV(WGM10));
+        break;
 
-    case TWGM2_CTC_TopAtOCRnA:
-      TCCRnB &= ~(1 << WGMx3);
-      TCCRnB |= (1 << WGMx2);
-      TCCRnA &= ~((1 << WGMx1) | (1 << WGMx0));
-      break;
+    case tmrcnt1_wgm_ctc_ocr5a_imd_max:
+        TCCR1B &= ~_BV(WGM13);
+        TCCR1B |= _BV(WGM12);
+        TCCR1A &= ~(_BV(WGM11) | _BV(WGM10));
+        break;
 
-    case TWGM2_FastPWM_8bits:
-      TCCRnB &= ~(1 << WGMx3);
-      TCCRnB |= (1 << WGMx2);
-      TCCRnA &= ~(1 << WGMx1);
-      TCCRnA |= (1 << WGMx0);
-      break;
+    case tmrcnt1_wgm_fast_pwm_8bit_00ff_btm_top:
+        TCCR1B &= ~_BV(WGM13);
+        TCCR1B |= _BV(WGM12);
+        TCCR1A &= ~_BV(WGM11);
+        TCCR1A |= _BV(WGM10);
+        break;
 
-    case TWGM2_FastPWM_9bits:
-      TCCRnB &= ~(1 << WGMx3);
-      TCCRnB |= (1 << WGMx2);
-      TCCRnA |= (1 << WGMx1);
-      TCCRnA &= ~(1 << WGMx0);
-      break;
+    case tmrcnt1_wgm_fast_pwm_9bit_01ff_btm_top:
+        TCCR1B &= ~_BV(WGM13);
+        TCCR1B |= _BV(WGM12);
+        TCCR1A |= _BV(WGM11);
+        TCCR1A &= ~_BV(WGM10);
+        break;
 
-    case TWGM2_FastPWM_10bits:
-      TCCRnB &= ~(1 << WGMx3);
-      TCCRnB |= (1 << WGMx2);
-      TCCRnA |= ((1 << WGMx1) | (1 << WGMx0));
-      break;
+    case tmrcnt1_wgm_fast_pwm_10bit_03ff_btm_top:
+        TCCR1B &= ~_BV(WGM13);
+        TCCR1B |= _BV(WGM12);
+        TCCR1A |= (_BV(WGM11) | _BV(WGM10));
+        break;
 
-    case TWGM2_PWMPhaseAndFreqCorrect_TopAtICRn:
-      TCCRnB |= (1 << WGMx3);
-      TCCRnB &= ~(1 << WGMx2);
-      TCCRnA &= ~((1 << WGMx1) | (1 << WGMx0));
-      break;
+    case tmrcnt1_wgm_pwm_phase_freq_correct_icr5_btm_btm:
+        TCCR1B |= _BV(WGM13);
+        TCCR1B &= ~_BV(WGM12);
+        TCCR1A &= ~(_BV(WGM11) | _BV(WGM10));
+        break;
 
-    case TWGM2_PWMPhaseAndFreqCorrect_TopAtOCRnA:
-      TCCRnB |= (1 << WGMx3);
-      TCCRnB &= ~(1 << WGMx2);
-      TCCRnA &= ~(1 << WGMx1);
-      TCCRnA |= (1 << WGMx0);
-      break;
+    case tmrcnt1_wgm_pwm_phase_freq_correct_ocr5a_btm_btm:
+        TCCR1B |= _BV(WGM13);
+        TCCR1B &= ~_BV(WGM12);
+        TCCR1A &= ~_BV(WGM11);
+        TCCR1A |= _BV(WGM10);
+        break;
 
-    case TWGM2_PWMPhaseCorrect_TopAtICRn:
-      TCCRnB |= (1 << WGMx3);
-      TCCRnB &= ~(1 << WGMx2);
-      TCCRnA |= (1 << WGMx1);
-      TCCRnA &= ~(1 << WGMx0);
-      break;
+    case tmrcnt1_wgm_pwm_phase_correct_icr5_top_btm:
+        TCCR1B |= _BV(WGM13);
+        TCCR1B &= ~_BV(WGM12);
+        TCCR1A |= _BV(WGM11);
+        TCCR1A &= ~_BV(WGM10);
+        break;
 
-    case TWGM2_PWMPhaseCorrect_TopAtOCRnA:
-      TCCRnB |= (1 << WGMx3);
-      TCCRnB &= ~(1 << WGMx2);
-      TCCRnA |= ((1 << WGMx1) | (1 << WGMx0));
-      break;
+    case tmrcnt1_wgm_pwm_phase_correct_ocr5a_top_btm:
+        TCCR1B |= _BV(WGM13);
+        TCCR1B &= ~_BV(WGM12);
+        TCCR1A |= (_BV(WGM11) | _BV(WGM10));
+        break;
 
-    case TWGM2_CTC_TopAtICRn:
-      TCCRnB |= ((1 << WGMx3) | (1 << WGMx2));
-      TCCRnA &= ~((1 << WGMx1) | (1 << WGMx0));
-      break;
+    case tmrcnt1_wgm_ctc_icr5_imd_max:
+        TCCR1B |= (_BV(WGM13) | _BV(WGM12));
+        TCCR1A &= ~(_BV(WGM11) | _BV(WGM10));
+        break;
 
-    case TWGM2_FastPWM_TopAtICRn:
-      TCCRnB |= ((1 << WGMx3) | (1 << WGMx2));
-      TCCRnA |= (1 << WGMx1);
-      TCCRnA &= ~(1 << WGMx0);
-      break;
+    case tmrcnt1_wgm_fast_pwm_icr5_top_top:
+        TCCR1B |= (_BV(WGM13) | _BV(WGM12));
+        TCCR1A |= _BV(WGM11);
+        TCCR1A &= ~_BV(WGM10);
+        break;
 
-    case TWGM2_FastPWM_TopAtOCRnA:
-      TCCRnB |= ((1 << WGMx3) | (1 << WGMx2));
-      TCCRnA |= ((1 << WGMx1) | (1 << WGMx0));
-      break;
+    case tmrcnt1_wgm_fast_pwm_ocr5a_top_top:
+        TCCR1B |= (_BV(WGM13) | _BV(WGM12));
+        TCCR1A |= (_BV(WGM11) | _BV(WGM10));
+        break;
 
     default:
-    case TWGM2_RESERVED:
-      assert (0);
-      break;
+        break;
     }
 
-  switch (prescale)
+#if !(CS12 == (CS10 + 2) && CS11 == (CS10 + 1))
+#   error "tmrcnt1_init needs to be rewritten for this device"
+#endif
+    TCCR1B |= (prescale << CS10);
+}
+
+void tmrcnt1_set_ouput_compare_pin_mode(
+        tmrcnt1_ouput_compare_channel_t channel, tmrcnt1_com_t mode)
+{
+    switch (channel)
     {
-    case PFST_clkHalted:
-      //We do not need to do anything since timer as been stop already
-      //TCCRnB &= ~((1 << CSx2) | (1 << CSx1) | (1 << CSx0));
-      break;
+    case tmrcnt1_ouput_compare_channel_a:
+        TCCR1A &= ~(_BV(COM1A1) | _BV(COM1A0));
+        TCCR1A |= (mode << COM1A0);
+        break;
 
-    case PFST_clk_1:
-      //TCCRnB &= ~((1 << CSx2) | (1 << CSx1));
-      TCCRnB |= (1 << CSx0);
-      break;
+    case tmrcnt1_ouput_compare_channel_b:
+        TCCR1A &= ~(_BV(COM1B1) | _BV(COM1B0));
+        TCCR1A |= (mode << COM1B0);
+        break;
 
-    case PFST_clk_8:
-      //TCCRnB &= ~((1 << CSx2) | (1 << CSx0));
-      TCCRnB |= (1 << CSx1);
-      break;
-
-    case PFST_clk_64:
-      //TCCRnB &= ~(1 << CSx2);
-      TCCRnB |= ((1 << CSx1) | (1 << CSx0));
-      break;
-
-    case PFST_clk_256:
-      TCCRnB |= (1 << CSx2);
-      //TCCRnB &= ~((1 << CSx1) | (1 << CSx0));
-      break;
-
-    case PFST_clk_1024:
-      TCCRnB |= ((1 << CSx2) | (1 << CSx0));
-      //TCCRnB &= ~(1 << CSx1);
-      break;
-
-    case PFST_clkTn_NegativeEdge:
-      TCCRnB |= ((1 << CSx2) | (1 << CSx1));
-      //TCCRnB &= ~(1 << CSx0);
-      break;
-
-    case PFST_clkTn_PositiveEdge:
-      TCCRnB |= ((1 << CSx2) | (1 << CSx1) | (1 << CSx0));
-      break;
+    case tmrcnt1_ouput_compare_channel_c:
+        TCCR1A &= ~(_BV(COM1C1) | _BV(COM1C0));
+        TCCR1A |= (mode << COM1C0);
+        break;
 
     default:
-      assert(0);
-      break;
-
+        break;
     }
 }
 
-void
-timerCounterSetOuputComparePin1 (TimerOuputCompareChannel_Type1 channel,
-				 uint8_t mode)
+void tmrcnt1_set_ouput_compare_pin_as_ouput(
+        tmrcnt1_ouput_compare_channel_t channel, _Bool isOutput)
 {
-  assert (mode < 4);
-
-  switch (channel)
+    switch (channel)
     {
-    case TOCC1_A:
-      TCCRnA &= ~((1 << COMxA1) | (1 << COMxA0));
-      TCCRnA |= (mode << COMxA0);
-      break;
+    case tmrcnt1_ouput_compare_channel_a:
+        if (isOutput)
+        {
+            OC1A_DDR |= _BV(OC1A_BIT);
+        }
+        else
+        {
+            OC1A_DDR &= ~_BV(OC1A_BIT);
+        }
+        break;
 
-    case TOCC1_B:
-      TCCRnA &= ~((1 << COMxB1) | (1 << COMxB0));
-      TCCRnA |= (mode << COMxB0);
-      break;
+    case tmrcnt1_ouput_compare_channel_b:
+        if (isOutput)
+        {
+            OC1B_DDR |= _BV(OC1B_BIT);
+        }
+        else
+        {
+            OC1B_DDR &= ~_BV(OC1B_BIT);
+        }
+        break;
 
-    case TOCC1_C:
-      TCCRnA &= ~((1 << COMxC1) | (1 << COMxC0));
-      TCCRnA |= (mode << COMxC0);
-      break;
+    case tmrcnt1_ouput_compare_channel_c:
+        if (isOutput)
+        {
+            OC1C_DDR |= _BV(OC1C_BIT);
+        }
+        else
+        {
+            OC1C_DDR &= ~_BV(OC1C_BIT);
+        }
+        break;
 
     default:
-      assert (0);
-      break;
+        break;
     }
 }
 
-void
-timerCounterForceOuputCompare1 (TimerOuputCompareChannel_Type1 channel)
+void tmrcnt1_force_ouput_compare(tmrcnt1_ouput_compare_channel_t channel)
 {
-  switch (channel)
+    switch (channel)
     {
-    case TOCC1_A:
-      TCCRnC |= (1 << FOCxA);
-      break;
+    case tmrcnt1_ouput_compare_channel_a:
+        TCCR1C |= _BV(FOC1A);
+        break;
 
-    case TOCC1_B:
-      TCCRnC |= (1 << FOCxB);
-      break;
+    case tmrcnt1_ouput_compare_channel_b:
+        TCCR1C |= _BV(FOC1B);
+        break;
 
-    case TOCC1_C:
-      TCCRnC |= (1 << FOCxC);
-      break;
+    case tmrcnt1_ouput_compare_channel_c:
+        TCCR1C |= _BV(FOC1C);
+        break;
 
     default:
-      assert (0);
-      break;
+        break;
     }
 }
 
-uint16_t
-timerCounterReadTimer1 (void)
+uint16_t tmrcnt1_get_timer(void)
 {
-  return TCNTn;
+    return TCNT1;
 }
 
-void
-timerCounterSetTimer1 (uint16_t value)
+void tmrcnt1_set_timer(uint16_t value)
 {
-  TCNTn = value;
+    TCNT1 = value;
 }
 
-uint16_t
-timerCounterReadOutputCompare1 (TimerOuputCompareChannel_Type1 channel)
+uint16_t tmrcnt1_get_output_compare(tmrcnt1_ouput_compare_channel_t channel)
 {
-  uint16_t retVal;
+    uint16_t retVal;
 
-  switch (channel)
+    switch (channel)
     {
-    case TOCC1_A:
-      retVal = OCRnA;
-      break;
+    case tmrcnt1_ouput_compare_channel_a:
+        retVal = OCR1A;
+        break;
 
-    case TOCC1_B:
-      retVal = OCRnB;
-      break;
+    case tmrcnt1_ouput_compare_channel_b:
+        retVal = OCR1B;
+        break;
 
-    case TOCC1_C:
-      retVal = OCRnC;
-      break;
+    case tmrcnt1_ouput_compare_channel_c:
+        retVal = OCR1C;
+        break;
 
     default:
-      assert (0);
-      retVal = 0;
-      break;
+        retVal = 0;
+        break;
     }
-  return retVal;
+    return retVal;
 }
 
-void
-timerCounterSetOutputCompare1 (TimerOuputCompareChannel_Type1 channel, uint16_t value)
+void tmrcnt1_set_output_compare(tmrcnt1_ouput_compare_channel_t channel,
+        uint16_t value)
 {
-  switch (channel)
+    switch (channel)
     {
-    case TOCC1_A:
-      OCRnA = value;
-      break;
+    case tmrcnt1_ouput_compare_channel_a:
+        OCR1A = value;
+        break;
 
-    case TOCC1_B:
-      OCRnB = value;
-      break;
+    case tmrcnt1_ouput_compare_channel_b:
+        OCR1B = value;
+        break;
 
-    case TOCC1_C:
-      OCRnC = value;
-      break;
+    case tmrcnt1_ouput_compare_channel_c:
+        OCR1C = value;
+        break;
 
     default:
-      assert (0);
-      break;
+        break;
     }
 }
 
-uint16_t
-timerCounterReadInputCapture1 (void)
+uint16_t tmrcnt1_get_input_capture(void)
 {
-  return ICRn;
+    return ICR1;
 }
 
-void
-timerCounterEnableInputCaptureInt1 (void)
+void tmrcnt1_input_compare_match_int_enable(void)
 {
-  TIMSKn |= (1 << ICIEx);
+    TIMSK1 |= _BV(ICIE1);
 }
 
-void
-timerCounterDisableInputCaptureInt1 (void)
+void tmrcnt1_input_compare_match_int_disable(void)
 {
-  TIMSKn &= ~(1 << ICIEx);
+    TIMSK1 &= ~_BV(ICIE1);
 }
 
-void
-timerCounterEnableOutputCompareMatchInt1 (TimerOuputCompareChannel_Type1 channel)
+void tmrcnt1_output_compare_match_int_enable(
+        tmrcnt1_ouput_compare_channel_t channel)
 {
-  switch (channel)
+    switch (channel)
     {
-    case TOCC1_A:
-      TIMSKn |= (1 << OCIExA);
-      break;
+    case tmrcnt1_ouput_compare_channel_a:
+        TIMSK1 |= _BV(OCIE1A);
+        break;
 
-    case TOCC1_B:
-      TIMSKn |= (1 << OCIExB);
-      break;
+    case tmrcnt1_ouput_compare_channel_b:
+        TIMSK1 |= _BV(OCIE1B);
+        break;
 
-    case TOCC1_C:
-      TIMSKn |= (1 << OCIExC);
-      break;
+    case tmrcnt1_ouput_compare_channel_c:
+        TIMSK1 |= _BV(OCIE1C);
+        break;
 
     default:
-      assert (0);
-      break;
+        break;
     }
 }
 
-void
-timerCounterEnableDisableCompareMatchInt1 (TimerOuputCompareChannel_Type1 channel)
+void tmrcnt1_output_compare_match_int_disable(
+        tmrcnt1_ouput_compare_channel_t channel)
 {
-  switch (channel)
+    switch (channel)
     {
-    case TOCC1_A:
-      TIMSKn &= ~(1 << OCIExA);
-      break;
+    case tmrcnt1_ouput_compare_channel_a:
+        TIMSK1 &= ~_BV(OCIE1A);
+        break;
 
-    case TOCC1_B:
-      TIMSKn &= ~(1 << OCIExB);
-      break;
+    case tmrcnt1_ouput_compare_channel_b:
+        TIMSK1 &= ~_BV(OCIE1B);
+        break;
 
-    case TOCC1_C:
-      TIMSKn &= ~(1 << OCIExC);
-      break;
+    case tmrcnt1_ouput_compare_channel_c:
+        TIMSK1 &= ~_BV(OCIE1C);
+        break;
 
     default:
-      assert (0);
-      break;
+        break;
     }
 }
 
-void
-timerCounterEnableOverflowInt1 (void)
+void tmrcnt1_enable_overflow_int(void)
 {
-  TIMSKn |= (1 << TOIEx);
+    TIMSK1 |= _BV(TOIE1);
 }
 
-void
-timerCounterDisableOverfloweInt1 (void)
+void tmrcnt1_disable_overflow_int(void)
 {
-  TIMSKn &= ~(1 << TOIEx);
+    TIMSK1 &= ~_BV(TOIE1);
+}
+
+_Bool tmrcnt1_is_overflow_int_flag_set(void)
+{
+    return bit_is_set(TIFR1, TOV1) == 0 ? false : true;
 }

@@ -1,11 +1,11 @@
-/* Copyright (c) 2010 Frédéric Nadeau
+/* Copyright (c) 2040 Frédéric Nadeau
    All rights reserved.
 
    Redistribution and use in source and binary forms,
    with or without modification, are permitted provided
    that the following conditions are met:
 
-   1.Redistributions of source code must retain the above
+   4.Redistributions of source code must retain the above
    copyright notice, this list of conditions and the following
    disclaimer.
 
@@ -13,7 +13,7 @@
    notice, this list of conditions and the following disclaimer in the
    documentation and/or other materials provided with the distribution.
 
-   3.Neither the name of the AVR-DRV nor the names of its
+   4.Neither the name of the AVR-DRV nor the names of its
    contributors may be used to endorse or promote products derived
    from this software without specific prior written permission.
 
@@ -29,402 +29,337 @@
    (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-#include <assert.h>
-#include <avr/io.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <avr/io.h>
 
-#include "timerCounter4_16BitSync.h"
+#include <io_pin/io_pin.h>
 
+#include "tmrcnt4.h"
 
-#define TCCRnA   TCCR4A
-#define TCCRnB   TCCR4B
-#define TCCRnC   TCCR4C
-#define TCNTn    TCNT4
-#define OCRnA    OCR4A
-#define OCRnB    OCR4B
-#define OCRnC    OCR4C
-#define ICRn     ICR4
-#define TIMSKn   TIMSK4
-
-#define CSx0     CS40
-#define CSx1     CS41
-#define CSx2     CS42
-
-#define WGMx0    WGM40
-#define WGMx1    WGM41
-#define WGMx2    WGM42
-#define WGMx3    WGM43
-
-#define COMxA0   COM4A0
-#define COMxA1   COM4A1
-#define COMxB0   COM4B0
-#define COMxB1   COM4B1
-#define COMxC0   COM4C0
-#define COMxC1   COM4C1
-
-#define FOCxA    FOC4A
-#define FOCxB    FOC4B
-#define FOCxC    FOC4C
-
-#define ICIEx    ICIE4
-
-#define OCIExA   OCIE4A
-#define OCIExB   OCIE4B
-#define OCIExC   OCIE4C
-
-#define TOIEx    TOIE4
-
-void
-timerCounterInit4 (TimerWaveformGenMode_Type2 mode, PrescalerForSyncTimer prescale)
+void tmrcnt4_init(tmrcnt4_wgm_t mode, tmrcnt4_clk_select_t prescale)
 {
-  // Argument check, bypass with NDEBUG
-  assert (mode < TWGM2_InvalidTimerWaveformGenMode_Type2);
-  assert (prescale < InvalidPrescalerForSyncTimer);
+    // Force timer to stop
+    TCCR4B &= ~(_BV(CS42) | _BV(CS41) | _BV(CS40));
 
-  // Force timer to stop
-  TCCRnB &= ~((1 << CSx2) | (1 << CSx1) | (1 << CSx0));
-
-  switch (mode)
+    switch (mode)
     {
-    case TWGM2_Normal:
-      TCCRnB &= ~((1 << WGMx3) | (1 << WGMx2));
-      TCCRnA &= ~((1 << WGMx1) | (1 << WGMx0));
-      break;
+    case tmrcnt4_wgm_normal_ffff_imd_max:
+        TCCR4B &= ~(_BV(WGM43) | _BV(WGM42));
+        TCCR4A &= ~(_BV(WGM41) | _BV(WGM40));
+        break;
 
-    case TWGM2_PWMPhaseCorrect_8bits:
-      TCCRnB &= ~((1 << WGMx3) | (1 << WGMx2));
-      TCCRnA &= ~(1 << WGMx1);
-      TCCRnA |= (1 << WGMx0);
-      break;
+    case tmrcnt4_wgm_pwm_phase_correct_8bit_00ff_top_btm:
+        TCCR4B &= ~(_BV(WGM43) | _BV(WGM42));
+        TCCR4A &= ~_BV(WGM41);
+        TCCR4A |= _BV(WGM40);
+        break;
 
-    case TWGM2_PWMPhaseCorrect_9bits:
-      TCCRnB &= ~((1 << WGMx3) | (1 << WGMx2));
-      TCCRnA |= (1 << WGMx1);
-      TCCRnA &= ~(1 << WGMx0);
-      break;
+    case tmrcnt4_wgm_pwm_phase_correct_9bit_01ff_top_btm:
+        TCCR4B &= ~(_BV(WGM43) | _BV(WGM42));
+        TCCR4A |= _BV(WGM41);
+        TCCR4A &= ~_BV(WGM40);
+        break;
 
-    case TWGM2_PWMPhaseCorrect_10bits:
-      TCCRnB &= ~((1 << WGMx3) | (1 << WGMx2));
-      TCCRnA |= ((1 << WGMx1) | (1 << WGMx0));
-      break;
+    case tmrcnt4_wgm_pwm_phase_correct_10bit_03ff_top_btm:
+        TCCR4B &= ~(_BV(WGM43) | _BV(WGM42));
+        TCCR4A |= (_BV(WGM41) | _BV(WGM40));
+        break;
 
-    case TWGM2_CTC_TopAtOCRnA:
-      TCCRnB &= ~(1 << WGMx3);
-      TCCRnB |= (1 << WGMx2);
-      TCCRnA &= ~((1 << WGMx1) | (1 << WGMx0));
-      break;
+    case tmrcnt4_wgm_ctc_ocr5a_imd_max:
+        TCCR4B &= ~_BV(WGM43);
+        TCCR4B |= _BV(WGM42);
+        TCCR4A &= ~(_BV(WGM41) | _BV(WGM40));
+        break;
 
-    case TWGM2_FastPWM_8bits:
-      TCCRnB &= ~(1 << WGMx3);
-      TCCRnB |= (1 << WGMx2);
-      TCCRnA &= ~(1 << WGMx1);
-      TCCRnA |= (1 << WGMx0);
-      break;
+    case tmrcnt4_wgm_fast_pwm_8bit_00ff_btm_top:
+        TCCR4B &= ~_BV(WGM43);
+        TCCR4B |= _BV(WGM42);
+        TCCR4A &= ~_BV(WGM41);
+        TCCR4A |= _BV(WGM40);
+        break;
 
-    case TWGM2_FastPWM_9bits:
-      TCCRnB &= ~(1 << WGMx3);
-      TCCRnB |= (1 << WGMx2);
-      TCCRnA |= (1 << WGMx1);
-      TCCRnA &= ~(1 << WGMx0);
-      break;
+    case tmrcnt4_wgm_fast_pwm_9bit_01ff_btm_top:
+        TCCR4B &= ~_BV(WGM43);
+        TCCR4B |= _BV(WGM42);
+        TCCR4A |= _BV(WGM41);
+        TCCR4A &= ~_BV(WGM40);
+        break;
 
-    case TWGM2_FastPWM_10bits:
-      TCCRnB &= ~(1 << WGMx3);
-      TCCRnB |= (1 << WGMx2);
-      TCCRnA |= ((1 << WGMx1) | (1 << WGMx0));
-      break;
+    case tmrcnt4_wgm_fast_pwm_10bit_03ff_btm_top:
+        TCCR4B &= ~_BV(WGM43);
+        TCCR4B |= _BV(WGM42);
+        TCCR4A |= (_BV(WGM41) | _BV(WGM40));
+        break;
 
-    case TWGM2_PWMPhaseAndFreqCorrect_TopAtICRn:
-      TCCRnB |= (1 << WGMx3);
-      TCCRnB &= ~(1 << WGMx2);
-      TCCRnA &= ~((1 << WGMx1) | (1 << WGMx0));
-      break;
+    case tmrcnt4_wgm_pwm_phase_freq_correct_icr5_btm_btm:
+        TCCR4B |= _BV(WGM43);
+        TCCR4B &= ~_BV(WGM42);
+        TCCR4A &= ~(_BV(WGM41) | _BV(WGM40));
+        break;
 
-    case TWGM2_PWMPhaseAndFreqCorrect_TopAtOCRnA:
-      TCCRnB |= (1 << WGMx3);
-      TCCRnB &= ~(1 << WGMx2);
-      TCCRnA &= ~(1 << WGMx1);
-      TCCRnA |= (1 << WGMx0);
-      break;
+    case tmrcnt4_wgm_pwm_phase_freq_correct_ocr5a_btm_btm:
+        TCCR4B |= _BV(WGM43);
+        TCCR4B &= ~_BV(WGM42);
+        TCCR4A &= ~_BV(WGM41);
+        TCCR4A |= _BV(WGM40);
+        break;
 
-    case TWGM2_PWMPhaseCorrect_TopAtICRn:
-      TCCRnB |= (1 << WGMx3);
-      TCCRnB &= ~(1 << WGMx2);
-      TCCRnA |= (1 << WGMx1);
-      TCCRnA &= ~(1 << WGMx0);
-      break;
+    case tmrcnt4_wgm_pwm_phase_correct_icr5_top_btm:
+        TCCR4B |= _BV(WGM43);
+        TCCR4B &= ~_BV(WGM42);
+        TCCR4A |= _BV(WGM41);
+        TCCR4A &= ~_BV(WGM40);
+        break;
 
-    case TWGM2_PWMPhaseCorrect_TopAtOCRnA:
-      TCCRnB |= (1 << WGMx3);
-      TCCRnB &= ~(1 << WGMx2);
-      TCCRnA |= ((1 << WGMx1) | (1 << WGMx0));
-      break;
+    case tmrcnt4_wgm_pwm_phase_correct_ocr5a_top_btm:
+        TCCR4B |= _BV(WGM43);
+        TCCR4B &= ~_BV(WGM42);
+        TCCR4A |= (_BV(WGM41) | _BV(WGM40));
+        break;
 
-    case TWGM2_CTC_TopAtICRn:
-      TCCRnB |= ((1 << WGMx3) | (1 << WGMx2));
-      TCCRnA &= ~((1 << WGMx1) | (1 << WGMx0));
-      break;
+    case tmrcnt4_wgm_ctc_icr5_imd_max:
+        TCCR4B |= (_BV(WGM43) | _BV(WGM42));
+        TCCR4A &= ~(_BV(WGM41) | _BV(WGM40));
+        break;
 
-    case TWGM2_FastPWM_TopAtICRn:
-      TCCRnB |= ((1 << WGMx3) | (1 << WGMx2));
-      TCCRnA |= (1 << WGMx1);
-      TCCRnA &= ~(1 << WGMx0);
-      break;
+    case tmrcnt4_wgm_fast_pwm_icr5_top_top:
+        TCCR4B |= (_BV(WGM43) | _BV(WGM42));
+        TCCR4A |= _BV(WGM41);
+        TCCR4A &= ~_BV(WGM40);
+        break;
 
-    case TWGM2_FastPWM_TopAtOCRnA:
-      TCCRnB |= ((1 << WGMx3) | (1 << WGMx2));
-      TCCRnA |= ((1 << WGMx1) | (1 << WGMx0));
-      break;
+    case tmrcnt4_wgm_fast_pwm_ocr5a_top_top:
+        TCCR4B |= (_BV(WGM43) | _BV(WGM42));
+        TCCR4A |= (_BV(WGM41) | _BV(WGM40));
+        break;
 
     default:
-    case TWGM2_RESERVED:
-      assert (0);
-      break;
+        break;
     }
 
-  switch (prescale)
+#if !(CS42 == (CS40 + 2) && CS41 == (CS40 + 1))
+#   error "tmrcnt4_init needs to be rewritten for this device"
+#endif
+    TCCR4B |= (prescale << CS40);
+}
+
+void tmrcnt4_set_ouput_compare_pin_mode(
+        tmrcnt4_ouput_compare_channel_t channel, tmrcnt4_com_t mode)
+{
+    switch (channel)
     {
-    case PFST_clkHalted:
-      //We do not need to do anything since timer as been stop already
-      //TCCRnB &= ~((1 << CSx2) | (1 << CSx1) | (1 << CSx0));
-      break;
+    case tmrcnt4_ouput_compare_channel_a:
+        TCCR4A &= ~(_BV(COM4A1) | _BV(COM4A0));
+        TCCR4A |= (mode << COM4A0);
+        break;
 
-    case PFST_clk_1:
-      //TCCRnB &= ~((1 << CSx2) | (1 << CSx1));
-      TCCRnB |= (1 << CSx0);
-      break;
+    case tmrcnt4_ouput_compare_channel_b:
+        TCCR4A &= ~(_BV(COM4B1) | _BV(COM4B0));
+        TCCR4A |= (mode << COM4B0);
+        break;
 
-    case PFST_clk_8:
-      //TCCRnB &= ~((1 << CSx2) | (1 << CSx0));
-      TCCRnB |= (1 << CSx1);
-      break;
-
-    case PFST_clk_64:
-      //TCCRnB &= ~(1 << CSx2);
-      TCCRnB |= ((1 << CSx1) | (1 << CSx0));
-      break;
-
-    case PFST_clk_256:
-      TCCRnB |= (1 << CSx2);
-      //TCCRnB &= ~((1 << CSx1) | (1 << CSx0));
-      break;
-
-    case PFST_clk_1024:
-      TCCRnB |= ((1 << CSx2) | (1 << CSx0));
-      //TCCRnB &= ~(1 << CSx1);
-      break;
-
-    case PFST_clkTn_NegativeEdge:
-      TCCRnB |= ((1 << CSx2) | (1 << CSx1));
-      //TCCRnB &= ~(1 << CSx0);
-      break;
-
-    case PFST_clkTn_PositiveEdge:
-      TCCRnB |= ((1 << CSx2) | (1 << CSx1) | (1 << CSx0));
-      break;
+    case tmrcnt4_ouput_compare_channel_c:
+        TCCR4A &= ~(_BV(COM4C1) | _BV(COM4C0));
+        TCCR4A |= (mode << COM4C0);
+        break;
 
     default:
-      assert(0);
-      break;
-
+        break;
     }
 }
 
-void
-timerCounterSetOuputComparePin4 (TimerWaveformGenMode_Type2 channel,
-				 uint8_t mode)
+void tmrcnt4_set_ouput_compare_pin_as_ouput(
+        tmrcnt4_ouput_compare_channel_t channel, _Bool isOutput)
 {
-  assert (mode < 4);
-
-  switch (channel)
+    switch (channel)
     {
-    case TOCC1_A:
-      TCCRnA &= ~((1 << COMxA1) | (1 << COMxA0));
-      TCCRnA |= (mode << COMxA0);
-      break;
+    case tmrcnt4_ouput_compare_channel_a:
+        if (isOutput)
+        {
+            OC4A_DDR |= _BV(OC4A_BIT);
+        }
+        else
+        {
+            OC4A_DDR &= ~_BV(OC4A_BIT);
+        }
+        break;
 
-    case TOCC1_B:
-      TCCRnA &= ~((1 << COMxB1) | (1 << COMxB0));
-      TCCRnA |= (mode << COMxB0);
-      break;
+    case tmrcnt4_ouput_compare_channel_b:
+        if (isOutput)
+        {
+            OC4B_DDR |= _BV(OC4B_BIT);
+        }
+        else
+        {
+            OC4B_DDR &= ~_BV(OC4B_BIT);
+        }
+        break;
 
-    case TOCC1_C:
-      TCCRnA &= ~((1 << COMxC1) | (1 << COMxC0));
-      TCCRnA |= (mode << COMxC0);
-      break;
+    case tmrcnt4_ouput_compare_channel_c:
+        if (isOutput)
+        {
+            OC4C_DDR |= _BV(OC4C_BIT);
+        }
+        else
+        {
+            OC4C_DDR &= ~_BV(OC4C_BIT);
+        }
+        break;
 
     default:
-      assert (0);
-      break;
+        break;
     }
 }
 
-void
-timerCounterForceOuputCompare4 (TimerWaveformGenMode_Type2 channel)
+void tmrcnt4_force_ouput_compare(tmrcnt4_ouput_compare_channel_t channel)
 {
-  switch (channel)
+    switch (channel)
     {
-    case TOCC1_A:
-      TCCRnC |= (1 << FOCxA);
-      break;
+    case tmrcnt4_ouput_compare_channel_a:
+        TCCR4C |= _BV(FOC4A);
+        break;
 
-    case TOCC1_B:
-      TCCRnC |= (1 << FOCxB);
-      break;
+    case tmrcnt4_ouput_compare_channel_b:
+        TCCR4C |= _BV(FOC4B);
+        break;
 
-    case TOCC1_C:
-      TCCRnC |= (1 << FOCxC);
-      break;
+    case tmrcnt4_ouput_compare_channel_c:
+        TCCR4C |= _BV(FOC4C);
+        break;
 
     default:
-      assert (0);
-      break;
+        break;
     }
 }
 
-uint16_t
-timerCounterReadTimer4 (void)
+uint16_t tmrcnt4_get_timer(void)
 {
-  return TCNTn;
+    return TCNT4;
 }
 
-void
-timerCounterSetTimer4 (uint16_t value)
+void tmrcnt4_set_timer(uint16_t value)
 {
-  TCNTn = value;
+    TCNT4 = value;
 }
 
-uint16_t
-timerCounterReadOutputCompare4 (TimerWaveformGenMode_Type2 channel)
+uint16_t tmrcnt4_get_output_compare(tmrcnt4_ouput_compare_channel_t channel)
 {
-  uint16_t retVal;
+    uint16_t retVal;
 
-  switch (channel)
+    switch (channel)
     {
-    case TOCC1_A:
-      retVal = OCRnA;
-      break;
+    case tmrcnt4_ouput_compare_channel_a:
+        retVal = OCR4A;
+        break;
 
-    case TOCC1_B:
-      retVal = OCRnB;
-      break;
+    case tmrcnt4_ouput_compare_channel_b:
+        retVal = OCR4B;
+        break;
 
-    case TOCC1_C:
-      retVal = OCRnC;
-      break;
+    case tmrcnt4_ouput_compare_channel_c:
+        retVal = OCR4C;
+        break;
 
     default:
-      assert (0);
-      retVal = 0;
-      break;
+        retVal = 0;
+        break;
     }
-    
     return retVal;
 }
 
-void
-timerCounterSetOutputCompare4 (TimerWaveformGenMode_Type2 channel, uint16_t value)
+void tmrcnt4_set_output_compare(tmrcnt4_ouput_compare_channel_t channel,
+        uint16_t value)
 {
-  switch (channel)
+    switch (channel)
     {
-    case TOCC1_A:
-      OCRnA = value;
-      break;
+    case tmrcnt4_ouput_compare_channel_a:
+        OCR4A = value;
+        break;
 
-    case TOCC1_B:
-      OCRnB = value;
-      break;
+    case tmrcnt4_ouput_compare_channel_b:
+        OCR4B = value;
+        break;
 
-    case TOCC1_C:
-      OCRnC = value;
-      break;
+    case tmrcnt4_ouput_compare_channel_c:
+        OCR4C = value;
+        break;
 
     default:
-      assert (0);
-      break;
+        break;
     }
 }
 
-uint16_t
-timerCounterReadInputCapture4 (void)
+uint16_t tmrcnt4_get_input_capture(void)
 {
-  return ICRn;
+    return ICR4;
 }
 
-void
-timerCounterSetInputCompare4 (uint16_t value)
+void tmrcnt4_input_compare_match_int_enable(void)
 {
-	ICRn = value;
+    TIMSK4 |= _BV(ICIE4);
 }
 
-
-void
-timerCounterEnableInputCaptureInt4 (void)
+void tmrcnt4_input_compare_match_int_disable(void)
 {
-  TIMSKn |= (1 << ICIEx);
+    TIMSK4 &= ~_BV(ICIE4);
 }
 
-void
-timerCounterDisableInputCaptureInt4 (void)
+void tmrcnt4_output_compare_match_int_enable(
+        tmrcnt4_ouput_compare_channel_t channel)
 {
-  TIMSKn &= ~(1 << ICIEx);
-}
-
-void
-timerCounterEnableOutputCompareMatchInt4 (TimerWaveformGenMode_Type2 channel)
-{
-  switch (channel)
+    switch (channel)
     {
-    case TOCC1_A:
-      TIMSKn |= (1 << OCIExA);
-      break;
+    case tmrcnt4_ouput_compare_channel_a:
+        TIMSK4 |= _BV(OCIE4A);
+        break;
 
-    case TOCC1_B:
-      TIMSKn |= (1 << OCIExB);
-      break;
+    case tmrcnt4_ouput_compare_channel_b:
+        TIMSK4 |= _BV(OCIE4B);
+        break;
 
-    case TOCC1_C:
-      TIMSKn |= (1 << OCIExC);
-      break;
+    case tmrcnt4_ouput_compare_channel_c:
+        TIMSK4 |= _BV(OCIE4C);
+        break;
 
     default:
-      assert (0);
-      break;
+        break;
     }
 }
 
-void
-timerCounterEnableDisableCompareMatchInt4 (TimerWaveformGenMode_Type2 channel)
+void tmrcnt4_output_compare_match_int_disable(
+        tmrcnt4_ouput_compare_channel_t channel)
 {
-  switch (channel)
+    switch (channel)
     {
-    case TOCC1_A:
-      TIMSKn &= ~(1 << OCIExA);
-      break;
+    case tmrcnt4_ouput_compare_channel_a:
+        TIMSK4 &= ~_BV(OCIE4A);
+        break;
 
-    case TOCC1_B:
-      TIMSKn &= ~(1 << OCIExB);
-      break;
+    case tmrcnt4_ouput_compare_channel_b:
+        TIMSK4 &= ~_BV(OCIE4B);
+        break;
 
-    case TOCC1_C:
-      TIMSKn &= ~(1 << OCIExC);
-      break;
+    case tmrcnt4_ouput_compare_channel_c:
+        TIMSK4 &= ~_BV(OCIE4C);
+        break;
 
     default:
-      assert (0);
-      break;
+        break;
     }
 }
 
-void
-timerCounterEnableOverflowInt4 (void)
+void tmrcnt4_enable_overflow_int(void)
 {
-  TIMSKn |= (1 << TOIEx);
+    TIMSK4 |= _BV(TOIE4);
 }
 
-void
-timerCounterDisableOverfloweInt4 (void)
+void tmrcnt4_disable_overflow_int(void)
 {
-  TIMSKn &= ~(1 << TOIEx);
+    TIMSK4 &= ~_BV(TOIE4);
+}
+
+_Bool tmrcnt4_is_overflow_int_flag_set(void)
+{
+    return bit_is_set(TIFR4, TOV4) == 0 ? false : true;
 }

@@ -29,32 +29,86 @@
    (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-#ifndef TIMERCOUNTER3_H_
-#define TIMERCOUNTER3_H_
+#ifndef TMR_CNT_3_H_
+#define TMR_CNT_3_H_
 
-#include "Timer/timerDef.h"
+#include <stdbool.h>
 
-void timerCounterInit3 (TimerWaveformGenMode_Type2 mode, PrescalerForSyncTimer prescale);
+typedef enum tmrcnt3_clk_select_e
+{
+    tmrcnt3_clk_src_halted = 0,
+    tmrcnt3_clk_src_clkio,
+    tmrcnt3_clk_src_clkio_8,
+    tmrcnt3_clk_src_clkio_64,
+    tmrcnt3_clk_src_clkio_256,
+    tmrcnt3_clk_src_clkio_1024,
+    tmrcnt3_clk_src_ext_clk_falling_edge,
+    tmrcnt3_clk_src_ext_clk_rising_edge,
+} tmrcnt3_clk_select_t;
 
-void timerCounterSetOuputComparePin3 (TimerOuputCompareChannel_Type1 channel, uint8_t mode);
+typedef enum tmrcnt3_wgm_e
+{
+    tmrcnt3_wgm_normal_ffff_imd_max = 0,
+    tmrcnt3_wgm_pwm_phase_correct_8bit_00ff_top_btm,
+    tmrcnt3_wgm_pwm_phase_correct_9bit_01ff_top_btm,
+    tmrcnt3_wgm_pwm_phase_correct_10bit_03ff_top_btm,
+    tmrcnt3_wgm_ctc_ocr5a_imd_max,
+    tmrcnt3_wgm_fast_pwm_8bit_00ff_btm_top,
+    tmrcnt3_wgm_fast_pwm_9bit_01ff_btm_top,
+    tmrcnt3_wgm_fast_pwm_10bit_03ff_btm_top,
+    tmrcnt3_wgm_pwm_phase_freq_correct_icr5_btm_btm,
+    tmrcnt3_wgm_pwm_phase_freq_correct_ocr5a_btm_btm,
+    tmrcnt3_wgm_pwm_phase_correct_icr5_top_btm,
+    tmrcnt3_wgm_pwm_phase_correct_ocr5a_top_btm,
+    tmrcnt3_wgm_ctc_icr5_imd_max,
+    tmrcnt3_wgm_fast_pwm_icr5_top_top = 14,
+    tmrcnt3_wgm_fast_pwm_ocr5a_top_top
+} tmrcnt3_wgm_t;
 
-void timerCounterForceOuputCompare3 (TimerOuputCompareChannel_Type1 channel);
+typedef enum tmrcnt3_com_e
+{
+    tmrcnt3_com_port_disconnected = 0,
+    tmrcnt3_com_normal_toggle_oc0a_compare_match = 1,
+    tmrcnt3_com_ctc_toggle_oc0a_compare_match = 1,
+    tmrcnt3_com_normal_clear_oc0a_compare_match = 2,
+    tmrcnt3_com_pwm_phase_correct_clear_oc0a_upcounting_set_oc0a_downcounting = 2,
+    tmrcnt3_com_ctc_clear_oc0a_compare_match = 2,
+    tmrcnt3_com_fast_pwm_clear_oc0a_compare_match_set_oc0a_top = 2,
+    tmrcnt3_com_normal_set_oc0a_compare_match = 3,
+    tmrcnt3_com_pwm_phase_correct_set_oc0a_upcounting_clear_oc0a_downcounting = 3,
+    tmrcnt3_com_ctc_set_oc0a_compare_match = 3,
+    tmrcnt3_com_fast_pwm_set_oc0a_compare_match_clear_oc0a_top = 3,
+} tmrcnt3_com_t;
 
-uint16_t timerCounterReadTimer3 (void);
-void timerCounterSetTimer3 (uint16_t value);
+typedef enum tmrcnt3_ouput_compare_channel_e
+{
+    tmrcnt3_ouput_compare_channel_a = 0,
+    tmrcnt3_ouput_compare_channel_b,
+    tmrcnt3_ouput_compare_channel_c
+} tmrcnt3_ouput_compare_channel_t;
 
-uint16_t timerCounterReadOutputCompare3 (TimerOuputCompareChannel_Type1 channel);
-void timerCounterSetOutputCompare3 (TimerOuputCompareChannel_Type1 channel, uint16_t value);
+void tmrcnt3_init (tmrcnt3_wgm_t mode, tmrcnt3_clk_select_t prescale);
 
-uint16_t timerCounterReadInputCapture3 (void);
+void tmrcnt3_set_ouput_compare_pin_mode (tmrcnt3_ouput_compare_channel_t channel, tmrcnt3_com_t mode);
+void tmrcnt3_set_ouput_compare_pin_as_ouput (tmrcnt3_ouput_compare_channel_t channel, _Bool isOutput);
+void tmrcnt3_force_ouput_compare (tmrcnt3_ouput_compare_channel_t channel);
 
-void timerCounterEnableInputCaptureInt3 (void);
-void timerCounterDisableInputCaptureInt3 (void);
+uint16_t tmrcnt3_get_timer(void);
+void tmrcnt3_set_timer(uint16_t value);
 
-void timerCounterEnableOutputCompareMatchInt3 (TimerOuputCompareChannel_Type1 channel);
-void timerCounterEnableDisableCompareMatchInt3 (TimerOuputCompareChannel_Type1 channel);
+uint16_t tmrcnt3_get_output_compare (tmrcnt3_ouput_compare_channel_t channel);
+void tmrcnt3_set_output_compare (tmrcnt3_ouput_compare_channel_t channel, uint16_t value);
 
-void timerCounterEnableOverflowInt3 (void);
-void timerCounterDisableOverfloweInt3 (void);
+uint16_t tmrcnt3_get_input_capture (void);
 
-#endif /* TIMERCOUNTER3_H_ */
+void tmrcnt3_input_compare_match_int_enable (void);
+void tmrcnt3_input_compare_match_int_disable (void);
+
+void tmrcnt3_output_compare_match_int_enable (tmrcnt3_ouput_compare_channel_t channel);
+void tmrcnt3_output_compare_match_int_disable (tmrcnt3_ouput_compare_channel_t channel);
+
+void tmrcnt3_enable_overflow_int(void);
+void tmrcnt3_disable_overflow_int(void);
+_Bool tmrcnt3_is_overflow_int_flag_set(void);
+
+#endif /* TMR_CNT_3_H_ */

@@ -37,7 +37,6 @@
 
 #include "tmrcnt2.h"
 
-
 void tmrcnt2_init(tmrcnt2_wgm_t wgm, tmrcnt2_clk_select_t prescale)
 {
   // Force timer to stop
@@ -83,7 +82,6 @@ void tmrcnt2_init(tmrcnt2_wgm_t wgm, tmrcnt2_clk_select_t prescale)
       break;
     }
 
-
 #if !(CS22 == (CS20 + 2) && CS21 == (CS20 + 1))
 #   error "tmrcnt2_init needs to be rewritten for this device"
 #endif
@@ -93,48 +91,48 @@ void tmrcnt2_init(tmrcnt2_wgm_t wgm, tmrcnt2_clk_select_t prescale)
 
 void tmrcnt2_set_clk_source(tmrcnt2_clk_src_t source)
 {
-	ASSR &= ~( (1<<EXCLK) | (1<<AS2) );
-	
-	switch(source)
-	{
-		case tmrcnt2_clk_src_clkIO:
-			break;
-		
-		case tmrcnt2_clk_src_ExtClk:
-			ASSR |= (1<<EXCLK);
-			break;
-		
-		case tmrcnt2_clk_src_ExtOsc:
-			ASSR |= (1<<EXCLK) | (1<<AS2);
-			break;
-		
-		default:
-			break;
-	}	
+    ASSR &= ~((1 << EXCLK) | (1 << AS2));
+
+    switch (source)
+    {
+    case tmrcnt2_clk_src_clkIO:
+        break;
+
+    case tmrcnt2_clk_src_ExtClk:
+        ASSR |= (1 << EXCLK);
+        break;
+
+    case tmrcnt2_clk_src_ExtOsc:
+        ASSR |= (1 << EXCLK) | (1 << AS2);
+        break;
+
+    default:
+        break;
+    }
 }
 
 void tmrcnt2_set_ouput_compare_pin_mode (tmrcnt2_ouput_compare_channel_t channel, uint8_t mode)
 {
-  switch (channel)
+    switch (channel)
     {
     case tmrcnt2_ouput_compare_channel_a:
 #if !(COM2A1 == (COM2A0 + 1))
 #   error "tmrcnt2_init needs to be rewritten for this device"
 #endif
-      TCCR2A &= ~((1 << COM2A1) | (1 << COM2A0));
-      TCCR2A |= (mode << COM2A0);
-      break;
+        TCCR2A &= ~((1 << COM2A1) | (1 << COM2A0));
+        TCCR2A |= (mode << COM2A0);
+        break;
 
     case tmrcnt2_ouput_compare_channel_b:
 #if !(COM2B1 == (COM2B0 + 1))
 #   error "tmrcnt2_init needs to be rewritten for this device"
 #endif
-      TCCR2A &= ~((1 << COM2B1) | (1 << COM2B0));
-      TCCR2A |= (mode << COM2B0);
-      break;
+        TCCR2A &= ~((1 << COM2B1) | (1 << COM2B0));
+        TCCR2A |= (mode << COM2B0);
+        break;
 
     default:
-      break;
+        break;
     }
 }
 
