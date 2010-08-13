@@ -29,7 +29,6 @@ attiny85 \
 attiny261 \
 attiny261a \
 attiny461 \
-attiny461a \
 attiny861 \
 attiny861a \
 attiny43u \
@@ -74,7 +73,6 @@ atmega163 \
 atmega164a \
 atmega164p \
 atmega165 \
-atmega165a \
 atmega165p \
 atmega168 \
 atmega168a \
@@ -152,12 +150,7 @@ m3000f \
 m3000s \
 m3001b \
 atmega2560 \
-atmega2561 \
-at90s1200 \
-attiny11 \
-attiny12 \
-attiny15 \
-attiny28 )
+atmega2561 )
 
 rm buildDir/avr-drv-errno
 for name in ${AVR_TARGET[@]}
@@ -165,7 +158,7 @@ do
   echo -n "Making avr-drv-errno librairy for" $name
   mkdir -p deliver/lib/$name
   MCU=$name OUTDIR=../deliver/lib/$name make -s -C errno clean
-  MCU=$name OUTDIR=../deliver/lib/$name make -C errno &> /dev/null
+  MCU=$name OUTDIR=../deliver/lib/$name make -s -C errno
   code=$?
   if (( code )); then
     echo -e '\E[31m'"\tFAIL"; tput sgr0
