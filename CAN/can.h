@@ -48,7 +48,6 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-
 enum can_int_src_e//Interrupt source
 {
 	can_int_src_AERR_00 = 0x00,
@@ -349,13 +348,6 @@ void can_can_timer_overrun_interrupt_disable(void);
 _Bool can_is_mob_enabled(uint8_t ubMOb);
 void can_interrupt_mob(uint8_t ubMOb, _Bool enabled);
 _Bool can_is_status_interrupt_mob_flag_set(uint8_t ubMOb);
-void can_set_bit_timing_register1(uint8_t ubData);
-uint8_t can_get_bit_timing_register1(void);
-void can_set_resync_jump_width(uint8_t ubData);
-void can_set_propagation_time_segment(uint8_t ubData);
-void can_set_phase_segment2(uint8_t ubData);
-void can_set_phase_segment1(uint8_t ubData);
-void can_set_sample_point(uint8_t ubData);
 void can_set_timer_control_register(uint8_t ubData);
 uint8_t can_get_timer_control_register(void);
 uint16_t can_get_timer_register(void);
@@ -363,8 +355,6 @@ uint16_t can_get_ttc_timer_register(void);
 uint8_t can_get_transmit_error_counter(void);
 uint8_t can_get_receive_error_counter(void);
 uint8_t can_get_highest_priority_mob_number(void);
-void can_set_general_purpose_bits(uint8_t ubData);
-uint8_t can_get_general_purpose_bits(void);
 void can_set_mob_page(uint8_t ubData);
 uint8_t can_get_mob_page(void);
 void can_set_auto_increment(_Bool enabled);
@@ -417,8 +407,10 @@ uint8_t can_get_free_mob_number(uint8_t *ubFreeMOb);
 /***************************************************************************************
  * Vitesse de CAN Bus
  ***************************************************************************************/
-uint8_t can_set_baud_rate(uint32_t ulBaudrate, uint8_t ubSamplingRate,
-		uint8_t ubTsjw);
+int can_set_baud_rate(uint32_t ulBaudrate, uint32_t ulClkFreq,
+        uint8_t ubSamplingRate, uint8_t ubTsjw);
+
+void can_set_baud_rate_precalc(uint8_t canbt1, uint8_t canbt2, uint8_t canbt3);
 
 /*! \fn can_int_src_t can_get_int_src(void)
  *  \brief Return interrupt source.

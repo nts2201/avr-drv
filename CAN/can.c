@@ -46,12 +46,11 @@
 #include <stdlib.h>
 #include <avr/io.h>
 
+#include "avr-drv-errno.h"
 #include "can.h"
 
 #define CAN_MIN_TQ                          8
 #define CAN_MAX_TQ                          25
-
-extern uint32_t xtal_get_clk_freq(void);
 
 //TODO Removed ASSERTs
 
@@ -415,64 +414,6 @@ _Bool can_is_status_interrupt_mob_flag_set(uint8_t ubMOb)
 }
 
 /************************************************/
-/*       CAN Bit Timing Register 1 CANBT1       */
-/************************************************/
-
-void can_set_bit_timing_register1(uint8_t ubData)
-{
-    CANBT1 = ubData & 0x7E;
-}
-
-uint8_t can_get_bit_timing_register1(void)
-{
-    return CANBT1;
-}
-
-/************************************************/
-/*       CAN Bit Timing Register 2 CANBT2       */
-/************************************************/
-
-void can_set_resync_jump_width(uint8_t ubData)
-{
-    assert(ubData < 4);
-    CANBT2 &= ~((1 << SJW1) | (1 << SJW0));//Remove current info
-    CANBT2 |= (ubData << SJW0);
-}
-
-void can_set_propagation_time_segment(uint8_t ubData)
-{
-    assert(ubData < 8);
-    CANBT2 &= ~((1 << PRS2) | (1 << PRS1) | (1 << PRS0));//Remove current info
-    CANBT2 |= (ubData << PRS0);
-}
-
-/************************************************/
-/*       CAN Bit Timing Register 3 CANBT3       */
-/************************************************/
-
-void can_set_phase_segment2(uint8_t ubData)
-{
-    assert(ubData < 8);
-    CANBT3 &= ~((1 << PHS22) | (1 << PHS21) | (1 << PHS20));//Remove current info
-    CANBT3 |= (ubData << PHS20);
-}
-
-void can_set_phase_segment1(uint8_t ubData)
-{
-    assert(ubData < 8);
-    CANBT3 &= ~((1 << PHS12) | (1 << PHS11) | (1 << PHS10));//Remove current info
-    CANBT3 |= (ubData << PHS10);
-}
-
-void can_set_sample_point(uint8_t ubData)
-{
-    assert(ubData < 2);
-    CANBT3 &= ~(1 << SMP);//Remove current info
-    CANBT3 |= (ubData << SMP);
-}
-
-
-/************************************************/
 /*     CAN Timer Control Register CANTCON       */
 /************************************************/
 
@@ -536,21 +477,6 @@ uint8_t can_get_highest_priority_mob_number(void)
 {
     uint8_t ubRetVal = CANHPMOB;
     ubRetVal &= ((1 << HPMOB3) | (1 << HPMOB2) | (1 << HPMOB1) | (1 << HPMOB0));
-    ubRetVal = ubRetVal >> HPMOB0;
-    return ubRetVal;
-}
-
-void can_set_general_purpose_bits(uint8_t ubData)
-{
-    assert(ubData < 16);
-    CANHPMOB &= ~((1 << CGP3) | (1 << CGP2) | (1 << CGP1) | (1 << CGP0));//Remove current info
-    CANHPMOB |= (ubData << CGP0);
-}
-
-uint8_t can_get_general_purpose_bits(void)
-{
-    uint8_t ubRetVal = CANHPMOB;
-    ubRetVal &= ((1 << CGP3) | (1 << CGP2) | (1 << CGP1) | (1 << CGP0));
     ubRetVal = ubRetVal >> HPMOB0;
     return ubRetVal;
 }
@@ -945,8 +871,8 @@ uint8_t can_get_free_mob_number(uint8_t *ubFreeMOb)
     return ubRetVal;
 }
 
-uint8_t can_set_baud_rate(uint32_t ulBaudrate, uint8_t ubSamplingRate,
-        uint8_t ubTsjw)
+int can_set_baud_rate(uint32_t ulBaudrate, uint32_t ulClkFreq,
+        uint8_t ubSamplingRate, uint8_t ubTsjw)
 {
     uint8_t ubDivider;
     uint8_t ubTbit;
@@ -955,8 +881,7 @@ uint8_t can_set_baud_rate(uint32_t ulBaudrate, uint8_t ubSamplingRate,
     uint8_t ubTphs2;
     uint8_t ubBRP = 0;
 
-    //TODO remove F_CPU
-    ubDivider = xtal_get_clk_freq() / ulBaudrate; /* Trouve le diviseur total de la fréquence du Can */
+    ubDivider = ulClkFreq / ulBaudrate; /* Trouve le diviseur total de la fréquence du Can */
 
     ubTbit = ubDivider;
     while ((ubTbit >= CAN_MAX_TQ) | (ubTbit <= CAN_MIN_TQ))
@@ -984,12 +909,20 @@ uint8_t can_set_baud_rate(uint32_t ulBaudrate, uint8_t ubSamplingRate,
 
     if (ubDivider == (ubBRP + 1) * (ubTprs + ubTphs1 + ubTphs2 + 1))
     {
-        return true;
+        return 0;
     }
     else
     {
-        return false;
+        avr_drv_errno = EBAUDRATE;
+        return -1;
     }
+}
+
+void can_set_baud_rate_precalc(uint8_t canbt1, uint8_t canbt2, uint8_t canbt3)
+{
+    CANBT1 = canbt1;
+    CANBT2 = canbt2;
+    CANBT3 = canbt3;
 }
 
 can_int_src_t can_get_int_src(void)
