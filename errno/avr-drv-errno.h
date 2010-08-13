@@ -40,6 +40,12 @@
 
 extern unsigned char avr_drv_errno;
 
+#define EINVAL 22
+
 #define EBAUDRATE 128 /*!< Requested baud rate is not attainable. */
+#define ERXPARITY 129 /*!< Parity error on reception. */
+#define ERXOVERRUN 130 /*!< Reception buffer overrun. */
+#define ERXFRAM 131 /*!< Framing error on reception. */
+#define ERXMULTI 132 /*!< Multiple error cause on reception. */
 
 #endif /* AVRDRVERRNO_H_ */
