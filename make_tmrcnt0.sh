@@ -8,7 +8,6 @@ at90pwm2 \
 at90pwm2b \
 at90pwm3 \
 at90pwm3b \
-at90pwm81 \
 at90pwm216 \
 at90pwm316 \
 at90usb82 \
@@ -136,12 +135,12 @@ do
   echo -n "Making Timer/Counter 0 librairy for" $name
   mkdir -p deliver/lib/$name
   MCU=$name OUTDIR=../deliver/lib/$name TARGET=tmrcnt0 make -s -C TimerCounter clean
-  MCU=$name OUTDIR=../deliver/lib/$name TARGET=tmrcnt0 make -s -C TimerCounter &> /dev/null
+  MCU=$name OUTDIR=../deliver/lib/$name TARGET=tmrcnt0 make -C TimerCounter &> /dev/null
   code=$?
   if (( code )); then
     echo -e '\E[31m'"\tFAIL"; tput sgr0
     echo "||"$name"||FAIL||" | tr [:lower:] [:upper:] | sed 's/MEGA/mega/' | sed 's/TINY/tiny/' >> buildDir/avr-drv-tmrcnt0
-    
+
   else
     echo -e '\E[32m'"\tPASS"; tput sgr0
     echo "||"$name"||PASS||" | tr [:lower:] [:upper:] | sed 's/MEGA/mega/' | sed 's/TINY/tiny/' >> buildDir/avr-drv-tmrcnt0
@@ -149,7 +148,7 @@ do
 done
 MCU=at90can128 OUTDIR=../deliver/lib/at90can128 TARGET=tmrcnt0 make -s -C TimerCounter clean
 mkdir -p deliver/include
-cp -f TimerCounter/*.h deliver/include
+cp -f TimerCounter/tmrcnt0.h deliver/include
 
 echo -n "PASS" `grep -c PASS buildDir/avr-drv-tmrcnt0`
 echo " FAIL" `grep -c FAIL buildDir/avr-drv-tmrcnt0`
