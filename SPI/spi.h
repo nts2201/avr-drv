@@ -1,4 +1,4 @@
-/* Copyright (c) 2009 Frédéric Nadeau
+/* Copyright (c) 2009-2010 Frédéric Nadeau
    All rights reserved.
 
    Redistribution and use in source and binary forms,
@@ -37,72 +37,93 @@
 #ifndef SPI_H_
 #define SPI_H_
 
-#include "spiDef.h"
-
 #include <stdint.h>
 
-/*! \fn void spiEnable(_Bool isEnable)
+
+typedef enum spi_op_mode_e
+{
+    spi_op_mode_single_master = 0, /*!< SPI act as a single master on bus.
+     Chip Select pin will be configured as output to prevent fallback to
+     slave mode.*/
+    spi_op_mode_multi_mMaster, /*!< SPI is configured as master but can fall back
+     as slave if Chip Select pin is driven low. */
+    spi_op_mode_slave, /*! SPI is configured as slave and will become active when
+     Chip select is driven low. */
+} spi_op_mode_t;
+
+typedef enum spi_mode_e
+{
+    spi_mode_0 = 0, /*!< CPOL = 0, CPHA = 0 */
+    spi_mode_1, /*!< CPOL = 0, CPHA = 1 */
+    spi_mode_2, /*!< CPOL = 1, CPHA = 0 */
+    spi_mode_3 /*!< CPOL = 1, CPHA = 1 */
+} spi_mode_t;
+
+typedef enum spi_prescaler_e
+{
+    spi_prescaler_2 = 0,/*!< OSCCLK/2 */
+    spi_prescaler_4, /*!< OSCCLK/4 */
+    spi_prescaler_8, /*!< OSCCLK/8 */
+    spi_prescaler_16, /*!< OSCCLK/16 */
+    spi_prescaler_32, /*!< OSCCLK/32 */
+    spi_prescaler_64, /*!< OSCCLK/64 */
+    spi_prescaler_128 /*!< OSCCLK/128 */
+} spi_prescaler_t;
+
+/*! \fn void spi_enable(_Bool isEnable)
  *  \brief Enable or disable SPI block.
  *
  *  \param  isEnable \c true to enable module, \c false to disable it.
  */
-void spiEnable(_Bool isEnable);
+void spi_enable(_Bool isEnable);
 
-/*! \fn void spiEnableInt(_Bool isEnable)
+/*! \fn void spi_enable_int(_Bool isEnable)
  *  \brief Enable or disable interrupt for SPI block.
  *
  *  \param  isEnable \c true to enable interrupt, \c false to disable it.
  */
-void spiEnableInt(_Bool isEnable);
+void spi_enable_int(_Bool isEnable);
 
-/*! \fn int spiInit(_Bool isMsb, SPI_MasterSlave_t masterSlaveMode, SPI_Mode_t mode, SPI_Prescaler_t scaler)
+/*! \fn void spi_init(_Bool isMsb, spi_op_mode_t masterSlaveMode, spi_mode_t mode, spi_prescaler_t scaler)
  *  \brief  Configure the SPI port.
  *
  *  \param  isMsb \c true if MSB fist, \c false for LSB first.
- *  \param  masterSlaveMode use #SPI_MasterSlave_t to select operation mode.
- *  \param  mode Use #SPI_Mode_t to select
- *  \param  scaler Use #SPI_Prescaler_t to select clock prescaler.
- *  \return 0 if successful or -1 on error, see errno.\n
- *  #EINVAL Invalid argument.
+ *  \param  masterSlaveMode use #spi_op_mode_t to select operation mode.
+ *  \param  mode Use #spi_mode_t to select
+ *  \param  scaler Use #spi_prescaler_t to select clock prescaler.
  */
-int spiInit(_Bool isMsb, SPI_MasterSlave_t masterSlaveMode, SPI_Mode_t mode, SPI_Prescaler_t scaler);
+void spi_init(_Bool isMsb, spi_op_mode_t masterSlaveMode, spi_mode_t mode, spi_prescaler_t scaler);
 
-/*! \fn int spiSetMasterSlave(SPI_MasterSlave_t mode)
- *  \brief Configure SPI in Slave or Master.
+/*! \fn void spi_set_operation_mode(spi_op_mode_t mode)
+ *  \brief Configure SPI in Slave or Master operation mode.
  *
- *  \param  mode use #SPI_MasterSlave_t to select master or slave mode.
- *  \return 0 if successful or -1 on error, see errno.\n
- *  #EINVAL Invalid argument.
+ *  \param  mode use #spi_op_mode_t to select master or slave mode.
  */
-int spiSetMasterSlave(SPI_MasterSlave_t mode);
+void spi_set_operation_mode(spi_op_mode_t mode);
 
-/*! \fn int spiSetMode(SPI_Mode_t mode)
+/*! \fn void spi_set_mode(spi_mode_t mode)
  *  \brief Configure SPI operation mode.
  *
- *  \param  mode use #SPI_Mode_t, see Atmel documentation.
- *  \return 0 if successful or -1 on error, see errno.\n
- *  #EINVAL Invalid argument.
+ *  \param  mode use #spi_mode_t, see Atmel documentation.
  */
-int spiSetMode(SPI_Mode_t mode);
+void spi_set_mode(spi_mode_t mode);
 
 /*! \fn void spiSetMsbLsb(_Bool isMsb)
  *  \brief Configure data order
  *
- * Use to see data transmission in Big Endian or Little Endian
+ * Use to see data spi_set_msb_lsb in Big Endian or Little Endian
  *  \param  isMsb true is sending MSB fist, false if sending LSB first.
  */
-void spiSetMsbLsb(_Bool isMsb);
+void spi_set_msb_lsb(_Bool isMsb);
 
-/*! \fn int spiSetPrescaler(SPI_Prescaler_t scaler)
+/*! \fn void spi_set_prescaler(spi_prescaler_t scaler)
  *  \brief Configure SPI clock to be use in Master mode.
  *
- *  \param  scaler Division factor, use #SPI_Prescaler_t to select clock source.
- *  \return 0 if successful or -1 on error, see errno.\n
- *  #EINVAL Invalid argument.
+ *  \param  scaler Division factor, use #spi_prescaler_t to select clock source.
  */
-int spiSetPrescaler(SPI_Prescaler_t scaler);
+void spi_set_prescaler(spi_prescaler_t scaler);
 
-/*! \fn int spiTransfer(uint8_t ubDataOut, uint8_t *pubDataIn)
+/*! \fn int spi_transfer(uint8_t ubDataOut, uint8_t *pubDataIn)
  *  \brief  Send byte over SPI bus.
  *  \param  ubDataOut Data to be send.
  *  \param  pubDataIn Pointer to 8 bit data space.  Red value will be saved at specified address.
@@ -110,15 +131,15 @@ int spiSetPrescaler(SPI_Prescaler_t scaler);
  *  #EINVAL Invalid argument.\n
  *  #ETXDISABLED SPI module is not enabled.
  */
-int spiTransfer(uint8_t ubDataOut, uint8_t *pubDataIn);
+int spi_transfer(uint8_t ubDataOut, uint8_t *pubDataIn);
 
-/*! \fn void spiTransferISR(uint8_t ubDataOut, uint8_t *pubDataIn)
+/*! \fn void spi_transferISR(uint8_t ubDataOut, uint8_t *pubDataIn)
  *  \brief Start a new byte transfer and get last byte in, use only in ISR function.
  *  \param ubDataOut Data to be send.
  *  \param  pubDataIn Pointer to 8 bit data space.
  *          Read value will be saved at specified address.
  *          If address is \c (void*) \c 0, received data will be discarded.
  */
-void spiTransferISR(uint8_t ubDataOut, uint8_t *pubDataIn);
+void spi_transferISR(uint8_t ubDataOut, uint8_t *pubDataIn);
 
 #endif /*SPI_H_*/

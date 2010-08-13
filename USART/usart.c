@@ -35,12 +35,62 @@
  \author Frédéric Nadeau
  */
 
-#include "usartCoreSelection.h"
 
-#if USART_NUM_PORT == 1
-#	include "usartSingle.c"
+#if defined(__AVR_AT90PWM1__) \
+|| defined(__AVR_AT90PWM2__) \
+|| defined(__AVR_AT90PWM2B__) \
+|| defined(__AVR_AT90PWM3__) \
+|| defined(__AVR_AT90PWM3B__) \
+|| defined(__AVR_AT90PWM216__) \
+|| defined(__AVR_AT90PWM316__) \
+|| defined(__AVR_ATmega8__) \
+|| defined(__AVR_ATmega16__) \
+|| defined(__AVR_ATmega16A__) \
+|| defined(__AVR_ATmega32__) \
+|| defined(__AVR_ATmega32A__) \
+|| defined(__AVR_ATmega165__) \
+|| defined(__AVR_ATmega169__) \
+|| defined(__AVR_ATmega323__) \
+|| defined(__AVR_ATmega8515__) \
+|| defined(__AVR_ATmega8535__) \
+|| defined(__AVR_ATtiny2313__) \
+|| defined(__AVR_ATtiny2313A__) \
+|| defined(__AVR_ATtiny4313__)
+#   include "usartSingle.c"
+#elif defined(__AVR_AT90CAN32__) \
+|| defined(__AVR_AT90CAN64__) \
+|| defined(__AVR_AT90CAN128__) \
+|| defined(__AVR_AT90USB82__) \
+|| defined(__AVR_AT90USB162__) \
+|| defined(__AVR_AT90USB646__) \
+|| defined(__AVR_AT90USB647__) \
+|| defined(__AVR_AT90USB1286__) \
+|| defined(__AVR_AT90USB1287__)\
+|| defined(__AVR_ATmega8U2__) \
+|| defined(__AVR_ATmega16U2__) \
+|| defined(__AVR_ATmega16U4__) \
+|| defined(__AVR_ATmega32U2__) \
+|| defined(__AVR_ATmega32U4__) \
+|| defined(__AVR_ATmega32U6__) \
+|| defined(__AVR_ATmega64__) \
+|| defined(__AVR_ATmega128__) \
+|| defined(__AVR_ATmega128RFA1__) \
+|| defined(__AVR_ATmega162__) \
+|| defined(__AVR_ATmega324A__) \
+|| defined(__AVR_ATmega324P__) \
+|| defined(__AVR_ATmega324PA__)\
+|| defined(__AVR_ATmega644__) \
+|| defined(__AVR_ATmega644A__) \
+|| defined(__AVR_ATmega644P__) \
+|| defined(__AVR_ATmega644PA__) \
+|| defined(__AVR_ATmega1280__) \
+|| defined(__AVR_ATmega1281__) \
+|| defined(__AVR_ATmega1284__) \
+|| defined(__AVR_ATmega2560__) \
+|| defined(__AVR_ATmega2561__)
+#   include "usartMulti.c"
 #else
-#	include "usartMulti.c"
+#   error "Device not supported!"
 #endif
 
 #include "usartBaudRate.c"

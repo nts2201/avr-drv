@@ -40,91 +40,109 @@
  \brief This file calculate value of baud rate register for the USART.
  */
 
-#include "usartDef.h"
-#include "xtal/xtal.h"
-
 #include <stdbool.h>
 #include <stdint.h>
 
-static uint16_t get_UBRR(uint32_t uiBaudRate, uint8_t ubTol, uint8_t factor)
+#include "usartDef.h"
+#include "avr-drv-errno.h"
+
+static uint16_t get_ubrb(uint32_t uiBaudRate, uint32_t uiClk, uint8_t ubTol,
+        uint8_t factor)
 {
-	//Get clock
-	uint32_t uiClk = xtalGetClockFreq();
-	return (((uiClk) + (factor>>1) * (uiBaudRate)) / (factor * (uiBaudRate)) - 1UL);
+    return (((uiClk) + (factor >> 1) * (uiBaudRate)) / (factor * (uiBaudRate))
+            - 1UL);
 }
 
-static _Bool check_Tol(uint32_t uiBaudRate, uint16_t uwUbrr, uint8_t ubTol, uint8_t factor)
+static _Bool check_Tol(uint32_t uiBaudRate, uint32_t uiClk, uint16_t uwUbrr,
+        uint8_t ubTol, uint8_t factor)
 {
-	uint32_t uiClk = xtalGetClockFreq();
-	if (100 * (uiClk) > (factor * ((uwUbrr) + 1)) * (100UL * (uiBaudRate) + (uiBaudRate)
-			* ubTol)) {
-		return false;
-	} else if (100 * (uiClk) < (factor * ((uwUbrr) + 1)) * (100 * (uiBaudRate)
-			- (uiBaudRate) * ubTol)) {
-		return false;
-	}
+    if (100 * (uiClk) > (factor * ((uwUbrr) + 1)) * (100UL * (uiBaudRate)
+            + (uiBaudRate) * ubTol))
+    {
+        return false;
+    }
+    else if (100 * (uiClk) < (factor * ((uwUbrr) + 1)) * (100 * (uiBaudRate)
+            - (uiBaudRate) * ubTol))
+    {
+        return false;
+    }
 
-	return true;
+    return true;
 }
 
-int usart_baud_rate_get_UBRR(uint32_t uiBaudRate, uint8_t ubTol, USART_Mode_t mode, uint16_t* puwUbrr)
+/*! \fn int usart_baud_rate_get_ubrb(uint32_t uiBaudRate, uint32_t uiClk, uint8_t ubTol, usart_mode_t mode, uint16_t* puwUbrr)
+ *  \brief  Compute value for UBRR.
+ *
+ *  \param  uiBaudRate Desired baud rate.
+ *  \param  uiClk Clock frequency in Hz.
+ *  \param  ubTol Mismatch tolerance. 2 should be use, witch mean 2%.
+ *  \param  mode Whether it is Asyn or Sync USART mode.
+ *  \param  puwUbrr Pointer to where UBRR value will be saved.
+ *  \return On success, value can be 0 or 1. If value is 0, X2 mode shall be desactivated and if
+ *          it is 1, it shall be activated. Value -1 indicate that an error occurred.
+ *          See \c errno for detail on error.\n
+ *          #EINVAL Invalid argument was provided.\n
+ *          #EBAUDRATE Desired baud rate can not be achieved.
+ */
+int usart_baud_rate_get_ubrb(uint32_t uiBaudRate, uint32_t uiClk,
+        uint8_t ubTol, usart_mode_t mode, uint16_t* puwUbrr)
 {
-	uint32_t uiClk;
-	uint16_t uwBaud;
-	int retVal = 0;
+    int retVal = 0;
+    uint16_t uwBaud;
 
-	if(NULL == puwUbrr)
-	{
-		errno = EINVAL;
-		return -1;
-	}
+    if (NULL == puwUbrr)
+    {
+        avr_drv_errno = EINVAL;
+        return -1;
+    }
 
-	//Get clock
-	uiClk = xtalGetClockFreq();
+    switch (mode)
+    {
+    case usart_mode_async:
+    {
+        //Use equation found in util/setbaud.h
+        uwBaud = get_ubrb(uiBaudRate, ubTol, 16);
 
-	switch(mode)
-	{
-	case USART_Mode_Async:
-	{
-		//Use equation found in util/setbaud.h
-		uwBaud = getUBRR(uiBaudRate,ubTol,16);
+        if (false == checkTol(uiBaudRate, uwBaud, ubTol, 16))
+        {
+            uwBaud = get_ubrb(uiBaudRate, ubTol, 8);
+            if (false == check_Tol(uiBaudRate, uwBaud, ubTol, 8))
+            {
+                avr_drv_errno = EBAUDRATE;
+                return -1;
+            }
+            else
+            {
+                retVal = 1;
+            }
+        }
+        else
+        {
+        }
+    }
+        break;
+    case usart_mode_sync_master:
+    case usart_mode_sync_slave:
+    {
+        //Use a modified version of equation found in util/setbaud.h
+        uwBaud = get_ubrb(uiBaudRate, ubTol, 2);
 
-		if(false == checkTol(uiBaudRate, uwBaud, ubTol, 16))
-		{
-			uwBaud = getUBRR(uiBaudRate,ubTol,8);
-			if(false == checkTol(uiBaudRate, uwBaud, ubTol, 8))
-			{
-				errno = EBAUDRATE;
-				return -1;
-			}
-			else
-			{}
-		}
-		else
-		{}
-	}
-		break;
-	case USART_Mode_SyncMaster:
-	case USART_Mode_SyncSlave:
-	{
-		//Use a modified version of equation found in util/setbaud.h
-		uwBaud = getUBRR(uiBaudRate,ubTol,2);
+        if (false == checkTol(uiBaudRate, uwBaud, ubTol, 2))
+        {
+            avr_drv_errno = EBAUDRATE;
+            return -1;
+        }
+        else
+        {
+        }
+    }
+        break;
+    default:
+        avr_drv_errno = EINVAL;
+        return -1;
+        break;
+    }
 
-		if(false == checkTol(uiBaudRate, uwBaud, ubTol, 2))
-		{
-			errno = EBAUDRATE;
-			return -1;
-		}
-		else
-		{}
-	}
-		break;
-	default:
-		errno = EINVAL;
-		return -1;
-		break;
-	}
-
-	*puwUbrr = uwBaud;
-	return retVal;
+    *puwUbrr = uwBaud;
+    return 0;
 }
