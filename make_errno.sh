@@ -165,7 +165,7 @@ do
   echo -n "Making avr-drv-errno librairy for" $name
   mkdir -p deliver/lib/$name
   MCU=$name OUTDIR=../deliver/lib/$name make -s -C errno clean
-  MCU=$name OUTDIR=../deliver/lib/$name make -s -C errno > /dev/null
+  MCU=$name OUTDIR=../deliver/lib/$name make -C errno &> /dev/null
   code=$?
   if (( code )); then
     echo -e '\E[31m'"\tFAIL"; tput sgr0
@@ -176,9 +176,9 @@ do
     echo "||"$name"||PASS||" | tr [:lower:] [:upper:] | sed 's/MEGA/mega/' | sed 's/TINY/tiny/' >> buildDir/avr-drv-errno
   fi
 done
-MCU=at90can128 OUTDIR=../deliver/lib/at90can128 make -s -C ADC errno
+MCU=at90can128 OUTDIR=../deliver/lib/at90can128 make -s -C errno clean
 mkdir -p deliver/include
-cp -f ADC/*.h deliver/include
+cp -f errno/*.h deliver/include
 
 echo -n "PASS" `grep -c PASS buildDir/avr-drv-errno`
 echo " FAIL" `grep -c FAIL buildDir/avr-drv-errno`
