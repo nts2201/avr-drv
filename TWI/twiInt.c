@@ -29,7 +29,11 @@
    (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
+#include <stdbool.h>
 #include <util/twi.h>
+
+extern void twi_send_stop(void);
+extern void twi_receive_byte(uint8_t ubAck);
 
 __attribute__((weak)) void twi_ext_start(void)
 {
