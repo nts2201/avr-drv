@@ -43,7 +43,6 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#include "usartDef.h"
 #include "avr-drv-errno.h"
 
 static uint16_t get_ubrb(uint32_t uiBaudRate, uint32_t uiClk, uint8_t ubTol,
@@ -101,12 +100,12 @@ int usart_baud_rate_get_ubrb(uint32_t uiBaudRate, uint32_t uiClk,
     case usart_mode_async:
     {
         //Use equation found in util/setbaud.h
-        uwBaud = get_ubrb(uiBaudRate, ubTol, 16);
+        uwBaud = get_ubrb(uiBaudRate, uiClk, ubTol, 16);
 
-        if (false == checkTol(uiBaudRate, uwBaud, ubTol, 16))
+        if (false == check_Tol(uiBaudRate, uiClk, uwBaud, ubTol, 16))
         {
-            uwBaud = get_ubrb(uiBaudRate, ubTol, 8);
-            if (false == check_Tol(uiBaudRate, uwBaud, ubTol, 8))
+            uwBaud = get_ubrb(uiBaudRate, uiClk, ubTol, 8);
+            if (false == check_Tol(uiBaudRate, uiClk, uwBaud, ubTol, 8))
             {
                 avr_drv_errno = EBAUDRATE;
                 return -1;
@@ -125,9 +124,9 @@ int usart_baud_rate_get_ubrb(uint32_t uiBaudRate, uint32_t uiClk,
     case usart_mode_sync_slave:
     {
         //Use a modified version of equation found in util/setbaud.h
-        uwBaud = get_ubrb(uiBaudRate, ubTol, 2);
+        uwBaud = get_ubrb(uiBaudRate, uiClk, ubTol, 2);
 
-        if (false == checkTol(uiBaudRate, uwBaud, ubTol, 2))
+        if (false == check_Tol(uiBaudRate, uiClk, uwBaud, ubTol, 2))
         {
             avr_drv_errno = EBAUDRATE;
             return -1;

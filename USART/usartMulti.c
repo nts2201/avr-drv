@@ -35,21 +35,57 @@
  \author Frédéric Nadeau
  */
 
+#include <stdbool.h>
+#include <stdlib.h>
 #include <stdint.h>
+#include <avr/io.h>
 
-#include "usart.h"
+#include "avr-drv-errno.h"
+#include "io_pin/io_pin.h"
 
-#define USART_RX_ERR_MASK   0x1C //0b0001 1100
-#define USART_RX_CHAR_IN    0x80 //0b1000 0000
-
-uint8_t USARTinit(uint8_t ubUSART, uint32_t ulBaudRate, uint8_t ubDataBit, uint8_t ubParity, uint8_t ubSstopBit)
+typedef struct usart_multi_port_s
 {
-    uint8_t ubRetVal = USART_OK;
+    volatile uint8_t *data;
+    volatile uint8_t *ucsra;
+    volatile uint8_t *ucsrb;
+    volatile uint8_t *ucsrc;
+    volatile uint16_t *ubrr;
+}usart_multi_port_t;
 
-    ubRetVal = USARTsetBaud(ubUSART, ulBaudRate);
-    ubRetVal |= USARTsetBit(ubUSART, ubDataBit, ubParity, ubSstopBit);
+static usart_multi_port_t gPort[] = {
+        {UDR0, UCSRA0, UCSRB0, UCSRC0, UBRR0},
+        {UDR1, UCSRA1, UCSRB1, UCSRC1, UBRR1}
+#if defined (__AVR_ATmega1280__) || defined (__AVR_ATmega2560__) || defined (__AVR_ATmega640__)
+        ,
+        {UDR2, UCSRA2, UCSRB2, UCSRC2, UBRR2},
+        {UDR3, UCSRA3, UCSRB3, UCSRC3, UBRR3}
+#endif
 
-    return ubRetVal;
+};
+
+extern int usart_baud_rate_get_ubrb(uint32_t uiBaudRate, uint32_t uiClk,
+        uint8_t ubTol, usart_mode_t mode, uint16_t* puwUbrr);
+
+#define USART_RX_ERR_MASK   (_BV(PE) | _BV(DOR) | _BV(FE)) //0b0001 1100
+
+int usart_multi_init(usart_port_t port, uint32_t ulBaudRate, uint32_t uiClk, usart_bit_t bit,
+        usart_parity_t parity, usart_stop_bit_t stopBit, usart_mode_t mode)
+{
+    int wRetVal = USART_OK;
+
+    wRetVal = usart_multi_set_baud_rate(port, ulBaudRate, uiClk, mode);
+    if (0 == wRetVal)
+    {
+        usart_multi_set_mode(port, mode);
+        usart_multi_set_num_bit(port, bit);
+        usart_multi_set_parity(port, parity);
+        usart_multi_set_stop_bit(port, stopBit);
+    }
+    else
+    {
+    }
+
+    return wRetVal;
 }
 
 uint8_t USARTsetBit(uint8_t ubUSART,uint8_t ubDataBit, uint8_t ubParity,uint8_t ubSstopBit)

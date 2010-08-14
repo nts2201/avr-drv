@@ -43,34 +43,59 @@
 #include "avr-drv-errno.h"
 #include "io_pin/io_pin.h"
 
-extern int usart_baud_rate_get_ubrb(uint32_t uiBaudRate, uint32_t uiClk, uint8_t ubTol, usart_mode_t mode, uint16_t* puwUbrr);
+extern int usart_baud_rate_get_ubrb(uint32_t uiBaudRate, uint32_t uiClk,
+        uint8_t ubTol, usart_mode_t mode, uint16_t* puwUbrr);
 
-#define USART_RX_ERR_MASK	0x1C //0b0001 1100 //TODO Check these value
-#define USART_RX_CHAR_IN	0x80 //0b1000 0000
+#define USART_RX_ERR_MASK   (_BV(PE) | _BV(DOR) | _BV(FE)) //0b0001 1100
 
-int usart_single_set_baud_rate(uint32_t baudRate) {
+int usart_single_init(uint32_t ulBaudRate, uint32_t uiClk, usart_bit_t bit,
+        usart_parity_t parity, usart_stop_bit_t stopBit, usart_mode_t mode)
+{
+    int wRetVal = USART_OK;
 
-	uint16_t uwBaud;
-	int result = usartBaudRateGetUBRR(baudRate, 2,USART_Mode_Async, &uwBaud);
+    wRetVal = usart_single_set_baud_rate(ulBaudRate, uiClk, mode);
+    if (0 == wRetVal)
+    {
+        usart_single_set_mode(mode);
+        usart_single_set_num_bit(bit);
+        usart_single_set_parity(parity);
+        usart_single_set_stop_bit(stopBit);
+    }
+    else
+    {
+    }
 
-	if(0 <= result)
-	{
-		UBRRH = uwBaud >> 8;
-		UBRRL = uwBaud;
+    return wRetVal;
+}
 
-		if (1 == result) {
-			UCSRC |= _BV(1<<U2X);
-			result = 0;
-		} else {
-			UCSRC &= ~(_BV(1<<U2X));
-		}
-		result = 0;
-	}
-	else
-	{}
+int usart_single_set_baud_rate(uint32_t baudRate, uint32_t uiClk, usart_mode_t mode)
+{
 
+    uint16_t uwBaud;
+    int result = usart_baud_rate_get_ubrb(baudRate, uiClk, 2, mode,
+            &uwBaud);
 
-	return result;
+    if (0 <= result)
+    {
+        UBRRH = uwBaud >> 8;
+        UBRRL = uwBaud;
+
+        if (1 == result)
+        {
+            UCSRC |= _BV(1 << U2X);
+            result = 0;
+        }
+        else
+        {
+            UCSRC &= ~(_BV(1 << U2X));
+        }
+        result = 0;
+    }
+    else
+    {
+    }
+
+    return result;
 }
 
 void usart_single_set_baud_rate_precalc(uint16_t ubrr, _Bool use2x)
@@ -78,254 +103,230 @@ void usart_single_set_baud_rate_precalc(uint16_t ubrr, _Bool use2x)
 #ifdef UBRR
     UBRR = ubrr;
 #else
-    UBRRH = (uint8_t)(ubrr >> 8);
-    UBRRL = (uint8_t)ubrr;
+    UBRRH = (uint8_t) (ubrr >> 8);
+    UBRRL = (uint8_t) ubrr;
 #endif
-    if(TRUE == use2x)
+    if (TRUE == use2x)
     {
-        UCSRC |= _BV(1<<U2X);
+        UCSRC |= _BV(1 << U2X);
     }
     else
     {
-        UCSRC &= ~(_BV(1<<U2X));
+        UCSRC &= ~(_BV(1 << U2X));
     }
 }
 
-int usart_single_set_num_bit(USART_NumBits_t numBit) {
-	uint8_t ubBit;
-	switch (numBit) {
-	case USART_NumBits_5:
-		ubBit = 0x00;
-		break;
-	case USART_NumBits_6:
-		ubBit = 0x01;
-		break;
-	case USART_NumBits_7:
-		ubBit = 0x02;
-		break;
-	case USART_NumBits_8:
-		ubBit = 0x03;
-		break;
-	case USART_NumBits_9:
-		ubBit = 0x07;
-		break;
-	default:
-		errno = EINVAL;
-		return -1;
-		break;
-	}
-	UCSRC &= ~(_BV(UCSZ0) | _BV(UCSZ1) | _BV(UCSZ1));
-	UCSRC |= (ubBit << UCSZ0);
-
-	return 0;
+void usart_single_set_num_bit(usart_bit_t numBit)
+{
+    UCSRC &= ~(_BV(UCSZ0) | _BV(UCSZ1) | _BV(UCSZ1));
+    UCSRC |= (numBit << UCSZ0);
 }
 
-int usart_single_set_parity(USART_Parity_t partity) {
-	uint8_t ubParity;
-	switch (partity) {
-	case USART_Parity_None:
-		ubParity = 0;
-		break;
-	case USART_Parity_Even:
-		ubParity = 2;
-		break;
-	case USART_Parity_Odd:
-		ubParity = 3;
-		break;
-	default:
-		errno = EINVAL;
-		return -1;
-		break;
-	}
-	UCSRC &= ~(_BV(UPM0) | _BV(UPM1));
-	UCSRC = (ubParity << UPM0);
-
-	return 0;
+void usart_single_set_parity(usart_parity_t partity)
+{
+    UCSRC &= ~(_BV(UPM0) | _BV(UPM1));
+    UCSRC = (partity << UPM0);
 }
 
-int usart_single_set_stop_bit(USART_StopBit_t stopBit) {
-	switch (stopBit) {
-	case USART_StopBit_1:
-		UCSRC &= ~(_BV(USBS));
-		break;
-	case USART_StopBit_2:
-		UCSRC |= _BV(USBS);
-		break;
-	default:
-		errno = EINVAL;
-		return -1;
-		break;
-	}
+void usart_single_set_stop_bit(usart_stop_bit_t stopBit)
+{
 
-	return 0;
+    if (usart_stop_bit_1 == stopBit)
+    {
+        UCSRC &= ~(_BV(USBS));
+    }
+    else
+    {
+        UCSRC |= _BV(USBS);
+    }
 }
 
-int usart_single_set_mode(USART_Mode_t mode) {
-	switch(mode)
-	{
-	case USART_Mode_Async:
-		UCSRC &= ~(_BV(UMSEL));
-		break;
-	case USART_Mode_SyncMaster:
-		UCSRC = _BV(UMSEL);
-		XCK0_DDR |= _BV(XCK0_DDx);
-		break;
-	case USART_Mode_SyncSlave:
-		UCSRC = _BV(UMSEL);
-		XCK0_DDR &= ~(_BV(XCK0_DDx));
-		break;
-	default:
-		errno = EINVAL;
-		return -1;
-		break;
-	}
-	return 0;
+void usart_single_set_mode(usart_mode_t mode)
+{
+    switch (mode)
+    {
+    case usart_mode_async:
+        UCSRC &= ~(_BV(UMSEL));
+        break;
+    case usart_mode_sync_master:
+        UCSRC = _BV(UMSEL);
+        XCK_DDR |= _BV(XCK_BIT);
+        break;
+    case usart_mode_sync_slave:
+        UCSRC = _BV(UMSEL);
+        XCK_DDR &= ~(_BV(XCK_BIT));
+        break;
+    default:
+        break;
+    }
 }
 
-int usart_single_enable_rx(_Bool enable) {
-	if (true == enable) {
-		UCSRB |= _BV(RXEN);
-	} else {
-		UCSRB &= ~_BV(RXEN);
-	}
-
-	return 0;
+void usart_single_enable_rx(_Bool enable)
+{
+    if (true == enable)
+    {
+        UCSRB |= _BV(RXEN);
+    }
+    else
+    {
+        UCSRB &= ~_BV(RXEN);
+    }
 }
 
-int usart_single_enable_tx(_Bool enable) {
-	if (true == enable) {
-		UCSRB |= _BV(TXEN);
-	} else {
-		UCSRB &= ~_BV(TXEN);
-	}
-
-	return 0;
+void usart_single_enable_tx(_Bool enable)
+{
+    if (true == enable)
+    {
+        UCSRB |= _BV(TXEN);
+    }
+    else
+    {
+        UCSRB &= ~_BV(TXEN);
+    }
 }
 
-int usart_single_putc(char data) {
-	if (false != (UCSRB & (1 << TXEN))) {
-		while (!(UCSRA & (1 << UDRE)))
-			;
-		UDR = data;
-		return 0;
-	} else {
-		errno = ETXDISABLED;
-		return -1;
-	}
+int usart_single_putc(char data)
+{
+    //Check if TX is enabled so that we don't loop infinitely
+    if (false != (UCSRB & _BV(TXEN)))
+    {
+        loop_while_bit_is_clear(UCSRA, UDRE);
+        UDR = data;
+        return 0;
+    }
+    else
+    {
+        avr_drv_errno = ETXDISABLED;
+        return -1;
+    }
 }
 
-int usart_single_getc(char* data) {
-	int wRetVal = 0;
-	uint8_t ubStatus = UCSRB;
+int usart_single_getc(char* data)
+{
+    int wRetVal;
+    uint8_t ubStatus = UCSRB;
 
-	if ((ubStatus & (1 << RXEN)) == 0) {
-		errno = ERXDISABLED;
-		wRetVal = -1;
-	} else {
-		ubStatus = UCSRA;
+    if ((ubStatus & _BV(RXEN)) == 0)
+    {
+        avr_drv_errno = ERXDISABLED;
+        wRetVal = -1;
+    }
+    else
+    {
+        ubStatus = UCSRA;
 
-		if ((ubStatus & USART_RX_CHAR_IN) != 0) {
-			if ((ubStatus & USART_RX_ERR_MASK) != 0) {
-				switch (ubStatus) {
-				case 0x04:
-					errno = ERXPARITY;
-					wRetVal = -1;//USART_ERR_PARITY;
-					break;
-				case 0x08:
-					errno = ERXOVERRUN;
-					wRetVal = -1;//USART_ERR_OVERRUN;
-					break;
-				case 0x10:
-					errno = ERXFRAM;
-					wRetVal = -1;//USART_ERR_FRAME;
-					break;
-				default:
-					errno = ERXMULTI;
-					wRetVal = -1;//USART_ERR_RX_MULTI;
-					break;
-				}
-			} else {
-			}
-			*data = UDR;
-		} else {
-			wRetVal = -1;//USART_ERR_RX_EMPTY;
-		}
-	}
-	return wRetVal;
+        if ((ubStatus & _BV(RCX)) != 0)
+        {
+            if ((ubStatus & USART_RX_ERR_MASK) != 0)
+            {
+                switch (ubStatus)
+                {
+                case _BV(PE):
+                    avr_drv_errno = ERXPARITY;
+                    wRetVal = -1;//USART_ERR_PARITY;
+                    break;
+                case _BV(DOR):
+                    avr_drv_errno = ERXOVERRUN;
+                    wRetVal = -1;//USART_ERR_OVERRUN;
+                    break;
+                case _BV(FE):
+                    avr_drv_errno = ERXFRAM;
+                    wRetVal = -1;//USART_ERR_FRAME;
+                    break;
+                default:
+                    avr_drv_errno = ERXMULTI;
+                    wRetVal = -1;//USART_ERR_RX_MULTI;
+                    break;
+                }
+            }
+            else
+            {
+            }
+            *data = UDR;
+            wRetVal = 1;
+        }
+        else
+        {
+            wRetVal = 0;//USART_ERR_RX_EMPTY;
+        }
+    }
+    return wRetVal;
 }
 
-_Bool usart_single_is_tx(void) {
-	if ((UCSRA & (1 << UDRE))) {
-		return false;
-	} else {
-		return true;
-	}
+void usart_single_enable_rx_int(_Bool enable)
+{
+    if (true == enable)
+    {
+        UCSRB |= _BV(RXCIE);
+    }
+    else
+    {
+        UCSRB &= ~_BV(RXCIE);
+    }
 }
 
-int usart_single_enable_rx_int(_Bool enable) {
-	if (true == enable) {
-		UCSRB |= _BV(RXCIE);
-	} else {
-		UCSRB &= ~_BV(RXCIE);
-	}
-
-	return 0;
+void usart_single_enable_tx_buf_int(_Bool enable)
+{
+    if (true == enable)
+    {
+        UCSRB |= _BV(UDRIE);
+    }
+    else
+    {
+        UCSRB &= ~_BV(UDRIE);
+    }
 }
 
-int usart_single_enable_tx_buf_int(_Bool enable) {
-	if (true == enable) {
-		UCSRB |= _BV(UDRIE);
-	} else {
-		UCSRB &= ~_BV(UDRIE);
-	}
-
-	return 0;
+void usart_single_enable_tx_cmp_int(_Bool enable)
+{
+    if (true == enable)
+    {
+        UCSRB |= _BV(TXCIE);
+    }
+    else
+    {
+        UCSRB &= ~_BV(TXCIE);
+    }
 }
 
-int usart_single_enable_tx_cmp_int(_Bool enable) {
-	if (true == enable) {
-		UCSRB |= _BV(TXCIE);
-	} else {
-		UCSRB &= ~_BV(TXCIE);
-	}
-
-	return 0;
+void usart_single_putcISR(char data)
+{
+    UDR = data;
 }
 
-int usart_single_putcISR(char data) {
-	UDR = data;
+int usart_single_getcISR(char *data)
+{
+    int wRetVal = 1;
+    uint8_t ubStatus = 0x00;
 
-	return 0;
-}
+    ubStatus = UCSRA;
+    *data = UDR;
 
-int usart_single_getcISR(char *data) {
-	int wRetVal = 0;
-	uint8_t ubStatus = 0x00;
+    if ((ubStatus & USART_RX_ERR_MASK) != 0)
+    {
+        switch (ubStatus)
+        {
+        case _BV(PE):
+            avr_drv_errno = ERXPARITY;
+            wRetVal = -1;//USART_ERR_PARITY;
+            break;
+        case _BV(DOR):
+            avr_drv_errno = ERXOVERRUN;
+            wRetVal = -1;//USART_ERR_OVERRUN;
+            break;
+        case _BV(FE):
+            avr_drv_errno = ERXFRAM;
+            wRetVal = -1;//USART_ERR_FRAME;
+            break;
+        default:
+            avr_drv_errno = ERXMULTI;
+            wRetVal = -1;//USART_ERR_RX_MULTI;
+            break;
+        }
+    }
+    else
+    {
+    }
 
-	ubStatus = UCSRA;
-	*data = UDR;
-
-	if ((ubStatus & USART_RX_ERR_MASK) != 0) {
-		switch (ubStatus) {
-		case 0x04:
-			errno = ERXPARITY;
-			wRetVal = -1;//USART_ERR_PARITY;
-			break;
-		case 0x08:
-			errno = ERXOVERRUN;
-			wRetVal = -1;//USART_ERR_OVERRUN;
-			break;
-		case 0x10:
-			errno = ERXFRAM;
-			wRetVal = -1;//USART_ERR_FRAME;
-			break;
-		default:
-			errno = ERXMULTI;
-			wRetVal = -1;//USART_ERR_RX_MULTI;
-			break;
-		}
-	} else {
-	}
-
-	return wRetVal;
+    return wRetVal;
 }
