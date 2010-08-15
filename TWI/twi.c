@@ -45,10 +45,6 @@
 // functions
 void twi_init(uint32_t clkio)
 {
-	// set pull-up resistors on I2C bus pins
-    SCL_DDR |= _BV(SCL_PIN);
-    SDA_DDR |= _BV(SDA_PIN);
-
 	// set i2c bit rate to 100KHz
 	twi_set_bitrate(clkio, 100);
 	// enable TWI (two-wire interface)
@@ -85,6 +81,14 @@ void twi_set_bitrate(uint32_t clkio, uint8_t uwBitrateKHz)
 		asm("break");
 	}
 
+}
+
+void twi_enable_pullup(void)
+{
+
+    // set pull-up resistors on I2C bus pins
+    SCL_PORT |= _BV(SCL_PIN);
+    SDA_PORT |= _BV(SDA_PIN);
 }
 
 void twi_set_slave_address( void )
