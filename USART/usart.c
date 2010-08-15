@@ -71,42 +71,91 @@
 || defined(__AVR_ATtiny2313__) \
 || defined(__AVR_ATtiny2313A__) \
 || defined(__AVR_ATtiny4313__)
-usart_port_t usart0 = {&UDR, &*port->ucsra, &*port->ucsrb, &*port->ucsrc, &UBRRH, &UBRRL, &XCK_DDR, XCK_BIT};
+usart_port_t usart0 = {&UDR, &UCSRA, &UCSRB, &UCSRC, &UBRRH, &UBRRL, &XCK_DDR, XCK_BIT};
 
 #   ifdef URSEL
-#       undef write_to_ucsrc(ucsrc, value)
-#       define write_to_ucsrc(ucsrc, value)    (ucsrc = _BV(URSEL) | value)
+#       undef write_to_ucsrc
+#       define write_to_ucsrc(ucsrc, value)    (ucsrc = _BV(URSEL) | (value))
 #   endif
 
-#elif defined(__AVR_AT90CAN32__) \
-|| defined(__AVR_AT90CAN64__) \
-|| defined(__AVR_AT90CAN128__) \
-|| defined(__AVR_AT90USB82__) \
+//Some device define PE as UPE
+#   if defined(UMSEL0) && !defined(UMSEL) && (UMSEL0 == 6)
+#       define UMSEL   UMSEL0
+#   endif
+
+#elif defined(__AVR_ATmega48__) \
+|| defined(__AVR_ATmega48A__)  \
+|| defined(__AVR_ATmega48P__) \
+|| defined(__AVR_ATmega48PA__) \
+|| defined(__AVR_ATmega88__) \
+|| defined(__AVR_ATmega88A__)  \
+|| defined(__AVR_ATmega88P__) \
+|| defined(__AVR_ATmega88PA__) \
+|| defined(__AVR_ATmega165P__) \
+|| defined(__AVR_ATmega165PA__) \
+|| defined(__AVR_ATmega168__) \
+|| defined(__AVR_ATmega168A__)  \
+|| defined(__AVR_ATmega168P__) \
+|| defined(__AVR_ATmega168PA__) \
+|| defined(__AVR_ATmega169P__) \
+|| defined(__AVR_ATmega169PA__) \
+|| defined(__AVR_ATmega325__) \
+|| defined(__AVR_ATmega325P__)  \
+|| defined(__AVR_ATmega328__) \
+|| defined(__AVR_ATmega328P__)  \
+|| defined(__AVR_ATmega329__) \
+|| defined(__AVR_ATmega329P__) \
+|| defined(__AVR_ATmega329PA__) \
+|| defined(__AVR_ATmega645__) \
+|| defined(__AVR_ATmega645A__) \
+|| defined(__AVR_ATmega645P__) \
+|| defined(__AVR_ATmega649__) \
+|| defined(__AVR_ATmega649P__) \
+|| defined(__AVR_ATmega3250__) \
+|| defined(__AVR_ATmega3250P__) \
+|| defined(__AVR_ATmega3290__) \
+|| defined(__AVR_ATmega3290P__) \
+|| defined(__AVR_ATmega6450__) \
+|| defined(__AVR_ATmega6450A__) \
+|| defined(__AVR_ATmega6450P__) \
+|| defined(__AVR_ATmega6490__)
+usart_port_t usart0 = {&UDR0, &UCSR0A, &UCSR0B, &UCSR0C, &UBRR0H, &UBRR0L, &XCK_DDR, XCK_BIT};
+#elif defined(__AVR_ATmega644__)
+usart_port_t usart0 = {&UDR0, &UCSR0A, &UCSR0B, &UCSR0C, &UBRR0H, &UBRR0L, &XCK0_DDR, XCK0_BIT};
+#elif defined(__AVR_AT90USB82__) \
 || defined(__AVR_AT90USB162__) \
 || defined(__AVR_AT90USB646__) \
 || defined(__AVR_AT90USB647__) \
 || defined(__AVR_AT90USB1286__) \
-|| defined(__AVR_AT90USB1287__)\
+|| defined(__AVR_AT90USB1287__) \
 || defined(__AVR_ATmega8U2__) \
 || defined(__AVR_ATmega16U2__) \
 || defined(__AVR_ATmega16U4__) \
 || defined(__AVR_ATmega32U2__) \
 || defined(__AVR_ATmega32U4__) \
-|| defined(__AVR_ATmega32U6__) \
+|| defined(__AVR_ATmega32U6__)
+usart_port_t usart1 = {&UDR1, &UCSR1A, &UCSR1B, &UCSR1C, &UBRR1H, &UBRR1L, &XCK1_DDR, XCK1_BIT};
+#elif defined(__AVR_AT90CAN32__) \
+|| defined(__AVR_AT90CAN64__) \
+|| defined(__AVR_AT90CAN128__) \
 || defined(__AVR_ATmega64__) \
 || defined(__AVR_ATmega128__) \
 || defined(__AVR_ATmega128RFA1__) \
 || defined(__AVR_ATmega162__) \
+|| defined(__AVR_ATmega164A__) \
+|| defined(__AVR_ATmega164P__) \
+|| defined(__AVR_ATmega164PA__) \
 || defined(__AVR_ATmega324A__) \
 || defined(__AVR_ATmega324P__) \
-|| defined(__AVR_ATmega324PA__)\
-|| defined(__AVR_ATmega644__) \
+|| defined(__AVR_ATmega324PA__) \
+|| defined(__AVR_ATmega640__) \
 || defined(__AVR_ATmega644A__) \
 || defined(__AVR_ATmega644P__) \
 || defined(__AVR_ATmega644PA__) \
 || defined(__AVR_ATmega1280__) \
 || defined(__AVR_ATmega1281__) \
 || defined(__AVR_ATmega1284__) \
+|| defined(__AVR_ATmega1284P__) \
 || defined(__AVR_ATmega2560__) \
 || defined(__AVR_ATmega2561__)
 usart_port_t usart0 = {&UDR0, &UCSR0A, &UCSR0B, &UCSR0C, &UBRR0H, &UBRR0L, &XCK0_DDR, XCK0_BIT};
@@ -117,6 +166,9 @@ usart_port_t usart1 = {&UDR1, &UCSR1A, &UCSR1B, &UCSR1C, &UBRR1H, &UBRR1L, &XCK1
 usart_port_t usart2 = {&UDR2, &UCSR2A, &UCSR2B, &UCSR2C, &UBRR2H, &UBRR2L, &XCK2_DDR, XCK2_BIT};
 usart_port_t usart3 = {&UDR3, &UCSR3A, &UCSR3B, &UCSR3C, &UBRR3H, &UBRR3L, &XCK3_DDR, XCK3_BIT};
 #   endif
+#else
+#   error "Device not supported!"
+#endif
 
 //Define generic
 /* USART Status Register A (generic) */
@@ -193,10 +245,6 @@ usart_port_t usart3 = {&UDR3, &UCSR3A, &UCSR3B, &UCSR3C, &UBRR3H, &UBRR3L, &XCK3
 #   ifndef UCPOL
 #       define    UCPOL        0
 #   endif
-
-#else
-#   error "Device not supported!"
-#endif
 
 //Some device define PE as UPE
 #   if defined(UPE) && !defined(PE) && (UPE == 2)
@@ -280,7 +328,7 @@ void usart_set_num_bit(usart_port_t* port, usart_bit_t numBit)
         *port->ucsrb &= ~_BV(UCSZ2);
         break;
     case usart_bit_9:
-        write_to_ucsrc(*port->ucsrc, *port->ucsrc | _BV(UCSZ0) | _BV(UCSZ1));
+        write_to_ucsrc(*port->ucsrc, *port->ucsrc | (_BV(UCSZ0) | _BV(UCSZ1)));
         *port->ucsrb |= _BV(UCSZ2);
         break;
     default:
@@ -303,7 +351,7 @@ void usart_set_stop_bit(usart_port_t* port, usart_stop_bit_t stopBit)
     }
     else
     {
-        write_to_ucsrc(*port->ucsrc, *port->ucsrc |= _BV(USBS));
+        write_to_ucsrc(*port->ucsrc, *port->ucsrc | _BV(USBS));
     }
 }
 
