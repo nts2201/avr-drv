@@ -37,7 +37,7 @@ usage() {
 cat << EOF
 usage: $0 -d <xml device file> -h <io header file>
     -d <xml device file>    XML Device File (Input)
-    -h <io header file>     I/O Header File (Output). 
+    -h <io header file>     I/O Header File (Output).
                             If file exists, it will be overwritten.
 EOF
 }
@@ -73,7 +73,7 @@ if test "$devicefile" = ""; then
     usage
     abort "Error: No device file specified."
 fi
-if test "$headerfile" = ""; then 
+if test "$headerfile" = ""; then
     usage
     abort "Error: No header file specified."
 fi
@@ -143,7 +143,7 @@ cat << eof > $headerfile
 #  define _AVR_IO_PINXXX_H_ "$headerfile"
 #else
 #  error "Attempt to include more than one <io_pin/io_pinXXX.h> file."
-#endif 
+#endif
 
 
 #ifndef _AVR_PIN_${DEVICEUPPER}_H_
@@ -176,9 +176,9 @@ if test -n $PACKAGE_SELECTED ; then
     for i in $PINS ; do
         TARGET=
         MAP_LIST=
-        
+
         # The XML files are inconsistent in their format. Try several options.
-        
+
         # Check for NAME tag.
         NAME=$(xml sel -T -t -m /AVRPART/PACKAGE/$PACKAGE_SELECTED/${i}/NAME -v . -o ' ' $devicefile | sed "s,\r,,g")
         if test $NAME ; then
@@ -194,39 +194,48 @@ if test -n $PACKAGE_SELECTED ; then
                 # Determine which field has the target and which has the mappings.
                 TARGET=$ALT_NAME
                 MAP_LIST=$(echo $PIN_NAME | sed "s,^[*]$,&,")
-                
+
                 TEST_CASE1=$(echo $PIN_NAME | cut -d '[' -f 2 | cut -d ']' -f 1 | cut -d ':' -f 1- --output-delimiter=' ')
-                
+
                 if [ ${#TEST_CASE1} -eq 3 ]; then
                     if [ ${TEST_CASE1:0:1} = "P" ]; then
                         MAP_LIST=$ALT_NAME
                         TARGET=$PIN_NAME
-                    fi                  
+                    fi
                 fi
-                
+
                 # Get list of mappings. Inside brackets, colon delimited.
                 MAP_LIST=$(echo $MAP_LIST | cut -d '[' -f 2 | cut -d ']' -f 1 | cut -d ':' -f 1- --output-delimiter=' ')
-                
+
                 # Make sure target isn't just a blank character.
                 TARGET=$(echo $TARGET | sed "s, ,,g")
-                
+
                 # Make sure target is not surrounded by []
                 TARGET=$(echo $TARGET | sed "s,\],,g")
                 TARGET=$(echo $TARGET | sed "s,\[,,g")
             fi
         fi
-        
+
+        # Destroy invalid target
+        if [[ "$TARGET" != P[A-Z][0-9] ]]; then
+            TARGET=""
+        fi
+
         if test -n "$TARGET" -a -n "$MAP_LIST" ; then
+
+            #     Remove these pin mappings because they cannot be manipulated by software.
+            #for j in TOSC1 TOSC2 PDI PDO TCK TMS TDO TDI AVCC AREF AGND HWB RESET XTAL1 XTAL2 UVCC UGND VCON VCC GND NC PEN DALI D- D+ UCAP SDATA dW CLKO IUID T1 T2 T3 T4 T5; do
+                #MAP_LIST=$(echo $MAP_LIST | sed "s,\<${j}\>,,g")
+            #done
+            #Script now runs in 6sec rather than 16 before
+            REMOVELIST='\<TOSC1\>\|\<TOSC2\>\|\<PDI\>\|\<PDO\>\|\<TCK\>\|\<TMS\>\|\<TDO\>\|\<TDI\>\|\<AVCC\>\|\<AREF\>\|\<AGND\>\|\<HWB\>\|\<RESET\>\|\<XTAL1\>\|\<XTAL2\>\|\<UVCC\>\|\<UGND\>\|\<VCON\>\|\<VCC\>\|\<GND\>\|\<NC\>\|\<PEN\>\|\<DALI\>\|\<D-\>\|\<D+\>\|\<UCAP\>\|\<SDATA\>\|\<dW\>\|\<CLKO\>\|\<IUID\>\|\<T1\>\|\<T2\>\|\<T3\>\|\<T4\>\|\<T5'
+            MAP_LIST=$(echo $MAP_LIST | sed "s,${REMOVELIST},,g")
+
             # Make transformations on map list.
             #     Remove active low character signified by single quote
             #     Replace '+' with "_P"
             #     Replace '-' with "_N"
             MAP_LIST=$(echo $MAP_LIST | sed "s,',,g" | sed "s,+,_P,g" | sed "s,-,_N,g")
-
-            #     Remove these pin mappings because they cannot be manipulated by software.
-            for j in TOSC1 TOSC2 PDI PDO TCK TMS TDO TDI AVCC AREF AGND HWB RESET XTAL1 XTAL2 VCC GND NC PEN; do
-                MAP_LIST=$(echo $MAP_LIST | sed "s,${j},,g")
-            done
 
             TARGET_LETTER=$(echo $TARGET | sed "s,^P,,g" | sed "s,[0-9]$,,g")
             TARGET_NUMBER=$(echo $TARGET | sed "s,^P[A-Z],,g")
