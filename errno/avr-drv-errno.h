@@ -47,5 +47,7 @@ extern unsigned char avr_drv_errno;
 #define ERXOVERRUN 130 /*!< Reception buffer overrun. */
 #define ERXFRAM 131 /*!< Framing error on reception. */
 #define ERXMULTI 132 /*!< Multiple error cause on reception. */
+#define ETXDISABLED 133 /*!< Tx is disabled. */
+#define ERXDISABLED 134 /*!< Rx is disabled. */
 
 #endif /* AVRDRVERRNO_H_ */
