@@ -42,7 +42,7 @@
 #  define _AVR_IO_PINXXX_H_ "../io_pin/iocan64_pin.h"
 #else
 #  error "Attempt to include more than one <io_pin/io_pinXXX.h> file."
-#endif 
+#endif
 
 
 #ifndef _AVR_PIN_AT90CAN64_H_
@@ -99,11 +99,6 @@
 #define INT5_PORT  PORTE
 #define INT5_PIN   PINE
 #define INT5_BIT   5
-
-#define T3_DDR   DDRE
-#define T3_PORT  PORTE
-#define T3_PIN   PINE
-#define T3_BIT   6
 
 #define INT6_DDR   DDRE
 #define INT6_PORT  PORTE
@@ -234,16 +229,6 @@
 #define XCK1_PORT  PORTD
 #define XCK1_PIN   PIND
 #define XCK1_BIT   5
-
-#define T1_DDR   DDRD
-#define T1_PORT  PORTD
-#define T1_PIN   PIND
-#define T1_BIT   6
-
-#define T2_DDR   DDRD
-#define T2_PORT  PORTD
-#define T2_PIN   PIND
-#define T2_BIT   7
 
 #define WR_DDR   DDRG
 #define WR_PORT  PORTG

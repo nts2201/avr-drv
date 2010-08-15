@@ -42,7 +42,7 @@
 #  define _AVR_IO_PINXXX_H_ "../io_pin/iom6490_pin.h"
 #else
 #  error "Attempt to include more than one <io_pin/io_pinXXX.h> file."
-#endif 
+#endif
 
 
 #ifndef _AVR_PIN_ATMEGA6490_H_
@@ -134,11 +134,6 @@
 #define PCINT6_PORT  PORTE
 #define PCINT6_PIN   PINE
 #define PCINT6_BIT   6
-
-#define CLKO_DDR   DDRE
-#define CLKO_PORT  PORTE
-#define CLKO_PIN   PINE
-#define CLKO_BIT   7
 
 #define PCINT7_DDR   DDRE
 #define PCINT7_PORT  PORTE
@@ -244,11 +239,6 @@
 #define PCINT15_PORT  PORTB
 #define PCINT15_PIN   PINB
 #define PCINT15_BIT   7
-
-#define T1_DDR   DDRG
-#define T1_PORT  PORTG
-#define T1_PIN   PING
-#define T1_BIT   3
 
 #define SEG33_DDR   DDRG
 #define SEG33_PORT  PORTG

@@ -42,7 +42,7 @@
 #  define _AVR_IO_PINXXX_H_ "../io_pin/iotn24a_pin.h"
 #else
 #  error "Attempt to include more than one <io_pin/io_pinXXX.h> file."
-#endif 
+#endif
 
 
 #ifndef _AVR_PIN_ATTINY24A_H_
@@ -64,11 +64,6 @@
 #define SCL_PORT  PORTA
 #define SCL_PIN   PINA
 #define SCL_BIT   4
-
-#define T1_DDR   DDRA
-#define T1_PORT  PORTA
-#define T1_PIN   PINA
-#define T1_BIT   4
 
 #define PCINT4_DDR   DDRA
 #define PCINT4_PORT  PORTA
@@ -144,11 +139,6 @@
 #define PCINT11_PORT  PORTB
 #define PCINT11_PIN   PINB
 #define PCINT11_BIT   3
-
-#define dW_DDR   DDRB
-#define dW_PORT  PORTB
-#define dW_PIN   PINB
-#define dW_BIT   3
 
 #define PCINT10_DDR   DDRB
 #define PCINT10_PORT  PORTB

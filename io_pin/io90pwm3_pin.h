@@ -42,7 +42,7 @@
 #  define _AVR_IO_PINXXX_H_ "../io_pin/io90pwm3_pin.h"
 #else
 #  error "Attempt to include more than one <io_pin/io_pinXXX.h> file."
-#endif 
+#endif
 
 
 #ifndef _AVR_PIN_AT90PWM3_H_
@@ -69,11 +69,6 @@
 #define TXD_PORT  PORTD
 #define TXD_PIN   PIND
 #define TXD_BIT   3
-
-#define DALI_DDR   DDRD
-#define DALI_PORT  PORTD
-#define DALI_PIN   PIND
-#define DALI_BIT   3
 
 #define OC0A_DDR   DDRD
 #define OC0A_PORT  PORTD
@@ -109,11 +104,6 @@
 #define PSCOUT22_PORT  PORTC
 #define PSCOUT22_PIN   PINC
 #define PSCOUT22_BIT   2
-
-#define T1_DDR   DDRC
-#define T1_PORT  PORTC
-#define T1_PIN   PINC
-#define T1_BIT   3
 
 #define PSCOUT23_DDR   DDRC
 #define PSCOUT23_PORT  PORTC
@@ -159,11 +149,6 @@
 #define RXD_PORT  PORTD
 #define RXD_PIN   PIND
 #define RXD_BIT   4
-
-#define DALI_DDR   DDRD
-#define DALI_PORT  PORTD
-#define DALI_PIN   PIND
-#define DALI_BIT   4
 
 #define ICP1_DDR   DDRD
 #define ICP1_PORT  PORTD

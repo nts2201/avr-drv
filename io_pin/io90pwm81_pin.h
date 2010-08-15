@@ -42,7 +42,7 @@
 #  define _AVR_IO_PINXXX_H_ "../io_pin/io90pwm81_pin.h"
 #else
 #  error "Attempt to include more than one <io_pin/io_pinXXX.h> file."
-#endif 
+#endif
 
 
 #ifndef _AVR_PIN_AT90PWM81_H_
@@ -50,11 +50,6 @@
 
 
 /* Device Pin Definitions */
-#define ADC6_DDR   DDRAREF
-#define ADC6_PORT  PORTAREF
-#define ADC6_PIN   PINAREF
-#define ADC6_BIT   AREF
-
 #define AMP0_N_DDR   DDRD
 #define AMP0_N_PORT  PORTD
 #define AMP0_N_PIN   PIND
@@ -114,11 +109,6 @@
 #define ACMP2_OUT_PORT  PORTB
 #define ACMP2_OUT_PIN   PINB
 #define ACMP2_OUT_BIT   0
-
-#define T1_DDR   DDRB
-#define T1_PORT  PORTB
-#define T1_PIN   PINB
-#define T1_BIT   0
 
 #define PSCOUT23_DDR   DDRB
 #define PSCOUT23_PORT  PORTB

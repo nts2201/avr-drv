@@ -42,7 +42,7 @@
 #  define _AVR_IO_PINXXX_H_ "../io_pin/iotn4313_pin.h"
 #else
 #  error "Attempt to include more than one <io_pin/io_pinXXX.h> file."
-#endif 
+#endif
 
 
 #ifndef _AVR_PIN_ATTINY4313_H_
@@ -59,16 +59,6 @@
 #define TXD_PORT  PORTD
 #define TXD_PIN   PIND
 #define TXD_BIT   1
-
-#define PA1_DDR   DDRXTAL
-#define PA1_PORT  PORTXTAL
-#define PA1_PIN   PINXTAL
-#define PA1_BIT   XTAL2
-
-#define PA0_DDR   DDRXTAL
-#define PA0_PORT  PORTXTAL
-#define PA0_PIN   PINXTAL
-#define PA0_BIT   XTAL1
 
 #define INT0_DDR   DDRD
 #define INT0_PORT  PORTD
@@ -94,11 +84,6 @@
 #define T0_PORT  PORTD
 #define T0_PIN   PIND
 #define T0_BIT   4
-
-#define T1_DDR   DDRD
-#define T1_PORT  PORTD
-#define T1_PIN   PIND
-#define T1_BIT   5
 
 #define OC0B_DDR   DDRD
 #define OC0B_PORT  PORTD

@@ -42,7 +42,7 @@
 #  define _AVR_IO_PINXXX_H_ "../io_pin/iom161_pin.h"
 #else
 #  error "Attempt to include more than one <io_pin/io_pinXXX.h> file."
-#endif 
+#endif
 
 
 #ifndef _AVR_PIN_ATMEGA161_H_
@@ -205,10 +205,10 @@
 #define OC0/T0_PIN   PINB
 #define OC0/T0_BIT   0
 
-#define OC2/T1_DDR   DDRB
-#define OC2/T1_PORT  PORTB
-#define OC2/T1_PIN   PINB
-#define OC2/T1_BIT   1
+#define OC2/_DDR   DDRB
+#define OC2/_PORT  PORTB
+#define OC2/_PIN   PINB
+#define OC2/_BIT   1
 
 #define RXD1_DDR   DDRB
 #define RXD1_PORT  PORTB

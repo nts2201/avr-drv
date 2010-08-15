@@ -42,7 +42,7 @@
 #  define _AVR_IO_PINXXX_H_ "../io_pin/iom1284p_pin.h"
 #else
 #  error "Attempt to include more than one <io_pin/io_pinXXX.h> file."
-#endif 
+#endif
 
 
 #ifndef _AVR_PIN_ATMEGA1284P_H_
@@ -324,16 +324,6 @@
 #define PCINT8_PORT  PORTB
 #define PCINT8_PIN   PINB
 #define PCINT8_BIT   0
-
-#define T1_DDR   DDRB
-#define T1_PORT  PORTB
-#define T1_PIN   PINB
-#define T1_BIT   1
-
-#define CLKO_DDR   DDRB
-#define CLKO_PORT  PORTB
-#define CLKO_PIN   PINB
-#define CLKO_BIT   1
 
 #define PCINT9_DDR   DDRB
 #define PCINT9_PORT  PORTB

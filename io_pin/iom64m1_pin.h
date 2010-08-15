@@ -42,7 +42,7 @@
 #  define _AVR_IO_PINXXX_H_ "../io_pin/iom64m1_pin.h"
 #else
 #  error "Attempt to include more than one <io_pin/io_pinXXX.h> file."
-#endif 
+#endif
 
 
 #ifndef _AVR_PIN_ATMEGA64M1_H_
@@ -134,11 +134,6 @@
 #define PCINT10_PORT  PORTC
 #define PCINT10_PIN   PINC
 #define PCINT10_BIT   2
-
-#define T1_DDR   DDRC
-#define T1_PORT  PORTC
-#define T1_PIN   PINC
-#define T1_BIT   3
 
 #define RXCAN_DDR   DDRC
 #define RXCAN_PORT  PORTC

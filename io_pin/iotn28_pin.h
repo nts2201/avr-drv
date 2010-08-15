@@ -42,7 +42,7 @@
 #  define _AVR_IO_PINXXX_H_ "../io_pin/iotn28_pin.h"
 #else
 #  error "Attempt to include more than one <io_pin/io_pinXXX.h> file."
-#endif 
+#endif
 
 
 #ifndef _AVR_PIN_ATTINY28_H_
@@ -74,31 +74,6 @@
 #define PD7_PORT  PORTD
 #define PD7_PIN   PIND
 #define PD7_BIT   7
-
-#define PB0_DDR   DDRAIN
-#define PB0_PORT  PORTAIN
-#define PB0_PIN   PINAIN
-#define PB0_BIT   AIN0
-
-#define PB1_DDR   DDRAIN
-#define PB1_PORT  PORTAIN
-#define PB1_PIN   PINAIN
-#define PB1_BIT   AIN1
-
-#define PB2_DDR   DDRT
-#define PB2_PORT  PORTT
-#define PB2_PIN   PINT
-#define PB2_BIT   T0
-
-#define PB3_DDR   DDRINT
-#define PB3_PORT  PORTINT
-#define PB3_PIN   PININT
-#define PB3_BIT   INT0
-
-#define PB4_DDR   DDRINT
-#define PB4_PORT  PORTINT
-#define PB4_PIN   PININT
-#define PB4_BIT   INT1
 
 #define PB5_DDR   DDRB
 #define PB5_PORT  PORTB

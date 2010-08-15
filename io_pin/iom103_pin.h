@@ -42,7 +42,7 @@
 #  define _AVR_IO_PINXXX_H_ "../io_pin/iom103_pin.h"
 #else
 #  error "Attempt to include more than one <io_pin/io_pinXXX.h> file."
-#endif 
+#endif
 
 
 #ifndef _AVR_PIN_ATMEGA103_H_
@@ -185,26 +185,6 @@
 #define PD5_PIN   PIND
 #define PD5_BIT   5
 
-#define T1_DDR   DDRD
-#define T1_PORT  PORTD
-#define T1_PIN   PIND
-#define T1_BIT   6
-
-#define T2_DDR   DDRD
-#define T2_PORT  PORTD
-#define T2_PIN   PIND
-#define T2_BIT   7
-
-#define WR_DDR   DDR'WR
-#define WR_PORT  PORT'WR
-#define WR_PIN   PIN'WR
-#define WR_BIT   'WR
-
-#define RD_DDR   DDR'RD
-#define RD_PORT  PORT'RD
-#define RD_PIN   PIN'RD
-#define RD_BIT   'RD
-
 #define A8_DDR   DDRC
 #define A8_PORT  PORTC
 #define A8_PIN   PINC
@@ -244,11 +224,6 @@
 #define A15_PORT  PORTC
 #define A15_PIN   PINC
 #define A15_BIT   7
-
-#define ALE_DDR   DDRALE
-#define ALE_PORT  PORTALE
-#define ALE_PIN   PINALE
-#define ALE_BIT   ALE
 
 #define AD7_DDR   DDRA
 #define AD7_PORT  PORTA

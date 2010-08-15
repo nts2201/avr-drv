@@ -42,7 +42,7 @@
 #  define _AVR_IO_PINXXX_H_ "../io_pin/iotn45_pin.h"
 #else
 #  error "Attempt to include more than one <io_pin/io_pinXXX.h> file."
-#endif 
+#endif
 
 
 #ifndef _AVR_PIN_ATTINY45_H_
@@ -59,11 +59,6 @@
 #define PCINT5_PORT  PORTB
 #define PCINT5_PIN   PINB
 #define PCINT5_BIT   5
-
-#define dW_DDR   DDRB
-#define dW_PORT  PORTB
-#define dW_PIN   PINB
-#define dW_BIT   5
 
 #define ADC3_DDR   DDRB
 #define ADC3_PORT  PORTB

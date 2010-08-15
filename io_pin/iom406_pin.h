@@ -42,7 +42,7 @@
 #  define _AVR_IO_PINXXX_H_ "../io_pin/iom406_pin.h"
 #else
 #  error "Attempt to include more than one <io_pin/io_pinXXX.h> file."
-#endif 
+#endif
 
 
 #ifndef _AVR_PIN_ATMEGA406_H_
@@ -50,11 +50,6 @@
 
 
 /* Device Pin Definitions */
-#define S_DDR   DDRSGND
-#define S_PORT  PORTSGND
-#define S_PIN   PINSGND
-#define S_BIT   SGND
-
 #define ADC0_DDR   DDRA
 #define ADC0_PORT  PORTA
 #define ADC0_PIN   PINA
@@ -94,11 +89,6 @@
 #define PCINT3_PORT  PORTA
 #define PCINT3_PIN   PINA
 #define PCINT3_BIT   3
-
-#define VREG_DDR   DDRVREG
-#define VREG_PORT  PORTVREG
-#define VREG_PIN   PINVREG
-#define VREG_BIT   VREG
 
 #define ADC4_DDR   DDRA
 #define ADC4_PORT  PORTA
@@ -175,16 +165,6 @@
 #define PCINT13_PIN   PINB
 #define PCINT13_BIT   5
 
-#define SCL_DDR   DDRSCL
-#define SCL_PORT  PORTSCL
-#define SCL_PIN   PINSCL
-#define SCL_BIT   SCL
-
-#define SDA_DDR   DDRSDA
-#define SDA_PORT  PORTSDA
-#define SDA_PIN   PINSDA
-#define SDA_BIT   SDA
-
 #define OC0A_DDR   DDRB
 #define OC0A_PORT  PORTB
 #define OC0A_PIN   PINB
@@ -220,36 +200,6 @@
 #define PC0_PIN   PINC
 #define PC0_BIT   0
 
-#define BATT_DDR   DDRBATT
-#define BATT_PORT  PORTBATT
-#define BATT_PIN   PINBATT
-#define BATT_BIT   BATT
-
-#define OPC_DDR   DDROPC
-#define OPC_PORT  PORTOPC
-#define OPC_PIN   PINOPC
-#define OPC_BIT   OPC
-
-#define OC_DDR   DDROC
-#define OC_PORT  PORTOC
-#define OC_PIN   PINOC
-#define OC_BIT   OC
-
-#define VFET_DDR   DDRVFET
-#define VFET_PORT  PORTVFET
-#define VFET_PIN   PINVFET
-#define VFET_BIT   VFET
-
-#define OD_DDR   DDROD
-#define OD_PORT  PORTOD
-#define OD_PIN   PINOD
-#define OD_BIT   OD
-
-#define PVT_DDR   DDRVT
-#define PVT_PORT  PORTVT
-#define PVT_PIN   PINVT
-#define PVT_BIT   T
-
 #define PV4_DDR   DDRV
 #define PV4_PORT  PORTV
 #define PV4_PIN   PINV
@@ -269,41 +219,6 @@
 #define PV1_PORT  PORTV
 #define PV1_PIN   PINV
 #define PV1_BIT   1
-
-#define NV_DDR   DDRNV
-#define NV_PORT  PORTNV
-#define NV_PIN   PINNV
-#define NV_BIT   NV
-
-#define VREF_DDR   DDRVREF
-#define VREF_PORT  PORTVREF
-#define VREF_PIN   PINVREF
-#define VREF_BIT   VREF
-
-#define VREF_DDR   DDRVREFGND
-#define VREF_PORT  PORTVREFGND
-#define VREF_PIN   PINVREFGND
-#define VREF_BIT   VREFGND
-
-#define PPI_DDR   DDRPI
-#define PPI_PORT  PORTPI
-#define PPI_PIN   PINPI
-#define PPI_BIT   I
-
-#define PI_DDR   DDRI
-#define PI_PORT  PORTI
-#define PI_PIN   PINI
-#define PI_BIT   
-
-#define NI_DDR   DDRNI
-#define NI_PORT  PORTNI
-#define NI_PIN   PINNI
-#define NI_BIT   NI
-
-#define NNI_DDR   DDRNNI
-#define NNI_PORT  PORTNNI
-#define NNI_PIN   PINNNI
-#define NNI_BIT   NNI
 
 #endif /* _AVR_PIN_ATMEGA406_H_ */
 

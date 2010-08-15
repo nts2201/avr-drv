@@ -42,7 +42,7 @@
 #  define _AVR_IO_PINXXX_H_ "../io_pin/iotn13_pin.h"
 #else
 #  error "Attempt to include more than one <io_pin/io_pinXXX.h> file."
-#endif 
+#endif
 
 
 #ifndef _AVR_PIN_ATTINY13_H_
@@ -50,36 +50,6 @@
 
 
 /* Device Pin Definitions */
-#define ADC0_DDR   DDRCINT
-#define ADC0_PORT  PORTCINT
-#define ADC0_PIN   PINCINT
-#define ADC0_BIT   INT5
-
-#define PB5_DDR   DDRCINT
-#define PB5_PORT  PORTCINT
-#define PB5_PIN   PINCINT
-#define PB5_BIT   INT5
-
-#define ADC3_DDR   DDRCINT
-#define ADC3_PORT  PORTCINT
-#define ADC3_PIN   PINCINT
-#define ADC3_BIT   INT3
-
-#define PB3_DDR   DDRCINT
-#define PB3_PORT  PORTCINT
-#define PB3_PIN   PINCINT
-#define PB3_BIT   INT3
-
-#define ADC2_DDR   DDRCINT
-#define ADC2_PORT  PORTCINT
-#define ADC2_PIN   PINCINT
-#define ADC2_BIT   INT4
-
-#define PB4_DDR   DDRCINT
-#define PB4_PORT  PORTCINT
-#define PB4_PIN   PINCINT
-#define PB4_BIT   INT4
-
 #define MOSI_DDR   DDRB
 #define MOSI_PORT  PORTB
 #define MOSI_PIN   PINB

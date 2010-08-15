@@ -42,7 +42,7 @@
 #  define _AVR_IO_PINXXX_H_ "../io_pin/iom169pa_pin.h"
 #else
 #  error "Attempt to include more than one <io_pin/io_pinXXX.h> file."
-#endif 
+#endif
 
 
 #ifndef _AVR_PIN_ATMEGA169PA_H_
@@ -219,11 +219,6 @@
 #define PCINT15_PORT  PORTB
 #define PCINT15_PIN   PINB
 #define PCINT15_BIT   7
-
-#define T1_DDR   DDRG
-#define T1_PORT  PORTG
-#define T1_PIN   PING
-#define T1_BIT   3
 
 #define SEG24_DDR   DDRG
 #define SEG24_PORT  PORTG

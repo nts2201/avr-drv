@@ -42,7 +42,7 @@
 #  define _AVR_IO_PINXXX_H_ "../io_pin/iom162_pin.h"
 #else
 #  error "Attempt to include more than one <io_pin/io_pinXXX.h> file."
-#endif 
+#endif
 
 
 #ifndef _AVR_PIN_ATMEGA162_H_
@@ -59,16 +59,6 @@
 #define MISO_PORT  PORTB
 #define MISO_PIN   PINB
 #define MISO_BIT   6
-
-#define PB7_SCK_DDR   DDRB7_SCK
-#define PB7_SCK_PORT  PORTB7_SCK
-#define PB7_SCK_PIN   PINB7_SCK
-#define PB7_SCK_BIT   7_SCK
-
-#define RXD0_DDR   DDRDO
-#define RXD0_PORT  PORTDO
-#define RXD0_PIN   PINDO
-#define RXD0_BIT   O
 
 #define TXD0_DDR   DDRD
 #define TXD0_PORT  PORTD
@@ -114,26 +104,6 @@
 #define WR_PORT  PORTD
 #define WR_PIN   PIND
 #define WR_BIT   6
-
-#define ICP3_DDR   DDRINT
-#define ICP3_PORT  PORTINT
-#define ICP3_PIN   PININT
-#define ICP3_BIT   INT1
-
-#define PD3_DDR   DDRINT
-#define PD3_PORT  PORTINT
-#define PD3_PIN   PININT
-#define PD3_BIT   INT1
-
-#define XCK0_DDR   DDRTOSC
-#define XCK0_PORT  PORTTOSC
-#define XCK0_PIN   PINTOSC
-#define XCK0_BIT   TOSC1
-
-#define OC3A_DDR   DDRTOSC
-#define OC3A_PORT  PORTTOSC
-#define OC3A_PIN   PINTOSC
-#define OC3A_BIT   TOSC1
 
 #define PCINT8_DDR   DDRC
 #define PCINT8_PORT  PORTC
@@ -329,11 +299,6 @@
 #define OC2_PORT  PORTB
 #define OC2_PIN   PINB
 #define OC2_BIT   1
-
-#define T1_DDR   DDRB
-#define T1_PORT  PORTB
-#define T1_PIN   PINB
-#define T1_BIT   1
 
 #define RXD1_DDR   DDRB
 #define RXD1_PORT  PORTB

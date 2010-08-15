@@ -42,7 +42,7 @@
 #  define _AVR_IO_PINXXX_H_ "../io_pin/iom128rfa1_pin.h"
 #else
 #  error "Attempt to include more than one <io_pin/io_pinXXX.h> file."
-#endif 
+#endif
 
 
 #ifndef _AVR_PIN_ATMEGA128RFA1_H_
@@ -90,41 +90,6 @@
 #define ADC7_PIN   PINF
 #define ADC7_BIT   7
 
-#define AVSS_RFP_DDR   DDRAVSS_RFP
-#define AVSS_RFP_PORT  PORTAVSS_RFP
-#define AVSS_RFP_PIN   PINAVSS_RFP
-#define AVSS_RFP_BIT   AVSS_RFP
-
-#define RFP_DDR   DDRRFP
-#define RFP_PORT  PORTRFP
-#define RFP_PIN   PINRFP
-#define RFP_BIT   RFP
-
-#define RFN_DDR   DDRRFN
-#define RFN_PORT  PORTRFN
-#define RFN_PIN   PINRFN
-#define RFN_BIT   RFN
-
-#define AVSS_RFN_DDR   DDRAVSS_RFN
-#define AVSS_RFN_PORT  PORTAVSS_RFN
-#define AVSS_RFN_PIN   PINAVSS_RFN
-#define AVSS_RFN_BIT   AVSS_RFN
-
-#define TST_DDR   DDRTST
-#define TST_PORT  PORTTST
-#define TST_PIN   PINTST
-#define TST_BIT   TST
-
-#define RSTN_DDR   DDRRSTN
-#define RSTN_PORT  PORTRSTN
-#define RSTN_PIN   PINRSTN
-#define RSTN_BIT   RSTN
-
-#define RSTON_DDR   DDRRSTON
-#define RSTON_PORT  PORTRSTON
-#define RSTON_PIN   PINRSTON
-#define RSTON_BIT   RSTON
-
 #define DIG3_DDR   DDRG
 #define DIG3_PORT  PORTG
 #define DIG3_PIN   PING
@@ -144,31 +109,6 @@
 #define OC0B_PORT  PORTG
 #define OC0B_PIN   PING
 #define OC0B_BIT   5
-
-#define DSVSS_DDR   DDRDVSS
-#define DSVSS_PORT  PORTDVSS
-#define DSVSS_PIN   PINDVSS
-#define DSVSS_BIT   DVSS
-
-#define DVDD_DDR   DDRDVDD
-#define DVDD_PORT  PORTDVDD
-#define DVDD_PIN   PINDVDD
-#define DVDD_BIT   DVDD
-
-#define DVDD_DDR   DDRDVDD
-#define DVDD_PORT  PORTDVDD
-#define DVDD_PIN   PINDVDD
-#define DVDD_BIT   DVDD
-
-#define DEVDD_DDR   DDRDEVDD
-#define DEVDD_PORT  PORTDEVDD
-#define DEVDD_PIN   PINDEVDD
-#define DEVDD_BIT   DEVDD
-
-#define DVSS_DDR   DDRDVSS
-#define DVSS_PORT  PORTDVSS
-#define DVSS_PIN   PINDVSS
-#define DVSS_BIT   DVSS
 
 #define SCL_DDR   DDRD
 #define SCL_PORT  PORTD
@@ -220,30 +160,10 @@
 #define XCK1_PIN   PIND
 #define XCK1_BIT   5
 
-#define T1_DDR   DDRD
-#define T1_PORT  PORTD
-#define T1_PIN   PIND
-#define T1_BIT   6
-
 #define T0_DDR   DDRD
 #define T0_PORT  PORTD
 #define T0_PIN   PIND
 #define T0_BIT   7
-
-#define CLKI_DDR   DDRCLKI
-#define CLKI_PORT  PORTCLKI
-#define CLKI_PIN   PINCLKI
-#define CLKI_BIT   CLKI
-
-#define DEVDD_DDR   DDRDEVDD
-#define DEVDD_PORT  PORTDEVDD
-#define DEVDD_PIN   PINDEVDD
-#define DEVDD_BIT   DEVDD
-
-#define DVSS_DDR   DDRDVSS
-#define DVSS_PORT  PORTDVSS
-#define DVSS_PIN   PINDVSS
-#define DVSS_BIT   DVSS
 
 #define SSN_DDR   DDRB
 #define SSN_PORT  PORTB
@@ -330,16 +250,6 @@
 #define PCINT7_PIN   PINB
 #define PCINT7_BIT   7
 
-#define DEVDD_DDR   DDRDEVDD
-#define DEVDD_PORT  PORTDEVDD
-#define DEVDD_PIN   PINDEVDD
-#define DEVDD_BIT   DEVDD
-
-#define DVSS_DDR   DDRDVSS
-#define DVSS_PORT  PORTDVSS
-#define DVSS_PIN   PINDVSS
-#define DVSS_BIT   DVSS
-
 #define RXD0_DDR   DDRE
 #define RXD0_PORT  PORTE
 #define RXD0_PIN   PINE
@@ -395,11 +305,6 @@
 #define INT5_PIN   PINE
 #define INT5_BIT   5
 
-#define T3_DDR   DDRE
-#define T3_PORT  PORTE
-#define T3_PIN   PINE
-#define T3_BIT   6
-
 #define INT6_DDR   DDRE
 #define INT6_PORT  PORTE
 #define INT6_PIN   PINE
@@ -415,41 +320,6 @@
 #define INT7_PIN   PINE
 #define INT7_BIT   7
 
-#define CLKO_DDR   DDRE
-#define CLKO_PORT  PORTE
-#define CLKO_PIN   PINE
-#define CLKO_BIT   7
-
-#define DEVDD_DDR   DDRDEVDD
-#define DEVDD_PORT  PORTDEVDD
-#define DEVDD_PIN   PINDEVDD
-#define DEVDD_BIT   DEVDD
-
-#define DVSS_DDR   DDRDVSS
-#define DVSS_PORT  PORTDVSS
-#define DVSS_PIN   PINDVSS
-#define DVSS_BIT   DVSS
-
-#define AVSS_DDR   DDRAVSS
-#define AVSS_PORT  PORTAVSS
-#define AVSS_PIN   PINAVSS
-#define AVSS_BIT   AVSS
-
-#define EVDD_DDR   DDREVDD
-#define EVDD_PORT  PORTEVDD
-#define EVDD_PIN   PINEVDD
-#define EVDD_BIT   EVDD
-
-#define AVDD_DDR   DDRAVDD
-#define AVDD_PORT  PORTAVDD
-#define AVDD_PIN   PINAVDD
-#define AVDD_BIT   AVDD
-
-#define ASVSS_DDR   DDRAVSS
-#define ASVSS_PORT  PORTAVSS
-#define ASVSS_PIN   PINAVSS
-#define ASVSS_BIT   AVSS
-
 #define ADC0_DDR   DDRF
 #define ADC0_PORT  PORTF
 #define ADC0_PIN   PINF
@@ -459,11 +329,6 @@
 #define ADC1_PORT  PORTF
 #define ADC1_PIN   PINF
 #define ADC1_BIT   1
-
-#define AVSS_DDR   DDRAVSS
-#define AVSS_PORT  PORTAVSS
-#define AVSS_PIN   PINAVSS
-#define AVSS_BIT   AVSS
 
 #endif /* _AVR_PIN_ATMEGA128RFA1_H_ */
 
