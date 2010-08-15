@@ -60,6 +60,11 @@
 #define MISO_PIN   PINB
 #define MISO_BIT   6
 
+#define RXD0_DDR   DDRD
+#define RXD0_PORT  PORTD
+#define RXD0_PIN   PIND
+#define RXD0_BIT   0
+
 #define TXD0_DDR   DDRD
 #define TXD0_PORT  PORTD
 #define TXD0_PIN   PIND
@@ -80,10 +85,10 @@
 #define INT1_PIN   PIND
 #define INT1_BIT   3
 
-#define XCK1_DDR   DDRD
-#define XCK1_PORT  PORTD
-#define XCK1_PIN   PIND
-#define XCK1_BIT   3
+#define ICP3_DDR   DDRD
+#define ICP3_PORT  PORTD
+#define ICP3_PIN   PIND
+#define ICP3_BIT   3
 
 #define XCK0_DDR   DDRD
 #define XCK0_PORT  PORTD
@@ -104,6 +109,11 @@
 #define WR_PORT  PORTD
 #define WR_PIN   PIND
 #define WR_BIT   6
+
+#define RD_DDR   DDRD
+#define RD_PORT  PORTD
+#define RD_PIN   PIND
+#define RD_BIT   7
 
 #define PCINT8_DDR   DDRC
 #define PCINT8_PORT  PORTC

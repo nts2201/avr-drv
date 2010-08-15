@@ -70,10 +70,10 @@
 #define TXD0_PIN   PINE
 #define TXD0_BIT   1
 
-#define XCK_DDR   DDRE
-#define XCK_PORT  PORTE
-#define XCK_PIN   PINE
-#define XCK_BIT   2
+#define XCK0_DDR   DDRE
+#define XCK0_PORT  PORTE
+#define XCK0_PIN   PINE
+#define XCK0_BIT   2
 
 #define AIN0_DDR   DDRE
 #define AIN0_PORT  PORTE

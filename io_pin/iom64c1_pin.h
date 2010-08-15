@@ -440,11 +440,6 @@
 #define PCINT24_PIN   PINE
 #define PCINT24_BIT   0
 
-#define CLK0_DDR   DDRD
-#define CLK0_PORT  PORTD
-#define CLK0_PIN   PIND
-#define CLK0_BIT   1
-
 #define PCINT17_DDR   DDRD
 #define PCINT17_PORT  PORTD
 #define PCINT17_PIN   PIND

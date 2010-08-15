@@ -75,11 +75,6 @@
 #define PSCIN0_PIN   PIND
 #define PSCIN0_BIT   1
 
-#define CLK0_DDR   DDRD
-#define CLK0_PORT  PORTD
-#define CLK0_PIN   PIND
-#define CLK0_BIT   1
-
 #define PSCIN2_DDR   DDRD
 #define PSCIN2_PORT  PORTD
 #define PSCIN2_PIN   PIND

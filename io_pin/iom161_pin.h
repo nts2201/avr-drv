@@ -155,10 +155,15 @@
 #define ALE_PIN   PINE
 #define ALE_BIT   1
 
-#define ICP/INT2_DDR   DDRE
-#define ICP/INT2_PORT  PORTE
-#define ICP/INT2_PIN   PINE
-#define ICP/INT2_BIT   0
+#define ICP_DDR   DDRE
+#define ICP_PORT  PORTE
+#define ICP_PIN   PINE
+#define ICP_BIT   0
+
+#define INT2_DDR   DDRE
+#define INT2_PORT  PORTE
+#define INT2_PIN   PINE
+#define INT2_BIT   0
 
 #define AD7_DDR   DDRA
 #define AD7_PORT  PORTA
@@ -200,15 +205,20 @@
 #define AD0_PIN   PINA
 #define AD0_BIT   0
 
-#define OC0/T0_DDR   DDRB
-#define OC0/T0_PORT  PORTB
-#define OC0/T0_PIN   PINB
-#define OC0/T0_BIT   0
+#define OC0_DDR   DDRB
+#define OC0_PORT  PORTB
+#define OC0_PIN   PINB
+#define OC0_BIT   0
 
-#define OC2/_DDR   DDRB
-#define OC2/_PORT  PORTB
-#define OC2/_PIN   PINB
-#define OC2/_BIT   1
+#define T0_DDR   DDRB
+#define T0_PORT  PORTB
+#define T0_PIN   PINB
+#define T0_BIT   0
+
+#define OC2_DDR   DDRB
+#define OC2_PORT  PORTB
+#define OC2_PIN   PINB
+#define OC2_BIT   1
 
 #define RXD1_DDR   DDRB
 #define RXD1_PORT  PORTB

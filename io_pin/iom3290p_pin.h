@@ -155,10 +155,10 @@
 #define PCINT25_PIN   PINJ
 #define PCINT25_BIT   1
 
-#define SEG33_DDR   DDRJ
-#define SEG33_PORT  PORTJ
-#define SEG33_PIN   PINJ
-#define SEG33_BIT   1
+#define SEG34_DDR   DDRJ
+#define SEG34_PORT  PORTJ
+#define SEG34_PIN   PINJ
+#define SEG34_BIT   1
 
 #define SS_DDR   DDRB
 #define SS_PORT  PORTB

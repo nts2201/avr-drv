@@ -170,6 +170,11 @@
 #define T0_PIN   PINB
 #define T0_BIT   0
 
+#define XCK_DDR   DDRB
+#define XCK_PORT  PORTB
+#define XCK_PIN   PINB
+#define XCK_BIT   0
+
 #define AIN0_DDR   DDRB
 #define AIN0_PORT  PORTB
 #define AIN0_PIN   PINB
