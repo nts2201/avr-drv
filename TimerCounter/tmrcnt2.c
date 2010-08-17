@@ -36,6 +36,7 @@
 #include <io_pin/io_pin.h>
 
 #include "tmrcnt2.h"
+#include "tmrcntCommon.h"
 
 void tmrcnt2_init(tmrcnt2_wgm_t wgm, tmrcnt2_clk_select_t prescale)
 {
@@ -111,196 +112,31 @@ void tmrcnt2_set_clk_source(tmrcnt2_clk_src_t source)
     }
 }
 
-void tmrcnt2_set_ouput_compare_pin_mode (tmrcnt2_ouput_compare_channel_t channel, uint8_t mode)
-{
-    switch (channel)
-    {
-    case tmrcnt2_ouput_compare_channel_a:
-#if !(COM2A1 == (COM2A0 + 1))
-#   error "tmrcnt2_init needs to be rewritten for this device"
-#endif
-        TCCR2A &= ~((1 << COM2A1) | (1 << COM2A0));
-        TCCR2A |= (mode << COM2A0);
-        break;
+tmrcnt_get_timer(2, 8);
+tmrcnt_set_timer(2, 8);
 
-    case tmrcnt2_ouput_compare_channel_b:
-#if !(COM2B1 == (COM2B0 + 1))
-#   error "tmrcnt2_init needs to be rewritten for this device"
-#endif
-        TCCR2A &= ~((1 << COM2B1) | (1 << COM2B0));
-        TCCR2A |= (mode << COM2B0);
-        break;
+tmrcnt_overflow_int_enable(2, 2);
+tmrcnt_overflow_int_disable(2, 2);
+tmrcnt_is_overflow_int_flag_set(2, 2);
 
-    default:
-        break;
-    }
-}
+tmrcnt_oc_set_pin_mode(2,A,a);
+tmrcnt_oc_set_pin_mode(2,B,b);
 
+tmrcnt_oc_set_pin_as_ouput(2,A,a);
+tmrcnt_oc_set_pin_as_ouput(2,B,b);
 
-void tmrcnt2_set_ouput_compare_pin_as_ouput (tmrcnt2_ouput_compare_channel_t channel, _Bool isOutput)
-{
-    switch (channel)
-    {
-        case tmrcnt2_ouput_compare_channel_a:
-            if(isOutput)
-            {
-                OC2A_DDR |= _BV(OC2A_BIT);
-            }
-            else
-            {
-                OC2A_DDR &= ~_BV(OC2A_BIT);
-            }
-        break;
+tmrcnt_oc_force_ouput_compare(2,A,a);
+tmrcnt_oc_force_ouput_compare(2,B,b);
 
-        case tmrcnt2_ouput_compare_channel_b:
-            if(isOutput)
-            {
-                OC2B_DDR |= _BV(OC2B_BIT);
-            }
-            else
-            {
-                OC2B_DDR &= ~_BV(OC2B_BIT);
-            }
-        break;
+tmrcnt_get_oc(2,A,a,8);
+tmrcnt_get_oc(2,B,b,8);
 
-        default:
-        break;
-    }
-}
+tmrcnt_set_oc(2,A,a,8);
+tmrcnt_set_oc(2,B,b,8);
 
-void tmrcnt2_force_ouput_compare (tmrcnt2_ouput_compare_channel_t channel)
-{
-  switch (channel)
-    {
-    case tmrcnt2_ouput_compare_channel_a:
-      TCCR2B |= (1 << FOC2A);
-      break;
+tmrcnt_oc_match_int_enable(2,A,a,2);
+tmrcnt_oc_match_int_enable(2,B,b,2);
 
-    case tmrcnt2_ouput_compare_channel_b:
-      TCCR2B |= (1 << FOC2B);
-      break;
-
-    default:
-      break;
-    }
-}
-
-uint8_t tmrcnt2_get_timer(void)
-{
-    return TCNT2;
-}
-
-void tmrcnt2_set_timer(uint8_t value)
-{
-    TCNT2 = value;
-}
-
-uint8_t tmrcnt2_get_output_compare(tmrcnt2_ouput_compare_channel_t channel)
-{
-    uint8_t retVal = 0;
-
-    switch (channel)
-    {
-    case tmrcnt2_ouput_compare_channel_a:
-        retVal = OCR2A;
-        break;
-
-        case tmrcnt2_ouput_compare_channel_b:
-        retVal = OCR2B;
-        break;
-
-    default:
-        break;
-    }
-    return retVal;
-}
-
-void tmrcnt2_set_output_compare(tmrcnt2_ouput_compare_channel_t channel,
-        uint8_t value)
-{
-    switch (channel)
-    {
-    case tmrcnt2_ouput_compare_channel_a:
-        OCR2A = value;
-        break;
-
-        case tmrcnt2_ouput_compare_channel_b:
-        OCR2B = value;
-        break;
-
-    default:
-        break;
-    }
-}
-
-void tmrcnt2_output_compare_match_int_enable(
-        tmrcnt2_ouput_compare_channel_t channel)
-{
-    switch (channel)
-    {
-    case tmrcnt2_ouput_compare_channel_a:
-        TIMSK2 |= _BV(OCIE2A);
-        break;
-
-        case tmrcnt2_ouput_compare_channel_b:
-        TIMSK2 |= _BV(OCIE2B);
-        break;
-
-    default:
-        break;
-    }
-}
-
-void tmrcnt2_output_compare_match_int_disable(
-        tmrcnt2_ouput_compare_channel_t channel)
-{
-    switch (channel)
-    {
-    case tmrcnt2_ouput_compare_channel_a:
-        TIMSK2 &= ~_BV(OCIE2A);
-        break;
-
-        case tmrcnt2_ouput_compare_channel_b:
-        TIMSK2 &= ~_BV(OCIE2B);
-        break;
-
-    default:
-        break;
-    }
-}
-
-_Bool tmrcnt2_is_output_compare_match_int_flag_set(tmrcnt2_ouput_compare_channel_t channel)
-{
-    _Bool retVal = false;
-    switch (channel)
-    {
-    case tmrcnt2_ouput_compare_channel_a:
-        retVal = bit_is_set(TIFR2,OCF2A) == 0 ? false:true;
-        break;
-
-        case tmrcnt2_ouput_compare_channel_b:
-            retVal = bit_is_set(TIFR2,OCF2B) == 0 ? false:true;
-        break;
-
-    default:
-        break;
-    }
-    return retVal;
-}
-
-void tmrcnt2_enable_overflow_int(void)
-{
-    TIMSK2 |= _BV(TOIE2);
-}
-
-void tmrcnt2_disable_overflow_int(void)
-{
-    TIMSK2 &= ~_BV(TOIE2);
-}
-
-_Bool tmrcnt2_is_overflow_int_flag_set(void)
-{
-    return bit_is_set(TIFR2,TOV2) == 0 ? false:true;
-}
-
+tmrcnt_oc_match_int_disable(2,A,a,2);
+tmrcnt_oc_match_int_disable(2,B,b,2);
 

@@ -36,324 +36,183 @@
 #include <io_pin/io_pin.h>
 
 #include "tmrcnt0.h"
+#include "tmrcntCommon.h"
 
-#if defined(__AVR_AT90can32__) \
-|| defined(__AVR_AT90can64__) \
-|| defined(__AVR_AT90can128__) \
+//Define Prescaler target register
+#if defined(__AVR_AT90CAN32__) \
+|| defined(__AVR_AT90CAN64__) \
+|| defined(__AVR_AT90CAN128__) \
 || defined(__AVR_ATmega640__) \
 || defined(__AVR_ATmega1280__) \
-|| defined(__AVR_ATmega2560__)
+|| defined(__AVR_ATmega1281__) \
+|| defined(__AVR_ATmega2560__) \
+|| defined(__AVR_ATmega2561__)
+#   if ((CS02 != CS00 + 2) && (CS01 != CS00 +1))
+#       error "Verify header file for CS0x"
+#   endif
+#   define CLK_SEL_REG    TCCR0A
+#   define CLK_SEL_REG_MASK (_BV(CS02) | _BV(CS01) | _BV(CS00))
+#   define CLK_SEL_REG_OFFSET (_BV(CS00))
+#elif defined(__AVR_ATmega8__) \
+|| defined(__AVR_ATmega128__)
+#   if ((CS02 != CS00 + 2) && (CS01 != CS00 +1))
+#       error "Verify header file for CS0x"
+#   endif
+#   define CLK_SEL_REG    TCCR0
+#   define CLK_SEL_REG_MASK (_BV(CS02) | _BV(CS01) | _BV(CS00))
+#   define CLK_SEL_REG_OFFSET (_BV(CS00))
+#elif defined(__AVR_ATmega644__)
+#   if ((CS02 != CS00 + 2) && (CS01 != CS00 +1))
+#       error "Verify header file for CS0x"
+#   endif
+#   define CLK_SEL_REG    TCCR0B
+#   define CLK_SEL_REG_MASK (_BV(CS02) | _BV(CS01) | _BV(CS00))
+#   define CLK_SEL_REG_OFFSET (_BV(CS00))
+#else
+#   warning "Device need verification"
+#   if ((CS02 != CS00 + 2) && (CS01 != CS00 +1))
+#       error "Verify header file for CS0x"
+#   endif
+#   define CLK_SEL_REG    TCCR0A
+#   define CLK_SEL_REG_MASK (_BV(CS02) | _BV(CS01) | _BV(CS00))
+#   define CLK_SEL_REG_OFFSET (_BV(CS00))
+#endif
+
+//Define Wave Generation Mode
+#if defined(__AVR_AT90CAN32__) \
+|| defined(__AVR_AT90CAN64__) \
+|| defined(__AVR_AT90CAN128__) \
+|| defined(__AVR_ATmega640__) \
+|| defined(__AVR_ATmega644__) \
+|| defined(__AVR_ATmega1280__) \
+|| defined(__AVR_ATmega1281__) \
+|| defined(__AVR_ATmega2560__) \
+|| defined(__AVR_ATmega2561__)
+#   define WGM_0_1_REG    TCCR0A
+#elif defined(__AVR_ATmega128__)
+#   define WGM_0_1_REG    TCCR0
+#elif defined(__AVR_ATmega8__)
+//No WGM
+#else
+#   warning "Device need verification"
+#   define WGM_0_1_REG    TCCR0A
+#endif
+
+
+#if defined(__AVR_AT90CAN32__) \
+|| defined(__AVR_AT90CAN64__) \
+|| defined(__AVR_AT90CAN128__) \
+|| defined(__AVR_ATmega128__) \
+|| defined(__AVR_ATmega640__) \
+|| defined(__AVR_ATmega1280__) \
+|| defined(__AVR_ATmega1281__) \
+|| defined(__AVR_ATmega2560__) \
+|| defined(__AVR_ATmega2561__)
 void tmrcnt0_init(tmrcnt0_wgm_t wgm, tmrcnt0_clk_select_t prescale)
 {
     /* Force timer to stop */
-    TCCR0A &= ~(_BV(CS02) | _BV(CS01) | _BV(CS00));
+       CLK_SEL_REG &= ~CLK_SEL_REG_MASK;
 
     switch (wgm)
     {
     case tmrcnt0_wgm_normal_ff_imd_max:
-        TCCR0A &= ~(_BV(WGMx1) | _BV(WGMx0));
+        WGM_0_1_REG &= ~(_BV(WGM01) | _BV(WGM00));
         break;
 
     case tmrcnt0_wgm_pwm_phase_correct_ff_top_btm:
-        TCCR0A &= ~_BV(WGMx1);
-        TCCR0A |= _BV(WGMx0);
+        WGM_0_1_REG &= ~_BV(WGM01);
+        WGM_0_1_REG |= _BV(WGM00);
         break;
 
     case tmrcnt0_wgm_ctc_ocra_imd_max:
-        TCCR0A |= _BV(WGMx1);
-        TCCR0A &= ~_BV(WGMx0);
+        WGM_0_1_REG |= _BV(WGM01);
+        WGM_0_1_REG &= ~_BV(WGM00);
         break;
 
     case tmrcnt0_wgm_fast_pwm_ff_top_max:
-        TCCR0A |= _BV(WGMx1);
-        TCCR0A |= _BV(WGMx0);
+        WGM_0_1_REG |= _BV(WGM01);
+        WGM_0_1_REG |= _BV(WGM00);
         break;
     default:
         break;
     }
 
-    switch (prescale)
-    {
-    case tmrcnt0_clk_src_halted:
-        //We do not need to do anything since timer as been stop already
-        break;
-
-    case tmrcnt0_clk_src_clkio:
-        TCCR0A |= _BV(CS00);
-        break;
-
-    case tmrcnt0_clk_src_clkio_8:
-        TCCR0A |= _BV(CS01);
-        break;
-
-    case tmrcnt0_clk_src_clkio_64:
-        TCCR0A |= (_BV(CS01) | _BV(CS00));
-        break;
-
-    case tmrcnt0_clk_src_clkio_256:
-        TCCR0A |= _BV(CS02);
-        break;
-
-    case tmrcnt0_clk_src_clkio_1024:
-        TCCR0A |= (_BV(CS02) | _BV(CS00));
-        break;
-
-    case tmrcnt0_clk_src_ext_clk_falling_edge:
-        TCCR0A |= (_BV(CS02) | _BV(CS01));
-
-        break;
-
-    case tmrcnt0_clk_src_ext_clk_rising_edge:
-        TCCR0A |= (_BV(CS02) | _BV(CS01) | _BV(CS00));
-        break;
-
-    default:
-        break;
-
-    }
+    //Clock prescaler
+    CLK_SEL_REG |= (prescale<<CLK_SEL_REG_OFFSET);
 }
 #else
 void tmrcnt0_init(tmrcnt0_clk_select_t prescale)
 {
     /* Force timer to stop */
-    TCCR0A &= ~(_BV(CS02) | _BV(CS01) | _BV(CS00));
+    CLK_SEL_REG &= ~CLK_SEL_REG_MASK;
 
-    switch (prescale)
-    {
-    case tmrcnt0_clk_src_halted:
-        //We do not need to do anything since timer as been stop already
-        break;
-
-    case tmrcnt0_clk_src_clkio:
-        TCCR0A |= _BV(CS00);
-        break;
-
-    case tmrcnt0_clk_src_clkio_8:
-        TCCR0A |= _BV(CS01);
-        break;
-
-    case tmrcnt0_clk_src_clkio_64:
-        TCCR0A |= (_BV(CS01) | _BV(CS00));
-        break;
-
-    case tmrcnt0_clk_src_clkio_256:
-        TCCR0A |= _BV(CS02);
-        break;
-
-    case tmrcnt0_clk_src_clkio_1024:
-        TCCR0A |= (_BV(CS02) | _BV(CS00));
-        break;
-
-    case tmrcnt0_clk_src_ext_clk_falling_edge:
-        TCCR0A |= (_BV(CS02) | _BV(CS01));
-
-        break;
-
-    case tmrcnt0_clk_src_ext_clk_rising_edge:
-        TCCR0A |= (_BV(CS02) | _BV(CS01) | _BV(CS00));
-        break;
-
-    default:
-        break;
-    }
+    CLK_SEL_REG |= (prescale<<CLK_SEL_REG_OFFSET);
 }
 #endif
+
+tmrcnt_get_timer(0, 8);
+tmrcnt_set_timer(0, 8);
+
+#if defined(__AVR_ATmega8__) \
+|| defined(__AVR_ATmega128__)
+tmrcnt_overflow_int_enable(0,);
+tmrcnt_overflow_int_disable(0,);
+tmrcnt_is_overflow_int_flag_set(0,);
+#else
+tmrcnt_overflow_int_enable(0, 0);
+tmrcnt_overflow_int_disable(0, 0);
+tmrcnt_is_overflow_int_flag_set(0, 0);
+#endif
+
 
 #if defined(__AVR_AT90can32__) \
 || defined(__AVR_AT90can64__) \
 || defined(__AVR_AT90can128__) \
 || defined(__AVR_ATmega640__) \
 || defined(__AVR_ATmega1280__) \
-|| defined(__AVR_ATmega2560__)
-void tmrcnt0_set_ouput_compare_pin_mode (tmrcnt0_ouput_compare_channel_t channel, tmrcnt0_com_t mode)
-{
-    switch (channel)
-    {
-        case tmrcnt0_ouput_compare_channel_a:
-        TCCR0A &= ~(_BV(COM0A1) | _BV(COM0A0));
-        TCCR0A |= (mode << COM0A0);
-        break;
-#if defined(__AVR_ATmega640__) || defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
-        case tmrcnt0_ouput_compare_channel_b:
-        TCCR0A &= ~(_BV(COM0B1) | _BV(COM0B0));
-        TCCR0A |= (mode << COM0B0);
-        break;
-#endif /* defined(__AVR_ATmega640__) || defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__) */
-        default:
-        break;
-    }
-}
+|| defined(__AVR_ATmega1281__) \
+|| defined(__AVR_ATmega2560__) \
+|| defined(__AVR_ATmega2561__)
 
-void tmrcnt0_set_ouput_compare_pin_as_ouput (tmrcnt0_ouput_compare_channel_t channel, _Bool isOutput)
-{
-    switch (channel)
-    {
-        case tmrcnt0_ouput_compare_channel_a:
-            if(isOutput)
-            {
-                OC0A_DDR |= _BV(OC0A_BIT);
-            }
-            else
-            {
-                OC0A_DDR &= ~_BV(OC0A_BIT);
-            }
-        break;
-#if defined(__AVR_ATmega640__) || defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
-        case tmrcnt0_ouput_compare_channel_b:
-            if(isOutput)
-            {
-                OC0B_DDR |= _BV(OC0B_BIT);
-            }
-            else
-            {
-                OC0B_DDR &= ~_BV(OC0B_BIT);
-            }
-        break;
-#endif /* defined(__AVR_ATmega640__) || defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__) */
-        default:
-        break;
-    }
-}
+tmrcnt_oc_set_pin_mode(0,A,a);
 
-void timerCounterForceOuputCompare0(TimerOuputCompareChannel_Type2 channel)
-{
-    switch (channel)
-    {
-    case tmrcnt0_ouput_compare_channel_a:
-        TCCR0A |= _BV(FOC0A);
-        break;
-#if defined(__AVR_ATmega640__) || defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
-        case tmrcnt0_ouput_compare_channel_b:
-        TCCRnB |= _BV(FOCxB);
-        break;
-#endif /* defined(__AVR_ATmega640__) || defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__) */
-        default:
-        break;
-    }
-}
+tmrcnt_oc_set_pin_as_ouput(0,A,a);
+
+tmrcnt_oc_force_ouput_compare(0,A,a);
+
+tmrcnt_get_oc(0,A,a,8);
+
+tmrcnt_set_oc(0,A,a,8);
+
+tmrcnt_oc_match_int_enable(0,A,a,TIMSK_SUFIX);
+
+tmrcnt_oc_match_int_disable(0,A,a,TIMSK_SUFIX);
+
+#   if defined(__AVR_ATmega640__) \
+    || defined(__AVR_ATmega1280__) \
+    || defined(__AVR_ATmega2560__)
+tmrcnt_oc_set_pin_mode(0,B,b);
+tmrcnt_oc_set_pin_as_ouput(0,B,b);
+tmrcnt_oc_force_ouput_compare(0,B,b);
+tmrcnt_get_oc(0,B,b,8);
+tmrcnt_set_oc(0,B,b,8);
+tmrcnt_oc_match_int_enable(0,B,b, TIMSK_SUFIX);
+tmrcnt_oc_match_int_disable(0,B,b, TIMSK_SUFIX);
+#   endif /* defined(__AVR_ATmega640__) || defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__) */
 #endif
 
-uint8_t tmrcnt0_get_timer(void)
-{
-    return TCNT0;
-}
+#if defined(__AVR_ATmega128__)
+tmrcnt_oc_set_pin_mode(0,,a);
 
-void tmrcnt0_set_timer(uint8_t value)
-{
-    TCNT0 = value;
-}
+tmrcnt_oc_set_pin_as_ouput(0,,a);
 
-#if defined(__AVR_AT90can32__) \
-|| defined(__AVR_AT90can64__) \
-|| defined(__AVR_AT90can128__) \
-|| defined(__AVR_ATmega640__) \
-|| defined(__AVR_ATmega1280__) \
-|| defined(__AVR_ATmega2560__)
-uint8_t tmrcnt0_get_output_compare(tmrcnt0_ouput_compare_channel_t channel)
-{
-    uint8_t retVal = 0;
+tmrcnt_oc_force_ouput_compare(0,,a);
 
-    switch (channel)
-    {
-    case tmrcnt0_ouput_compare_channel_a:
-        retVal = OCR0A;
-        break;
-#if defined(__AVR_ATmega640__) || defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
-        case tmrcnt0_ouput_compare_channel_b:
-        retVal = OCRnB;
-        break;
-#endif /* defined(__AVR_ATmega640__) || defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__) */
-    default:
-        break;
-    }
-    return retVal;
-}
+tmrcnt_get_oc(0,,a,8);
 
-void tmrcnt0_set_output_compare(tmrcnt0_ouput_compare_channel_t channel,
-        uint8_t value)
-{
-    switch (channel)
-    {
-    case tmrcnt0_ouput_compare_channel_a:
-        OCR0A = value;
-        break;
-#if defined(__AVR_ATmega640__) || defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
-        case tmrcnt0_ouput_compare_channel_b:
-        OCRnB = value;
-        break;
-#endif /* defined(__AVR_ATmega640__) || defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__) */      
-    default:
-        break;
-    }
-}
+tmrcnt_set_oc(0,,a,8);
 
-void tmrcnt0_output_compare_match_int_enable(
-        tmrcnt0_ouput_compare_channel_t channel)
-{
-    switch (channel)
-    {
-    case tmrcnt0_ouput_compare_channel_a:
-        TIMSK0 |= _BV(OCIE0A);
-        break;
-#if defined(__AVR_ATmega640__) || defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
-        case tmrcnt0_ouput_compare_channel_b:
-        TIMSKn |= _BV(OCIExB);
-        break;
-#endif /* defined(__AVR_ATmega640__) || defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__) */
-    default:
-        break;
-    }
-}
+tmrcnt_oc_match_int_enable(0,,a,);
 
-void tmrcnt0_output_compare_match_int_disable(
-        tmrcnt0_ouput_compare_channel_t channel)
-{
-    switch (channel)
-    {
-    case tmrcnt0_ouput_compare_channel_a:
-        TIMSK0 &= ~_BV(OCIE0A);
-        break;
-#if defined(__AVR_ATmega640__) || defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
-        case tmrcnt0_ouput_compare_channel_b:
-        TIMSKn &= ~_BV(OCIExB);
-        break;
-#endif /* defined(__AVR_ATmega640__) || defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__) */
-    default:
-        break;
-    }
-}
-
-_Bool tmrcnt0_is_output_compare_match_int_flag_set(void)
-{
-    _Bool retVal = false;
-    switch (channel)
-    {
-    case tmrcnt0_ouput_compare_channel_a:
-        retVal = bit_is_set(TIFR0,OCF0A) == 0 ? false:true;
-        break;
-#if defined(__AVR_ATmega640__) || defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
-        case tmrcnt0_ouput_compare_channel_b:
-            retVal = bit_is_set(TIFR0,OCF0B) == 0 ? false:true;
-        break;
-#endif /* defined(__AVR_ATmega640__) || defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__) */
-    default:
-        break;
-    }
-    return retVal;
-}
+tmrcnt_oc_match_int_disable(0,,a,);
 #endif
-
-void tmrcnt0_enable_overflow_int(void)
-{
-    TIMSK0 |= _BV(TOIE0);
-}
-
-void tmrcnt0_disable_overflow_int(void)
-{
-    TIMSK0 &= ~_BV(TOIE0);
-}
-
-_Bool tmrcnt0_is_overflow_int_flag_set(void)
-{
-    return bit_is_set(TIFR0,TOV0) == 0 ? false:true;
-}

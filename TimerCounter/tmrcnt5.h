@@ -80,35 +80,48 @@ typedef enum tmrcnt5_com_e
     tmrcnt5_com_fast_pwm_set_oc0a_compare_match_clear_oc0a_top = 3,
 } tmrcnt5_com_t;
 
-typedef enum tmrcnt5_ouput_compare_channel_e
-{
-    tmrcnt5_ouput_compare_channel_a = 0,
-    tmrcnt5_ouput_compare_channel_b,
-    tmrcnt5_ouput_compare_channel_c
-} tmrcnt5_ouput_compare_channel_t;
-
 void tmrcnt5_init (tmrcnt5_wgm_t mode, tmrcnt5_clk_select_t prescale);
 
-void tmrcnt5_set_ouput_compare_pin_mode (tmrcnt5_ouput_compare_channel_t channel, tmrcnt5_com_t mode);
-void tmrcnt5_set_ouput_compare_pin_as_ouput (tmrcnt5_ouput_compare_channel_t channel, _Bool isOutput);
-void tmrcnt5_force_ouput_compare (tmrcnt5_ouput_compare_channel_t channel);
-
 uint16_t tmrcnt5_get_timer(void);
-void tmrcnt5_set_timer(uint16_t value);
+void tmrcnt5_set_timer(uint16_t);
 
-uint16_t tmrcnt5_get_output_compare (tmrcnt5_ouput_compare_channel_t channel);
-void tmrcnt5_set_output_compare (tmrcnt5_ouput_compare_channel_t channel, uint16_t value);
-
-uint16_t tmrcnt5_get_input_capture (void);
-
-void tmrcnt5_input_compare_match_int_enable (void);
-void tmrcnt5_input_compare_match_int_disable (void);
-
-void tmrcnt5_output_compare_match_int_enable (tmrcnt5_ouput_compare_channel_t channel);
-void tmrcnt5_output_compare_match_int_disable (tmrcnt5_ouput_compare_channel_t channel);
-
-void tmrcnt5_enable_overflow_int(void);
-void tmrcnt5_disable_overflow_int(void);
+void tmrcnt5_overflow_int_enable(void);
+void tmrcnt5_overflow_int_disable(void);
 _Bool tmrcnt5_is_overflow_int_flag_set(void);
+
+void tmrcnt5_oca_set_pin_mode(tmrcnt5_com_t mode);
+void tmrcnt5_ocb_set_pin_mode(tmrcnt5_com_t mode);
+void tmrcnt5_occ_set_pin_mode(tmrcnt5_com_t mode);
+
+#if !defined(__AVR_ATmega128RFA1__)
+void tmrcnt5_oca_set_pin_as_ouput(_Bool isOutput);
+void tmrcnt5_ocb_set_pin_as_ouput(_Bool isOutput);
+void tmrcnt5_occ_set_pin_as_ouput(_Bool isOutput);
+#endif
+
+void tmrcnt5_oca_force_ouput_compare(void);
+void tmrcnt5_ocb_force_ouput_compare(void);
+void tmrcnt5_occ_force_ouput_compare(void);
+
+uint16_t tmrcnt5_get_oca(void);
+uint16_t tmrcnt5_get_ocb(void);
+uint16_t tmrcnt5_get_occ(void);
+
+void tmrcnt5_set_oca(uint16_t value);
+void tmrcnt5_set_ocb(uint16_t value);
+void tmrcnt5_set_occ(uint16_t value);
+
+uint16_t tmrcnt5_get_ic(void);
+
+void tmrcnt5_ic_match_int_enable(void);
+void tmrcnt5_ic_match_int_disable(void);
+
+void tmrcnt5_oca_match_int_enable(void);
+void tmrcnt5_ocb_match_int_enable(void);
+void tmrcnt5_occ_match_int_enable(void);
+
+void tmrcnt5_oca_match_int_disable(void);
+void tmrcnt5_ocb_match_int_disable(void);
+void tmrcnt5_occ_match_int_disable(void);
 
 #endif /* TMR_CNT_5_H_ */

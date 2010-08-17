@@ -79,30 +79,35 @@ typedef enum tmrcnt2_com_e
     tmrcnt2_com_fast_pwm_set_oc0a_compare_match_clear_oc0a_top = 3,
 } tmrcnt2_com_t;
 
-typedef enum tmrcnt2_ouput_compare_channel_e
-{
-    tmrcnt2_ouput_compare_channel_a = 0,
-    tmrcnt2_ouput_compare_channel_b
-} tmrcnt2_ouput_compare_channel_t;
-
 void tmrcnt2_init(tmrcnt2_wgm_t wgm, tmrcnt2_clk_select_t prescale);
 void tmrcnt2_set_clk_source(tmrcnt2_clk_src_t source);
 
-void tmrcnt2_set_ouput_compare_pin_mode (tmrcnt2_ouput_compare_channel_t channel, uint8_t mode);
-void tmrcnt2_set_ouput_compare_pin_as_ouput (tmrcnt2_ouput_compare_channel_t channel, _Bool isOutput);
-void tmrcnt2_force_ouput_compare (tmrcnt2_ouput_compare_channel_t channel);
-
 uint8_t tmrcnt2_get_timer(void);
-void tmrcnt2_set_timer(uint8_t value);
+void tmrcnt2_set_timer(uint8_t);
 
-uint8_t tmrcnt2_get_output_compare (tmrcnt2_ouput_compare_channel_t channel);
-void tmrcnt2_set_output_compare (tmrcnt2_ouput_compare_channel_t channel, uint8_t value);
-
-void tmrcnt2_output_compare_match_int_enable (tmrcnt2_ouput_compare_channel_t channel);
-void tmrcnt2_output_compare_match_int_disable (tmrcnt2_ouput_compare_channel_t channel);
-
-void tmrcnt2_enable_overflow_int(void);
-void tmrcnt2_disable_overflow_int(void);
+void tmrcnt2_overflow_int_enable(void);
+void tmrcnt2_overflow_int_disable(void);
 _Bool tmrcnt2_is_overflow_int_flag_set(void);
+
+void tmrcnt2_oca_set_pin_mode(tmrcnt2_com_t mode);
+void tmrcnt2_ocb_set_pin_mode(tmrcnt2_com_t mode);
+
+void tmrcnt2_oca_set_pin_as_ouput(_Bool isOutput);
+void tmrcnt2_ocb_set_pin_as_ouput(_Bool isOutput);
+
+void tmrcnt2_oca_force_ouput_compare(void);
+void tmrcnt2_ocb_force_ouput_compare(void);
+
+uint8_t tmrcnt2_get_oca(void);
+uint8_t tmrcnt2_get_ocb(void);
+
+void tmrcnt2_set_oca(uint8_t value);
+void tmrcnt2_set_ocb(uint8_t value);
+
+void tmrcnt2_oca_match_int_enable(void);
+void tmrcnt2_ocb_match_int_enable(void);
+
+void tmrcnt2_oca_match_int_disable(void);
+void tmrcnt2_ocb_match_int_disable(void);
 
 #endif /*TMR_CNT_2_H_*/

@@ -46,17 +46,16 @@ typedef enum tmrcnt0_clk_select_e
     tmrcnt0_clk_src_ext_clk_rising_edge,
 } tmrcnt0_clk_select_t;
 
-typedef enum tmrcnt0_ouput_compare_channel_e
-{
-    tmrcnt0_ouput_compare_channel_a = 0,
-#if defined(__AVR_AT90pwm1__)
-    tmrcnt0_ouput_compare_channel_b
-#endif
-} tmrcnt0_ouput_compare_channel_t;
-
-#if defined(__AVR_AT90can32__) \
-|| defined(__AVR_AT90can64__) \
-|| defined(__AVR_AT90can128__)
+#if defined(__AVR_AT90CAN32__) \
+|| defined(__AVR_AT90CAN64__) \
+|| defined(__AVR_AT90CAN128__) \
+|| defined(__AVR_ATmega128__) \
+|| defined(__AVR_ATmega640__) \
+|| defined(__AVR_ATmega644__) \
+|| defined(__AVR_ATmega1280__) \
+|| defined(__AVR_ATmega1281__) \
+|| defined(__AVR_ATmega2561__) \
+|| defined(__AVR_ATmega2560__)
 // Name are tmrcnt0_wgm_W_X_Y_Z
 // W: mode: normal, pwm_phaze_correct, ctc, fast_pwm
 // X: TOP
@@ -68,7 +67,13 @@ typedef enum tmrcnt0_wgm_e
     tmrcnt0_wgm_pwm_phase_correct_ff_top_btm,
     tmrcnt0_wgm_ctc_ocra_imd_max,
     tmrcnt0_wgm_fast_pwm_ff_top_max,
-#if defined(__AVR_AT90pwm1__)
+#if defined(__AVR_AT90PWM1__) \
+|| defined(__AVR_ATmega640__) \
+|| defined(__AVR_ATmega644__) \
+|| defined(__AVR_ATmega1280__) \
+|| defined(__AVR_ATmega1281__) \
+|| defined(__AVR_ATmega2560__) \
+|| defined(__AVR_ATmega2561__)
     tmrcnt0_wgm_pwm_phase_correct_ocra_top_btm = 5,
     tmrcnt0_wgm_fast_pwm_ocra_top_top = 7
 #endif
@@ -90,45 +95,59 @@ typedef enum tmrcnt0_com_e
 } tmrcnt0_com_t;
 #endif
 
-#if defined(__AVR_AT90can32__) \
-|| defined(__AVR_AT90can64__) \
-|| defined(__AVR_AT90can128__) \
+#if defined(__AVR_AT90CAN32__) \
+|| defined(__AVR_AT90CAN64__) \
+|| defined(__AVR_AT90CAN128__) \
+|| defined(__AVR_ATmega128__) \
 || defined(__AVR_ATmega640__) \
 || defined(__AVR_ATmega1280__) \
-|| defined(__AVR_ATmega2560__)
-void tmrcnt0_init(tmrcnt0_wgm_t wgm, tmrcnt0_com_t com, tmrcnt0_clk_select_t prescale);
+|| defined(__AVR_ATmega1281__) \
+|| defined(__AVR_ATmega2560__) \
+|| defined(__AVR_ATmega2561__)
+void tmrcnt0_init(tmrcnt0_wgm_t wgm, tmrcnt0_clk_select_t prescale);
 #else
 void tmrcnt0_init(tmrcnt0_clk_select_t prescale);
 #endif
 
-#if defined(__AVR_AT90can32__) \
-|| defined(__AVR_AT90can64__) \
-|| defined(__AVR_AT90can128__) \
-|| defined(__AVR_ATmega640__) \
-|| defined(__AVR_ATmega1280__) \
-|| defined(__AVR_ATmega2560__)
-void tmrcnt0_set_ouput_compare_pin_mode (tmrcnt0_ouput_compare_channel_t channel, tmrcnt0_com_t mode);
-void tmrcnt0_set_ouput_compare_pin_as_ouput (tmrcnt0_ouput_compare_channel_t channel, _Bool isOutput);
-void tmrcnt0_force_ouput_compare (tmrcnt0_ouput_compare_channel_t channel);
-#endif
 
 uint8_t tmrcnt0_get_timer(void);
-void tmrcnt0_set_timer(uint8_t value);
+void tmrcnt0_set_timer(uint8_t);
 
-#if defined(__AVR_AT90can32__) \
-|| defined(__AVR_AT90can64__) \
-|| defined(__AVR_AT90can128__) \
-|| defined(__AVR_ATmega640__) \
-|| defined(__AVR_ATmega1280__) \
-|| defined(__AVR_ATmega2560__)
-uint8_t tmrcnt0_get_output_compare (tmrcnt0_ouput_compare_channel_t channel);
-void tmrcnt0_set_output_compare (tmrcnt0_ouput_compare_channel_t channel, uint8_t value);
-void tmrcnt0_output_compare_match_int_enable (tmrcnt0_ouput_compare_channel_t channel);
-void tmrcnt0_output_compare_match_int_disable (tmrcnt0_ouput_compare_channel_t channel);
-#endif
-
-void tmrcnt0_enable_overflow_int(void);
-void tmrcnt0_disable_overflow_int(void);
+void tmrcnt0_overflow_int_enable(void);
+void tmrcnt0_overflow_int_disable(void);
 _Bool tmrcnt0_is_overflow_int_flag_set(void);
+
+#if defined(__AVR_AT90CAN32__) \
+|| defined(__AVR_AT90CAN64__) \
+|| defined(__AVR_AT90CAN128__) \
+|| defined(__AVR_ATmega640__) \
+|| defined(__AVR_ATmega128__) \
+|| defined(__AVR_ATmega1280__) \
+|| defined(__AVR_ATmega1281__) \
+|| defined(__AVR_ATmega2560__) \
+|| defined(__AVR_ATmega2561__)
+
+void tmrcnt0_oca_set_pin_mode(tmrcnt0_com_t mode);
+void tmrcnt0_ocb_set_pin_mode(tmrcnt0_com_t mode);
+
+void tmrcnt0_oca_set_pin_as_ouput(_Bool isOutput);
+void tmrcnt0_ocb_set_pin_as_ouput(_Bool isOutput);
+
+void tmrcnt0_oca_force_ouput_compare(void);
+void tmrcnt0_ocb_force_ouput_compare(void);
+
+uint8_t tmrcnt0_get_oca(void);
+uint8_t tmrcnt0_get_ocb(void);
+
+void tmrcnt0_set_oca(uint8_t value);
+void tmrcnt0_set_ocb(uint8_t value);
+
+void tmrcnt0_oca_match_int_enable(void);
+void tmrcnt0_ocb_match_int_enable(void);
+
+void tmrcnt0_oca_match_int_disable(void);
+void tmrcnt0_ocb_match_int_disable(void);
+
+#endif
 
 #endif//TMR_CNT_0_H_
