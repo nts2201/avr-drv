@@ -30,7 +30,7 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 #include <avr/io.h>
-#include <avr/interrupt.h>
+#include <util/twi.h>
 
 #include "twi.h"
 #include "io_pin/io_pin.h"
