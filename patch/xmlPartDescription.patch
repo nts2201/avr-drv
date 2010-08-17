@@ -163,6 +163,30 @@ diff -u ../xmlPartDescriptionOriginal/AT90PWM3.xml ../xmlPartDescription/AT90PWM
          <TEXT/>
        </PIN32>
      </SOIC>
+diff -u ../xmlPartDescriptionOriginal/AT90S4434.xml ../xmlPartDescription/AT90S4434.xml
+--- ../xmlPartDescriptionOriginal/AT90S4434.xml	2010-02-25 10:07:24.000000000 -0500
++++ ../xmlPartDescription/AT90S4434.xml	2010-08-17 13:47:11.284069201 -0400
+@@ -725,7 +725,7 @@
+         <TEXT>MISO: Master data input, slave data output pin for SPI channel. When the SPI is enabled as a master, this pin is configured as an input regardless of the setting of DDB6. When the SPI is enabled as a slave, the data direction of this pin is controlled by DDB6. When the pin is forced to be an input, the pull-up can still be controlled by the PORTB6 bit. See the description of the SPI port for further details.</TEXT>
+       </PIN2>
+       <PIN3>
+-        <NAME>[PB7_SCK]</NAME>
++        <NAME>[PB7:SCK]</NAME>
+         <TEXT>SCK: Master clock output, slave clock input pin for SPI channel. When the SPI is enabled as a slave, this pin is configured as an input regardless of the setting of DDB7. When the SPI is enabled as a master, the data direction of this pin is con-trolled by DDB7. When the pin is forced to be an input, the pull-up can still be controlled by the PORTB7 bit. See the description of the SPI port for further details.</TEXT>
+       </PIN3>
+       <PIN4>
+diff -u ../xmlPartDescriptionOriginal/AT90S8535.xml ../xmlPartDescription/AT90S8535.xml
+--- ../xmlPartDescriptionOriginal/AT90S8535.xml	2010-02-25 10:07:24.000000000 -0500
++++ ../xmlPartDescription/AT90S8535.xml	2010-08-17 13:47:19.724068001 -0400
+@@ -729,7 +729,7 @@
+         <TEXT>MISO: Master data input, slave data output pin for SPI channel. When the SPI is enabled as a master, this pin is configured as an input regardless of the setting of DDB6. When the SPI is enabled as a slave, the data direction of this pin is controlled by DDB6. When the pin is forced to be an input, the pull-up can still be controlled by the PORTB6 bit. See the description of the SPI port for further details.</TEXT>
+       </PIN2>
+       <PIN3>
+-        <NAME>[PB7_SCK]</NAME>
++        <NAME>[PB7:SCK]</NAME>
+         <TEXT>SCK: Master clock output, slave clock input pin for SPI channel. When the SPI is enabled as a slave, this pin is configured as an input regardless of the setting of DDB7. When the SPI is enabled as a master, the data direction of this pin is con-trolled by DDB7. When the pin is forced to be an input, the pull-up can still be controlled by the PORTB7 bit. See the description of the SPI port for further details.</TEXT>
+       </PIN3>
+       <PIN4>
 diff -u ../xmlPartDescriptionOriginal/AT90USB1286.xml ../xmlPartDescription/AT90USB1286.xml
 --- ../xmlPartDescriptionOriginal/AT90USB1286.xml	2010-02-25 10:07:26.000000000 -0500
 +++ ../xmlPartDescription/AT90USB1286.xml	2010-08-15 01:04:37.154068128 -0400
@@ -1684,7 +1708,16 @@ diff -u ../xmlPartDescriptionOriginal/ATmega161.xml ../xmlPartDescription/ATmega
        <PIN42>
 diff -u ../xmlPartDescriptionOriginal/ATmega162.xml ../xmlPartDescription/ATmega162.xml
 --- ../xmlPartDescriptionOriginal/ATmega162.xml	2010-02-25 10:07:42.000000000 -0500
-+++ ../xmlPartDescription/ATmega162.xml	2010-08-15 06:30:59.694069634 -0400
++++ ../xmlPartDescription/ATmega162.xml	2010-08-17 13:47:34.737820142 -0400
+@@ -1729,7 +1729,7 @@
+         <TEXT>MISO:Master data input,slave data output pin for SPI channel.When the SPI is enabled as a master,this pin is configured as an input regardless of the setting of DDB6.When the SPI is enabled as a slave,the data direction of this pin is controlled by DDB6.When the pin is forced by the SPI to be an input,the pull-up can still be controlled by the PORTB6 bit.   </TEXT>
+       </PIN2>
+       <PIN3>
+-        <NAME>[PB7_SCK]</NAME>
++        <NAME>[PB7:SCK]</NAME>
+         <TEXT>SCK:Master clock output,slave clock input pin for SPI channel.When the SPI is enabled as a slave,this pin is configured as an input regardless of the setting of DDB7. When the SPI is enabled as a master,the data direction of this pin is controlled by DDB7.When the pin is forced by the SPI to be an input,the pull-up can still be controlled by the PORTB7 bit.      </TEXT>
+       </PIN3>
+       <PIN4>
 @@ -1737,7 +1737,7 @@
          <TEXT/>
        </PIN4>
@@ -1717,6 +1750,18 @@ diff -u ../xmlPartDescriptionOriginal/ATmega162.xml ../xmlPartDescription/ATmega
          <TEXT/>
        </PIN14>
        <PIN15>
+diff -u ../xmlPartDescriptionOriginal/ATmega163.xml ../xmlPartDescription/ATmega163.xml
+--- ../xmlPartDescriptionOriginal/ATmega163.xml	2010-02-25 10:07:42.000000000 -0500
++++ ../xmlPartDescription/ATmega163.xml	2010-08-17 13:47:41.194068096 -0400
+@@ -882,7 +882,7 @@
+         <TEXT>MISO: Master data input, slave data output pin for SPI channel. When the SPI is enabled as a master, this pin is configured as an input regardless of the setting of DDB6. When the SPI is enabled as a slave, the data direction of this pin is controlled by DDB6. When the pin is forced to be an input, the pull-up can still be controlled by the PORTB6 bit. See the description of the SPI port for further details.</TEXT>
+       </PIN2>
+       <PIN3>
+-        <NAME>[PB7_SCK]</NAME>
++        <NAME>[PB7:SCK]</NAME>
+         <TEXT>SCK: Master clock output, slave clock input pin for SPI channel. When the SPI is enabled as a slave, this pin is configured as an input regardless of the setting of DDB7. When the SPI is enabled as a master, the data direction of this pin is con-trolled by DDB7. When the pin is forced to be an input, the pull-up can still be controlled by the PORTB7 bit. See the description of the SPI port for further details.</TEXT>
+       </PIN3>
+       <PIN4>
 diff -u ../xmlPartDescriptionOriginal/ATmega164A.xml ../xmlPartDescription/ATmega164A.xml
 --- ../xmlPartDescriptionOriginal/ATmega164A.xml	2010-02-25 10:07:44.000000000 -0500
 +++ ../xmlPartDescription/ATmega164A.xml	2010-08-15 03:13:53.754069370 -0400
@@ -1855,7 +1900,16 @@ diff -u ../xmlPartDescriptionOriginal/ATmega169.xml ../xmlPartDescription/ATmega
        </PIN26>
 diff -u ../xmlPartDescriptionOriginal/ATmega16A.xml ../xmlPartDescription/ATmega16A.xml
 --- ../xmlPartDescriptionOriginal/ATmega16A.xml	2010-02-25 10:07:52.000000000 -0500
-+++ ../xmlPartDescription/ATmega16A.xml	2010-08-15 07:17:04.676568378 -0400
++++ ../xmlPartDescription/ATmega16A.xml	2010-08-17 13:47:46.824070037 -0400
+@@ -1053,7 +1053,7 @@
+         <TEXT>MISO: Master data input, slave data output pin for SPI channel. When the SPI is enabled as a master, this pin is configured as an input regardless of the setting of DDB6. When the SPI is enabled as a slave, the data direction of this pin is controlled by DDB6. When the pin is forced to be an input, the pull-up can still be controlled by the PORTB6 bit. See the description of the SPI port for further details.</TEXT>
+       </PIN2>
+       <PIN3>
+-        <NAME>[PB7_SCK]</NAME>
++        <NAME>[PB7:SCK]</NAME>
+         <TEXT>SCK: Master clock output, slave clock input pin for SPI channel. When the SPI is enabled as a slave, this pin is configured as an input regardless of the setting of DDB7. When the SPI is enabled as a master, the data direction of this pin is con-trolled by DDB7. When the pin is forced to be an input, the pull-up can still be controlled by the PORTB7 bit. See the description of the SPI port for further details.</TEXT>
+       </PIN3>
+       <PIN4>
 @@ -1201,7 +1201,7 @@
          <TEXT/>
        </PIN39>
@@ -2224,7 +2278,16 @@ diff -u ../xmlPartDescriptionOriginal/ATmega16U4.xml ../xmlPartDescription/ATmeg
      <PROG_FLASH>16384</PROG_FLASH>
 diff -u ../xmlPartDescriptionOriginal/ATmega16.xml ../xmlPartDescription/ATmega16.xml
 --- ../xmlPartDescriptionOriginal/ATmega16.xml	2010-02-25 10:07:40.000000000 -0500
-+++ ../xmlPartDescription/ATmega16.xml	2010-08-14 14:20:50.204069745 -0400
++++ ../xmlPartDescription/ATmega16.xml	2010-08-17 13:47:27.697821996 -0400
+@@ -1053,7 +1053,7 @@
+         <TEXT>MISO: Master data input, slave data output pin for SPI channel. When the SPI is enabled as a master, this pin is configured as an input regardless of the setting of DDB6. When the SPI is enabled as a slave, the data direction of this pin is controlled by DDB6. When the pin is forced to be an input, the pull-up can still be controlled by the PORTB6 bit. See the description of the SPI port for further details.</TEXT>
+       </PIN2>
+       <PIN3>
+-        <NAME>[PB7_SCK]</NAME>
++        <NAME>[PB7:SCK]</NAME>
+         <TEXT>SCK: Master clock output, slave clock input pin for SPI channel. When the SPI is enabled as a slave, this pin is configured as an input regardless of the setting of DDB7. When the SPI is enabled as a master, the data direction of this pin is con-trolled by DDB7. When the pin is forced to be an input, the pull-up can still be controlled by the PORTB7 bit. See the description of the SPI port for further details.</TEXT>
+       </PIN3>
+       <PIN4>
 @@ -1201,7 +1201,7 @@
          <TEXT/>
        </PIN39>
@@ -2258,6 +2321,18 @@ diff -u ../xmlPartDescriptionOriginal/ATmega2560.xml ../xmlPartDescription/ATmeg
          <ALT_NAME>[PE2]</ALT_NAME>
          <DESCRIPTION/>
        </PIN4>
+diff -u ../xmlPartDescriptionOriginal/ATmega323.xml ../xmlPartDescription/ATmega323.xml
+--- ../xmlPartDescriptionOriginal/ATmega323.xml	2010-02-25 10:08:00.000000000 -0500
++++ ../xmlPartDescription/ATmega323.xml	2010-08-17 13:47:52.114069699 -0400
+@@ -1051,7 +1051,7 @@
+         <TEXT>MISO: Master data input, slave data output pin for SPI channel. When the SPI is enabled as a master, this pin is configured as an input regardless of the setting of DDB6. When the SPI is enabled as a slave, the data direction of this pin is controlled by DDB6. When the pin is forced to be an input, the pull-up can still be controlled by the PORTB6 bit. See the description of the SPI port for further details.</TEXT>
+       </PIN2>
+       <PIN3>
+-        <NAME>[PB7_SCK]</NAME>
++        <NAME>[PB7:SCK]</NAME>
+         <TEXT>SCK: Master clock output, slave clock input pin for SPI channel. When the SPI is enabled as a slave, this pin is configured as an input regardless of the setting of DDB7. When the SPI is enabled as a master, the data direction of this pin is con-trolled by DDB7. When the pin is forced to be an input, the pull-up can still be controlled by the PORTB7 bit. See the description of the SPI port for further details.</TEXT>
+       </PIN3>
+       <PIN4>
 diff -u ../xmlPartDescriptionOriginal/ATmega324A.xml ../xmlPartDescription/ATmega324A.xml
 --- ../xmlPartDescriptionOriginal/ATmega324A.xml	2010-02-25 10:08:00.000000000 -0500
 +++ ../xmlPartDescription/ATmega324A.xml	2010-08-15 03:14:43.646569236 -0400
@@ -2459,6 +2534,18 @@ diff -u ../xmlPartDescriptionOriginal/ATmega329.xml ../xmlPartDescription/ATmega
          <ALT_NAME>PD1</ALT_NAME>
          <DESCRIPTION/>
        </PIN26>
+diff -u ../xmlPartDescriptionOriginal/ATmega32A.xml ../xmlPartDescription/ATmega32A.xml
+--- ../xmlPartDescriptionOriginal/ATmega32A.xml	2010-02-25 10:08:12.000000000 -0500
++++ ../xmlPartDescription/ATmega32A.xml	2010-08-17 13:48:00.144069219 -0400
+@@ -1041,7 +1041,7 @@
+         <TEXT>MISO: Master data input, slave data output pin for SPI channel. When the SPI is enabled as a master, this pin is configured as an input regardless of the setting of DDB6. When the SPI is enabled as a slave, the data direction of this pin is controlled by DDB6. When the pin is forced to be an input, the pull-up can still be controlled by the PORTB6 bit. See the description of the SPI port for further details.</TEXT>
+       </PIN2>
+       <PIN3>
+-        <NAME>[PB7_SCK]</NAME>
++        <NAME>[PB7:SCK]</NAME>
+         <TEXT>SCK: Master clock output, slave clock input pin for SPI channel. When the SPI is enabled as a slave, this pin is configured as an input regardless of the setting of DDB7. When the SPI is enabled as a master, the data direction of this pin is con-trolled by DDB7. When the pin is forced to be an input, the pull-up can still be controlled by the PORTB7 bit. See the description of the SPI port for further details.</TEXT>
+       </PIN3>
+       <PIN4>
 diff -u ../xmlPartDescriptionOriginal/ATmega32C1.xml ../xmlPartDescription/ATmega32C1.xml
 --- ../xmlPartDescriptionOriginal/ATmega32C1.xml	2010-02-25 10:08:12.000000000 -0500
 +++ ../xmlPartDescription/ATmega32C1.xml	2010-08-15 11:22:14.374069080 -0400
@@ -3145,6 +3232,18 @@ diff -u ../xmlPartDescriptionOriginal/ATmega32U6.xml ../xmlPartDescription/ATmeg
          <IO_ADDR>NA</IO_ADDR>
          <MEM_ADDR>$CC</MEM_ADDR>
          <ICON>io_com.bmp</ICON>
+diff -u ../xmlPartDescriptionOriginal/ATmega32.xml ../xmlPartDescription/ATmega32.xml
+--- ../xmlPartDescriptionOriginal/ATmega32.xml	2010-02-25 10:08:00.000000000 -0500
++++ ../xmlPartDescription/ATmega32.xml	2010-08-17 13:47:13.424070080 -0400
+@@ -1041,7 +1041,7 @@
+         <TEXT>MISO: Master data input, slave data output pin for SPI channel. When the SPI is enabled as a master, this pin is configured as an input regardless of the setting of DDB6. When the SPI is enabled as a slave, the data direction of this pin is controlled by DDB6. When the pin is forced to be an input, the pull-up can still be controlled by the PORTB6 bit. See the description of the SPI port for further details.</TEXT>
+       </PIN2>
+       <PIN3>
+-        <NAME>[PB7_SCK]</NAME>
++        <NAME>[PB7:SCK]</NAME>
+         <TEXT>SCK: Master clock output, slave clock input pin for SPI channel. When the SPI is enabled as a slave, this pin is configured as an input regardless of the setting of DDB7. When the SPI is enabled as a master, the data direction of this pin is con-trolled by DDB7. When the pin is forced to be an input, the pull-up can still be controlled by the PORTB7 bit. See the description of the SPI port for further details.</TEXT>
+       </PIN3>
+       <PIN4>
 diff -u ../xmlPartDescriptionOriginal/ATmega640.xml ../xmlPartDescription/ATmega640.xml
 --- ../xmlPartDescriptionOriginal/ATmega640.xml	2010-02-25 10:08:22.000000000 -0500
 +++ ../xmlPartDescription/ATmega640.xml	2010-08-15 07:26:32.334069414 -0400

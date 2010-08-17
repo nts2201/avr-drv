@@ -60,6 +60,11 @@
 #define MISO_PIN   PINB
 #define MISO_BIT   6
 
+#define SCK_DDR   DDRB
+#define SCK_PORT  PORTB
+#define SCK_PIN   PINB
+#define SCK_BIT   7
+
 #define RXD_DDR   DDRD
 #define RXD_PORT  PORTD
 #define RXD_PIN   PIND
