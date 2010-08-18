@@ -52,7 +52,7 @@
 #   endif
 #   define CLK_SEL_REG    TCCR0A
 #   define CLK_SEL_REG_MASK (_BV(CS02) | _BV(CS01) | _BV(CS00))
-#   define CLK_SEL_REG_OFFSET (_BV(CS00))
+#   define CLK_SEL_REG_OFFSET (CS00)
 #elif defined(__AVR_ATmega8__) \
 || defined(__AVR_ATmega128__)
 #   if ((CS02 != CS00 + 2) && (CS01 != CS00 +1))
@@ -60,14 +60,14 @@
 #   endif
 #   define CLK_SEL_REG    TCCR0
 #   define CLK_SEL_REG_MASK (_BV(CS02) | _BV(CS01) | _BV(CS00))
-#   define CLK_SEL_REG_OFFSET (_BV(CS00))
+#   define CLK_SEL_REG_OFFSET (CS00)
 #elif defined(__AVR_ATmega644__)
 #   if ((CS02 != CS00 + 2) && (CS01 != CS00 +1))
 #       error "Verify header file for CS0x"
 #   endif
 #   define CLK_SEL_REG    TCCR0B
 #   define CLK_SEL_REG_MASK (_BV(CS02) | _BV(CS01) | _BV(CS00))
-#   define CLK_SEL_REG_OFFSET (_BV(CS00))
+#   define CLK_SEL_REG_OFFSET (CS00)
 #else
 #   warning "Device need verification"
 #   if ((CS02 != CS00 + 2) && (CS01 != CS00 +1))
@@ -75,7 +75,7 @@
 #   endif
 #   define CLK_SEL_REG    TCCR0A
 #   define CLK_SEL_REG_MASK (_BV(CS02) | _BV(CS01) | _BV(CS00))
-#   define CLK_SEL_REG_OFFSET (_BV(CS00))
+#   define CLK_SEL_REG_OFFSET (CS00)
 #endif
 
 //Define Wave Generation Mode
