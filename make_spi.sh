@@ -20,13 +20,10 @@ atmega8 \
 atmega8u2 \
 atmega16 \
 atmega16a \
-atmega16hva2 \
-atmega16hvb \
 atmega16m1 \
 atmega16u4 \
 atmega32 \
 atmega32c1 \
-atmega32hvb \
 atmega32m1 \
 atmega32u2 \
 atmega32u4 \
@@ -36,13 +33,11 @@ atmega48a \
 atmega48p \
 atmega64 \
 atmega64c1 \
-atmega64hve \
 atmega64m1 \
 atmega88 \
 atmega88a \
 atmega88p \
 atmega88pa \
-atmega103 \
 atmega128 \
 atmega128rfa1 \
 atmega161 \
@@ -56,7 +51,6 @@ atmega168 \
 atmega168a \
 atmega168p \
 atmega169 \
-atmega169a \
 atmega169p \
 atmega169pa \
 atmega323 \
@@ -70,17 +64,13 @@ atmega328p \
 atmega329 \
 atmega329p \
 atmega329pa \
-atmega406 \
 atmega640 \
 atmega644 \
 atmega644a \
 atmega644p \
 atmega644pa \
 atmega645 \
-atmega645a \
-atmega645p \
 atmega649 \
-atmega649a \
 atmega649p \
 atmega1280 \
 atmega1281 \
@@ -92,41 +82,10 @@ atmega3250p \
 atmega3290 \
 atmega3290p \
 atmega6450 \
-atmega6450a \
-atmega6450p \
 atmega6490 \
-atmega6490a \
-atmega6490p \
 atmega8535 \
-attiny11 \
-attiny12 \
-attiny13 \
-attiny13a \
-attiny15 \
-attiny24 \
-attiny24a \
-attiny25 \
-attiny26 \
-attiny28 \
-attiny43u \
-attiny44 \
-attiny44a \
-attiny45 \
 attiny48 \
-attiny84 \
-attiny85 \
-attiny88 \
-attiny87 \
-attiny167 \
-attiny261 \
-attiny261a \
-attiny461 \
-attiny461a \
-attiny861 \
-attiny861a \
-attiny2313 \
-attiny2313a \
-attiny4313)
+attiny88)
 
 rm buildDir/avr-drv-spi
 for name in ${AVR_TARGET[@]}

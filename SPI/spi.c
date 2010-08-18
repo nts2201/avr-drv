@@ -43,6 +43,38 @@
 #include "spi.h"
 #include "io_pin/io_pin.h" //\TODO If avr-libc accept pin description, change me.
 
+#if defined(__AVR_AT90USB82__) \
+|| defined(__AVR_AT90USB162__) \
+|| defined(__AVR_ATmega8U2__) \
+|| defined(__AVR_ATmega16U4__) \
+|| defined(__AVR_ATmega32U2__) \
+|| defined(__AVR_ATmega32U4__)
+
+#define SCK_PORT    SCLK_PORT
+#define SCK_DDR     SCLK_DDR
+#define SCK_BIT     SCLK_BIT
+
+#endif
+
+#if defined(__AVR_ATmega324PA__)
+#define SPCR    SPCR0
+#define SPR0    SPR00
+#define SPR1    SPR10
+#define CPHA    CPHA0
+#define CPOL    CPOL0
+#define MSTR    MSTR0
+#define DORD    DORD0
+#define SPE     SPE0
+#define SPIE    SPIE0
+
+#define SPSR   SPSR0
+#define SPI2X  SPI2X0
+#define WCOL   WCOL0
+#define SPIF   SPIF0
+
+#define SPDR   SPDR0
+#endif
+
 void spi_enable(void)
 {
     SPCR |= _BV(SPE);
