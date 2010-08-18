@@ -81,9 +81,9 @@ rm buildDir/avr-drv-usart
 for name in ${AVR_TARGET[@]}
 do
   echo -n "Making USART librairy for" $name
-  mkdir -p deliver/lib/$name
-  MCU=$name OUTDIR=../deliver/lib/$name make -s -C USART clean
-  MCU=$name OUTDIR=../deliver/lib/$name make -s -k -C USART
+  mkdir -p avr-drv/lib/$name
+  MCU=$name OUTDIR=../avr-drv/lib/$name make -s -C USART clean
+  MCU=$name OUTDIR=../avr-drv/lib/$name make -s -k -C USART
   code=$?
   if (( code )); then
     echo -e '\E[31m'"\tFAIL"; tput sgr0
@@ -94,9 +94,9 @@ do
     echo "||"$name"||PASS||" | tr [:lower:] [:upper:] | sed 's/MEGA/mega/' | sed 's/TINY/tiny/' >> buildDir/avr-drv-usart
   fi
 done
-MCU=at90can128 OUTDIR=../deliver/lib/at90can128 make -s -C USART clean
-mkdir -p deliver/include
-cp -f USART/usart.h deliver/include
+MCU=at90can128 OUTDIR=../avr-drv/lib/at90can128 make -s -C USART clean
+mkdir -p avr-drv/include
+cp -f USART/usart.h avr-drv/include
 
 echo -n "PASS" `grep -c PASS buildDir/avr-drv-usart`
 echo " FAIL" `grep -c FAIL buildDir/avr-drv-usart`
