@@ -37,118 +37,95 @@
 
 #include <stdbool.h>
 #include <stdint.h>
+#include <avr/io.h>
 
 #include "avr-drv-errno.h"
 #include "spi.h"
-#include "spiDef.h"
 #include "io_pin/io_pin.h" //\TODO If avr-libc accept pin description, change me.
-void spi_enable(_Bool isEnable)
+
+void spi_enable(void)
 {
-    if (false == isEnable)
-    {
-        SPCR |= _BV(SPE);
-    }
-    else
-    {
-        SPCR &= ~_BV(SPE);
-    }
+    SPCR |= _BV(SPE);
 }
 
-void spi_enable_int(_Bool isEnable)
+void spi_disable(void)
 {
-    if (true == isEnable)
-    {
-        SPCR |= (1 << SPIE);
-    }
-    else
-    {
-        SPCR &= ~(1 << SPIE);
-    }
+    SPCR &= ~_BV(SPE);
 }
 
-int spi_init(_Bool isMsb, SPI_MasterSlave_t masterSlaveMode, SPI_Mode_t mode,
-        SPI_Prescaler_t scaler)
+void spi_int_enable(void)
 {
-    spiSetMsbLsb(isMsb);
-    if (0 != spiSetMasterSlave(masterSlaveMode))
-    {
-        return -1;
-    }
-    if (0 != spiSetPrescaler(scaler))
-    {
-        return -1;
-    }
-    if (0 != spiSetMode(mode))
-    {
-        return -1;
-    }
-
-    spiEnable(true);
-
-    return 0;
+    SPCR |= (1 << SPIE);
 }
 
-int spi_set_master_slave(SPI_MasterSlave_t mode)
+void spi_int_disable(void)
+{
+    SPCR &= ~(1 << SPIE);
+}
+
+void spi_init(_Bool isMsb, spi_op_mode_t opMode, spi_mode_t mode,
+        spi_prescaler_t scaler)
+{
+    spi_set_msb_lsb(isMsb);
+    spi_set_operation_mode(opMode);
+    spi_set_prescaler(scaler);
+    spi_set_mode(mode);
+    spi_enable();
+}
+
+void spi_set_operation_mode(spi_op_mode_t mode)
 {
     switch (mode)
     {
-    case SPI_SingleMaster:
-        PORT_SCK |= (1 << SCK_IDX); // set SCK hi
+    case spi_op_mode_single_master:
+        SCK_PORT |= (1 << SCK_BIT); // set SCK hi
         //MOSI & SCK as output
-        DDR_SCK |= (1 << SCK_IDX);
-        DDR_MOSI |= (1 << MOSI_IDX);
-        DDR_SS |= (1 << SS_IDX); // SS as output, will prevent fallback to slave
+        SCK_DDR |= (1 << SCK_BIT);
+        MOSI_DDR |= (1 << MOSI_BIT);
+        SS_DDR |= (1 << SS_BIT); // SS as output, will prevent fallback to slave
         SPCR |= (1 << MSTR);
         break;
-    case SPI_MultiMaster:
-        PORT_SCK |= (1 << SCK_IDX); // set SCK hi
+    case spi_op_mode_multi_mMaster:
+        SCK_PORT |= (1 << SCK_BIT); // set SCK hi
         //MOSI & SCK as output
-        DDR_SCK |= (1 << SCK_IDX);
-        DDR_MOSI |= (1 << MOSI_IDX);
-        DDR_SS &= ~_BV(SS_IDX); // SS as input
-        PORT_SS |= _BV(SS_IDX); // Activate pull-up on SS
+        SCK_DDR |= (1 << SCK_BIT);
+        MOSI_DDR |= (1 << MOSI_BIT);
+        SS_DDR &= ~_BV(SS_BIT); // SS as input
+        SS_PORT |= _BV(SS_BIT); // Activate pull-up on SS
         SPCR |= (1 << MSTR);
         break;
-    case SPI_Slave:
-        DDR_SS &= ~_BV(SS_IDX); // SS as input
-        PORT_SS |= _BV(SS_IDX); // Activate pull-up on SS
-        DDR_MISO |= (1 << MISO_IDX); //set MISO as output
+    case spi_op_mode_slave:
+        SS_DDR &= ~_BV(SS_BIT); // SS as input
+        SS_PORT |= _BV(SS_BIT); // Activate pull-up on SS
+        MISO_DDR |= (1 << MISO_BIT); //set MISO as output
         SPCR &= ~(1 << MSTR);
         break;
     default:
-        errno = EINVAL;
-        return -1;
         break;
     }
-
-    return 0;
 }
 
-int spi_set_mode(SPI_Mode_t mode)
+void spi_set_mode(spi_mode_t mode)
 {
     switch (mode)
     {
-    case SPI_Mode_0:
+    case spi_mode_0:
         SPCR &= ~((1 << CPOL) | (1 << CPHA));
         break;
-    case SPI_Mode_1:
+    case spi_mode_1:
         SPCR &= ~(1 << CPOL);
         SPCR |= (1 << CPHA);
         break;
-    case SPI_Mode_2:
+    case spi_mode_2:
         SPCR |= (1 << CPOL);
         SPCR &= ~(1 << CPHA);
         break;
-    case SPI_Mode_3:
+    case spi_mode_3:
         SPCR |= ((1 << CPOL) | (1 << CPHA));
         break;
     default:
-        errno = EINVAL;
-        return -1;
         break;
     }
-
-    return 0;
 }
 
 void spi_set_msb_lsb(_Bool isMsb)
@@ -163,38 +140,38 @@ void spi_set_msb_lsb(_Bool isMsb)
     }
 }
 
-int spi_set_prescaler(SPI_Prescaler_t scaler)
+void spi_set_prescaler(spi_prescaler_t scaler)
 {
     switch (scaler)
     {
-    case SPI_OSCCLK_DIV4:
+    case spi_prescaler_4:
         SPCR &= ~((1 << SPR1) | (1 << SPR0));
         SPSR &= ~(1 << SPI2X);
         break;
-    case SPI_OSCCLK_DIV16:
+    case spi_prescaler_16:
         SPCR |= (1 << SPR0);
         SPCR &= ~(1 << SPR1);
         SPSR &= ~(1 << SPI2X);
         break;
-    case SPI_OSCCLK_DIV64:
+    case spi_prescaler_64:
         SPCR &= ~(1 << SPR0);
         SPCR |= (1 << SPR1);
         SPSR &= ~(1 << SPI2X);
         break;
-    case SPI_OSCCLK_DIV128:
+    case spi_prescaler_128:
         SPCR |= ((1 << SPR1) | (1 << SPR0));
         SPSR &= ~(1 << SPI2X);
         break;
-    case SPI_OSCCLK_DIV2:
+    case spi_prescaler_2:
         SPCR &= ~((1 << SPR1) | (1 << SPR0));
         SPSR |= (1 << SPI2X);
         break;
-    case SPI_OSCCLK_DIV8:
+    case spi_prescaler_8:
         SPCR |= (1 << SPR0);
         SPCR &= ~(1 << SPR1);
         SPSR |= (1 << SPI2X);
         break;
-    case SPI_OSCCLK_DIV32:
+    case spi_prescaler_32:
         SPCR &= ~(1 << SPR0);
         SPCR |= (1 << SPR1);
         SPSR |= (1 << SPI2X);
@@ -205,18 +182,15 @@ int spi_set_prescaler(SPI_Prescaler_t scaler)
          break;
          */
     default:
-        errno = EINVAL;
-        return -1;
         break;
     }
-    return 0;
 }
 
 void spi_transfer(uint8_t ubDataOut, uint8_t *pubDataIn)
 {
     SPDR = ubDataOut;
 
-    loop_while_bit_is_clear(SPSR, SPIF);
+    loop_until_bit_is_set(SPSR, SPIF);
 
     if (pubDataIn != (void*) 0)
     {

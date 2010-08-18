@@ -70,19 +70,25 @@ typedef enum spi_prescaler_e
     spi_prescaler_128 /*!< OSCCLK/128 */
 } spi_prescaler_t;
 
-/*! \fn void spi_enable(_Bool isEnable)
- *  \brief Enable or disable SPI block.
- *
- *  \param  isEnable \c true to enable module, \c false to disable it.
+/*! \fn void spi_enable(void)
+ *  \brief Enable SPI block.
  */
-void spi_enable(_Bool isEnable);
+void spi_enable(void);
 
-/*! \fn void spi_enable_int(_Bool isEnable)
- *  \brief Enable or disable interrupt for SPI block.
- *
- *  \param  isEnable \c true to enable interrupt, \c false to disable it.
+/*! \fn void spi_disable(void)
+ *  \brief Disable SPI block.
  */
-void spi_enable_int(_Bool isEnable);
+void spi_disable(void);
+
+/*! \fn void spi_int_enable(void)
+ *  \brief Enable interrupt for SPI block.
+ */
+void spi_int_enable(void);
+
+/*! \fn void spi_int_disable(void)
+ *  \brief Disable interrupt for SPI block.
+ */
+void spi_int_disable(void);
 
 /*! \fn void spi_init(_Bool isMsb, spi_op_mode_t masterSlaveMode, spi_mode_t mode, spi_prescaler_t scaler)
  *  \brief  Configure the SPI port.
@@ -123,15 +129,12 @@ void spi_set_msb_lsb(_Bool isMsb);
  */
 void spi_set_prescaler(spi_prescaler_t scaler);
 
-/*! \fn int spi_transfer(uint8_t ubDataOut, uint8_t *pubDataIn)
+/*! \fn void spi_transfer(uint8_t ubDataOut, uint8_t *pubDataIn)
  *  \brief  Send byte over SPI bus.
  *  \param  ubDataOut Data to be send.
  *  \param  pubDataIn Pointer to 8 bit data space.  Red value will be saved at specified address.
- *  \return 0 if successful or -1 on error, see errno.\n
- *  #EINVAL Invalid argument.\n
- *  #ETXDISABLED SPI module is not enabled.
  */
-int spi_transfer(uint8_t ubDataOut, uint8_t *pubDataIn);
+void spi_transfer(uint8_t ubDataOut, uint8_t *pubDataIn);
 
 /*! \fn void spi_transferISR(uint8_t ubDataOut, uint8_t *pubDataIn)
  *  \brief Start a new byte transfer and get last byte in, use only in ISR function.
