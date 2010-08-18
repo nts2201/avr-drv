@@ -3,16 +3,6 @@
 AVR_TARGET=(at90can32 \
 at90can64 \
 at90can128 \
-at90pwm1 \
-at90pwm2 \
-at90pwm2b \
-at90pwm3 \
-at90pwm3b \
-at90pwm81 \
-at90pwm216 \
-at90pwm316 \
-at90usb82 \
-at90usb162 \
 at90usb646 \
 at90usb647 \
 at90usb1286 \
@@ -99,41 +89,12 @@ atmega6450p \
 atmega6490 \
 atmega6490a \
 atmega6490p \
-atmega8535 \
-attiny11 \
-attiny12 \
-attiny13 \
-attiny13a \
-attiny15 \
-attiny24 \
-attiny24a \
-attiny25 \
-attiny26 \
-attiny28 \
-attiny43u \
-attiny44 \
-attiny44a \
-attiny45 \
-attiny48 \
-attiny84 \
-attiny85 \
-attiny88 \
-attiny87 \
-attiny167 \
-attiny261 \
-attiny261a \
-attiny461 \
-attiny461a \
-attiny861 \
-attiny861a \
-attiny2313 \
-attiny2313a \
-attiny4313)
+atmega8535)
 
 rm buildDir/avr-drv-tmrcnt2
 for name in ${AVR_TARGET[@]}
 do
-  echo -n "Making Timer/Counter 0 librairy for" $name
+  echo -n "Making Timer/Counter 2 librairy for" $name
   mkdir -p avr-drv/lib/$name
   MCU=$name OUTDIR=../avr-drv/lib/$name TARGET=tmrcnt2 make -s -C TimerCounter clean
   MCU=$name OUTDIR=../avr-drv/lib/$name TARGET=tmrcnt2 make -s -k -C TimerCounter

@@ -38,61 +38,13 @@
 #include "tmrcnt2.h"
 #include "tmrcntCommon.h"
 
-void tmrcnt2_init(tmrcnt2_wgm_t wgm, tmrcnt2_clk_select_t prescale)
-{
-  // Force timer to stop
-  TCCR2B &= ~((1 << CS22) | (1 << CS21) | (1 << CS20));
 
-  switch (wgm)
-    {
-    case tmrcnt2_wgm_normal_ff_imd_max:
-      TCCR2B &= ~(1 << WGM22);
-      TCCR2A &= ~((1 << WGM21) | (1 << WGM20));
-      break;
+tmrcnt_init_7(2, TCCR2B, ((1 << CS22) | (1 << CS21) | (1 << CS20)), CS20, TCCR2A, TCCR2B);
 
-    case tmrcnt2_wgm_pwm_phase_correct_ff_top_btm:
-      TCCR2B &= ~(1 << WGM22);
-      TCCR2A &= ~(1 << WGM21);
-      TCCR2A |=  (1 << WGM20);
-      break;
-
-    case tmrcnt2_wgm_ctc_ocra_imd_max:
-      TCCR2B &= ~(1 << WGM22);
-      TCCR2A |=  (1 << WGM21);
-      TCCR2A &= ~(1 << WGM20);
-      break;
-
-    case tmrcnt2_wgm_fast_pwm_ff_top_max:
-      TCCR2B &= ~(1 << WGM22);
-      TCCR2A |=  (1 << WGM21);
-      TCCR2A |=  (1 << WGM20);
-      break;
-
-    case tmrcnt2_wgm_pwm_phase_correct_ocra_top_btm:
-      TCCR2B |=  (1 << WGM22);
-      TCCR2A &= ~(1 << WGM21);
-      TCCR2A |=  (1 << WGM20);
-      break;
-
-    case tmrcnt2_wgm_fast_pwm_ocra_top_top:
-      TCCR2B |= (1 << WGM22);
-      TCCR2A |= ((1 << WGM21) | (1 << WGM20));
-      break;
-
-    default:
-      break;
-    }
-
-#if !(CS22 == (CS20 + 2) && CS21 == (CS20 + 1))
-#   error "tmrcnt2_init needs to be rewritten for this device"
-#endif
-  TCCR2B |= (prescale << CS20);
-
-}
 
 void tmrcnt2_set_clk_source(tmrcnt2_clk_src_t source)
 {
-    ASSR &= ~((1 << EXCLK) | (1 << AS2));
+    ASSR &= ~(_BV(EXCLK) | _BV(AS2));
 
     switch (source)
     {
@@ -100,11 +52,12 @@ void tmrcnt2_set_clk_source(tmrcnt2_clk_src_t source)
         break;
 
     case tmrcnt2_clk_src_ExtClk:
-        ASSR |= (1 << EXCLK);
+        ASSR |= _BV(EXCLK);
         break;
 
     case tmrcnt2_clk_src_ExtOsc:
-        ASSR |= (1 << EXCLK) | (1 << AS2);
+        ASSR |= _BV(EXCLK);
+        ASSR |= _BV(AS2);
         break;
 
     default:

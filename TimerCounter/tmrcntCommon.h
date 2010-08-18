@@ -136,6 +136,87 @@
     TCCR##id##B |= (prescale << CS##id##0); \
 }
 
+#define tmrcnt_init_3(id, clkSelReg, clkSelRegMask, clkSelOffset, wgm_0_1_reg) void tmrcnt##id##_init(tmrcnt##id##_wgm_t wgm, tmrcnt##id##_clk_select_t prescale) \
+{ \
+    clkSelReg &= ~clkSelRegMask; \
+\
+    switch (wgm) \
+    { \
+    case tmrcnt##id##_wgm_normal_ff_imd_max: \
+        wgm_0_1_reg &= ~(_BV(WGM##id##1) | _BV(WGM##id##0)); \
+        break; \
+\
+    case tmrcnt##id##_wgm_pwm_phase_correct_ff_top_btm: \
+        wgm_0_1_reg &= ~_BV(WGM##id##1); \
+        wgm_0_1_reg |= _BV(WGM##id##0); \
+        break; \
+\
+    case tmrcnt##id##_wgm_ctc_ocra_imd_max: \
+        wgm_0_1_reg |= _BV(WGM##id##1); \
+        wgm_0_1_reg &= ~_BV(WGM##id##0); \
+        break; \
+\
+    case tmrcnt##id##_wgm_fast_pwm_ff_top_max: \
+        wgm_0_1_reg |= _BV(WGM##id##1); \
+        wgm_0_1_reg |= _BV(WGM##id##0); \
+        break; \
+\
+    default: \
+        break;\
+    } \
+ \
+    clkSelReg |= (prescale<<clkSelOffset); \
+}
+
+
+#define tmrcnt_init_7(id, clkSelReg, clkSelRegMask, clkSelOffset, wgm_0_1_reg, wgm_2_reg) void tmrcnt##id##_init(tmrcnt##id##_wgm_t wgm, tmrcnt##id##_clk_select_t prescale) \
+{ \
+    clkSelReg &= ~clkSelRegMask; \
+\
+    switch (wgm) \
+    { \
+    case tmrcnt##id##_wgm_normal_ff_imd_max: \
+        wgm_0_1_reg &= ~(_BV(WGM##id##1) | _BV(WGM##id##0)); \
+        wgm_2_reg &= ~_BV(WGM##id##2); \
+        break; \
+\
+    case tmrcnt##id##_wgm_pwm_phase_correct_ff_top_btm: \
+        wgm_0_1_reg &= ~_BV(WGM##id##1); \
+        wgm_0_1_reg |= _BV(WGM##id##0); \
+        wgm_2_reg &= ~_BV(WGM##id##2); \
+        break; \
+\
+    case tmrcnt##id##_wgm_ctc_ocra_imd_max: \
+        wgm_0_1_reg |= _BV(WGM##id##1); \
+        wgm_0_1_reg &= ~_BV(WGM##id##0); \
+        wgm_2_reg &= ~_BV(WGM##id##2); \
+        break; \
+\
+    case tmrcnt##id##_wgm_fast_pwm_ff_top_max: \
+        wgm_0_1_reg |= _BV(WGM##id##1); \
+        wgm_0_1_reg |= _BV(WGM##id##0); \
+        wgm_2_reg &= ~_BV(WGM##id##2); \
+        break; \
+\
+    case tmrcnt##id##_wgm_pwm_phase_correct_ocra_top_btm: \
+        wgm_0_1_reg &= ~_BV(WGM##id##1); \
+        wgm_0_1_reg |= _BV(WGM##id##0); \
+        wgm_2_reg |= _BV(WGM##id##2); \
+        break; \
+\
+    case tmrcnt##id##_wgm_fast_pwm_ocra_top_top: \
+        wgm_0_1_reg |= _BV(WGM##id##1); \
+        wgm_0_1_reg |= _BV(WGM##id##0); \
+        wgm_2_reg |= _BV(WGM##id##2); \
+        break; \
+\
+    default: \
+        break; \
+    } \
+ \
+    clkSelReg |= (prescale<<clkSelOffset); \
+}
+
 #define tmrcnt_get_timer(id, size); uint##size##_t tmrcnt##id##_get_timer(void) \
 { \
     return (TCNT##id); \
