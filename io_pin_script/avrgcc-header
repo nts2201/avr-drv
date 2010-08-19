@@ -182,9 +182,10 @@ if test -n $PACKAGE_SELECTED ; then
         # Check for NAME tag.
         NAME=$(xml sel -T -t -m /AVRPART/PACKAGE/$PACKAGE_SELECTED/${i}/NAME -v . -o ' ' $devicefile | sed "s,\r,,g")
         if test $NAME ; then
-            # Get list of mappings. Inside brackets, colon delimited. The first one in the list is the target information.
-            TARGET=$(echo $NAME | cut -d '[' -f 2 | cut -d ']' -f 1 | cut -d ':' -f 1 --output-delimiter=' ')
-            MAP_LIST=$(echo $NAME | cut -d '[' -f 2 | cut -d ']' -f 1 | cut -d ':' -f 2- --output-delimiter=' ')
+            # Get list of mappings. Inside brackets, colon delimited. The first one in the list is usually the target information.
+            TARGET=$(echo $NAME | sed -n -e "s/.*\(P[A-L][0-7]\).*/\1/p")
+            MAP_LIST=$(echo $NAME | cut -d '[' -f 2 | cut -d ']' -f 1 | cut -d ':' -f 1- --output-delimiter=' ')
+            MAP_LIST=$(echo $MAP_LIST | sed "s,${TARGET},,g")
         else
             # Check for PIN_NAME and ALT_NAME tags.
             PIN_NAME=$(xml sel -T -t -m /AVRPART/PACKAGE/$PACKAGE_SELECTED/${i}/PIN_NAME -v . -o ' ' $devicefile | sed "s,\r,,g")
@@ -217,7 +218,7 @@ if test -n $PACKAGE_SELECTED ; then
         fi
 
         # Destroy invalid target
-        if [[ "$TARGET" != P[A-Z][0-9] ]]; then
+        if [[ "$TARGET" != P[A-L][0-7] ]]; then
             TARGET=""
         fi
 
@@ -232,10 +233,15 @@ if test -n $PACKAGE_SELECTED ; then
             MAP_LIST=$(echo $MAP_LIST | sed "s,${REMOVELIST},,g")
 
             # Make transformations on map list.
-            #     Remove active low character signified by single quote
             #     Replace '+' with "_P"
             #     Replace '-' with "_N"
-            MAP_LIST=$(echo $MAP_LIST | sed "s,',,g" | sed "s,+,_P,g" | sed "s,-,_N,g")
+            MAP_LIST=$(echo $MAP_LIST | sed "s,+,_P,g" | sed "s,-,_N,g")
+
+            #Some device have OC4A and 'OC4A, we can't simply remove the leading "'"
+            MAP_LIST=$(echo $MAP_LIST | sed "s,'OC,INV_OC,g")
+
+            #Remove remaining unwanted leading "'"
+            MAP_LIST=$(echo $MAP_LIST | sed "s,',,g")
 
             TARGET_LETTER=$(echo $TARGET | sed "s,^P,,g" | sed "s,[0-9]$,,g")
             TARGET_NUMBER=$(echo $TARGET | sed "s,^P[A-Z],,g")
