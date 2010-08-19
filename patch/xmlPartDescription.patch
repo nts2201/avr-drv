@@ -1636,6 +1636,18 @@ diff -u ../xmlPartDescriptionOriginal/ATmega1284.xml ../xmlPartDescription/ATmeg
          <TEXT>T0, Timer/Counter0 counter source. See the timer description for further details. XCK, USART external clock. See the USART description for further details.</TEXT>
        </PIN40>
        <PIN41>
+diff -u ../xmlPartDescriptionOriginal/ATmega128RFA1.xml ../xmlPartDescription/ATmega128RFA1.xml
+--- ../xmlPartDescriptionOriginal/ATmega128RFA1.xml	2010-02-25 10:07:40.000000000 -0500
++++ ../xmlPartDescription/ATmega128RFA1.xml	2010-08-18 17:01:02.685320030 -0400
+@@ -613,7 +613,7 @@
+         <TEXT>Digital ground supply (IO)</TEXT>
+       </PIN35>
+       <PIN36>
+-        <NAME>[PB0:SSN:PCINT0]</NAME>
++        <NAME>[PB0:'SS:PCINT0]</NAME>
+         <TEXT>SSN: Slave port select input. When the SPI is enabled as a slave, this pin is configured as an input regardless of the setting of DDB0. As a slave, the SPI is activated when this pin is driven low. When the SPI is enabled as a master, the data direction of this pin is controlled by DDB0. When the pin is forced to be an input, the pull-up can still be controlled by the PORTB0 bit.</TEXT>
+       </PIN36>
+       <PIN37>
 diff -u ../xmlPartDescriptionOriginal/ATmega161comp.xml ../xmlPartDescription/ATmega161comp.xml
 --- ../xmlPartDescriptionOriginal/ATmega161comp.xml	2010-02-25 10:07:42.000000000 -0500
 +++ ../xmlPartDescription/ATmega161comp.xml	2010-08-15 06:47:01.134069480 -0400
@@ -1846,7 +1858,25 @@ diff -u ../xmlPartDescriptionOriginal/ATmega164P.xml ../xmlPartDescription/ATmeg
        <PIN41>
 diff -u ../xmlPartDescriptionOriginal/ATmega169PA.xml ../xmlPartDescription/ATmega169PA.xml
 --- ../xmlPartDescriptionOriginal/ATmega169PA.xml	2010-02-25 10:07:52.000000000 -0500
-+++ ../xmlPartDescription/ATmega169PA.xml	2010-08-15 06:25:52.886567840 -0400
++++ ../xmlPartDescription/ATmega169PA.xml	2010-08-18 13:33:58.096570287 -0400
+@@ -1431,7 +1431,7 @@
+         <DESCRIPTION/>
+       </PIN13>
+       <PIN14>
+-        <PIN_NAME>[OC0:PCINT12]</PIN_NAME>
++        <PIN_NAME>[OC0A:PCINT12]</PIN_NAME>
+         <ALT_NAME>PB4</ALT_NAME>
+         <DESCRIPTION/>
+       </PIN14>
+@@ -1446,7 +1446,7 @@
+         <DESCRIPTION/>
+       </PIN16>
+       <PIN17>
+-        <PIN_NAME>[OC2:PCINT15]</PIN_NAME>
++        <PIN_NAME>[OC2A:PCINT15]</PIN_NAME>
+         <ALT_NAME>PB7</ALT_NAME>
+         <DESCRIPTION/>
+       </PIN17>
 @@ -1486,12 +1486,12 @@
          <DESCRIPTION/>
        </PIN24>
@@ -1864,7 +1894,25 @@ diff -u ../xmlPartDescriptionOriginal/ATmega169PA.xml ../xmlPartDescription/ATme
        </PIN26>
 diff -u ../xmlPartDescriptionOriginal/ATmega169P.xml ../xmlPartDescription/ATmega169P.xml
 --- ../xmlPartDescriptionOriginal/ATmega169P.xml	2010-02-25 10:07:50.000000000 -0500
-+++ ../xmlPartDescription/ATmega169P.xml	2010-08-15 06:25:40.604068743 -0400
++++ ../xmlPartDescription/ATmega169P.xml	2010-08-18 13:33:45.894070018 -0400
+@@ -1429,7 +1429,7 @@
+         <DESCRIPTION/>
+       </PIN13>
+       <PIN14>
+-        <PIN_NAME>[OC0:PCINT12]</PIN_NAME>
++        <PIN_NAME>[OC0A:PCINT12]</PIN_NAME>
+         <ALT_NAME>PB4</ALT_NAME>
+         <DESCRIPTION/>
+       </PIN14>
+@@ -1444,7 +1444,7 @@
+         <DESCRIPTION/>
+       </PIN16>
+       <PIN17>
+-        <PIN_NAME>[OC2:PCINT15]</PIN_NAME>
++        <PIN_NAME>[OC2A:PCINT15]</PIN_NAME>
+         <ALT_NAME>PB7</ALT_NAME>
+         <DESCRIPTION/>
+       </PIN17>
 @@ -1484,12 +1484,12 @@
          <DESCRIPTION/>
        </PIN24>
@@ -1882,7 +1930,25 @@ diff -u ../xmlPartDescriptionOriginal/ATmega169P.xml ../xmlPartDescription/ATmeg
        </PIN26>
 diff -u ../xmlPartDescriptionOriginal/ATmega169.xml ../xmlPartDescription/ATmega169.xml
 --- ../xmlPartDescriptionOriginal/ATmega169.xml	2010-02-25 10:07:50.000000000 -0500
-+++ ../xmlPartDescription/ATmega169.xml	2010-08-15 06:25:17.284070861 -0400
++++ ../xmlPartDescription/ATmega169.xml	2010-08-18 13:33:18.255320569 -0400
+@@ -1441,7 +1441,7 @@
+         <DESCRIPTION/>
+       </PIN13>
+       <PIN14>
+-        <PIN_NAME>[OC0:PCINT12]</PIN_NAME>
++        <PIN_NAME>[OC0A:PCINT12]</PIN_NAME>
+         <ALT_NAME>PB4</ALT_NAME>
+         <DESCRIPTION/>
+       </PIN14>
+@@ -1456,7 +1456,7 @@
+         <DESCRIPTION/>
+       </PIN16>
+       <PIN17>
+-        <PIN_NAME>[OC2:PCINT15]</PIN_NAME>
++        <PIN_NAME>[OC2A:PCINT15]</PIN_NAME>
+         <ALT_NAME>PB7</ALT_NAME>
+         <DESCRIPTION/>
+       </PIN17>
 @@ -1496,12 +1496,12 @@
          <DESCRIPTION/>
        </PIN24>
@@ -1900,7 +1966,7 @@ diff -u ../xmlPartDescriptionOriginal/ATmega169.xml ../xmlPartDescription/ATmega
        </PIN26>
 diff -u ../xmlPartDescriptionOriginal/ATmega16A.xml ../xmlPartDescription/ATmega16A.xml
 --- ../xmlPartDescriptionOriginal/ATmega16A.xml	2010-02-25 10:07:52.000000000 -0500
-+++ ../xmlPartDescription/ATmega16A.xml	2010-08-17 13:47:46.824070037 -0400
++++ ../xmlPartDescription/ATmega16A.xml	2010-08-17 22:22:20.637818301 -0400
 @@ -1053,7 +1053,7 @@
          <TEXT>MISO: Master data input, slave data output pin for SPI channel. When the SPI is enabled as a master, this pin is configured as an input regardless of the setting of DDB6. When the SPI is enabled as a slave, the data direction of this pin is controlled by DDB6. When the pin is forced to be an input, the pull-up can still be controlled by the PORTB6 bit. See the description of the SPI port for further details.</TEXT>
        </PIN2>
@@ -1919,6 +1985,15 @@ diff -u ../xmlPartDescriptionOriginal/ATmega16A.xml ../xmlPartDescription/ATmega
          <TEXT>T0: Timer/Counter0 counter source. See the timer description for further details.</TEXT>
        </PIN40>
        <PIN41>
+@@ -1213,7 +1213,7 @@
+         <TEXT>AIN0: Analog Comparator Positive Input. When configured as an input (DDB2 is cleared [zero]) and with the internal MOS pull-up resistor switched off (PB2 is cleared [zero]), this pin also serves as the positive input of the on-chip Analog Comparator.</TEXT>
+       </PIN42>
+       <PIN43>
+-        <NAME>[PB3:AIN1]</NAME>
++        <NAME>[PB3:AIN1:OC0]</NAME>
+         <TEXT>AIN1: Analog Comparator Negative Input. When configured as an input (DDB3 is cleared [zero]) and with the internal MOS pull-up resistor switched off (PB3 is cleared [zero]), this pin also serves as the negative input of the on-chip Analog Comparator.</TEXT>
+       </PIN43>
+       <PIN44>
 diff -u ../xmlPartDescriptionOriginal/ATmega16M1.xml ../xmlPartDescription/ATmega16M1.xml
 --- ../xmlPartDescriptionOriginal/ATmega16M1.xml	2010-02-25 10:07:56.000000000 -0500
 +++ ../xmlPartDescription/ATmega16M1.xml	2010-08-15 11:21:39.546568789 -0400
@@ -2278,7 +2353,7 @@ diff -u ../xmlPartDescriptionOriginal/ATmega16U4.xml ../xmlPartDescription/ATmeg
      <PROG_FLASH>16384</PROG_FLASH>
 diff -u ../xmlPartDescriptionOriginal/ATmega16.xml ../xmlPartDescription/ATmega16.xml
 --- ../xmlPartDescriptionOriginal/ATmega16.xml	2010-02-25 10:07:40.000000000 -0500
-+++ ../xmlPartDescription/ATmega16.xml	2010-08-17 13:47:27.697821996 -0400
++++ ../xmlPartDescription/ATmega16.xml	2010-08-17 22:21:47.954069996 -0400
 @@ -1053,7 +1053,7 @@
          <TEXT>MISO: Master data input, slave data output pin for SPI channel. When the SPI is enabled as a master, this pin is configured as an input regardless of the setting of DDB6. When the SPI is enabled as a slave, the data direction of this pin is controlled by DDB6. When the pin is forced to be an input, the pull-up can still be controlled by the PORTB6 bit. See the description of the SPI port for further details.</TEXT>
        </PIN2>
@@ -2297,6 +2372,15 @@ diff -u ../xmlPartDescriptionOriginal/ATmega16.xml ../xmlPartDescription/ATmega1
          <TEXT>T0: Timer/Counter0 counter source. See the timer description for further details.</TEXT>
        </PIN40>
        <PIN41>
+@@ -1213,7 +1213,7 @@
+         <TEXT>AIN0: Analog Comparator Positive Input. When configured as an input (DDB2 is cleared [zero]) and with the internal MOS pull-up resistor switched off (PB2 is cleared [zero]), this pin also serves as the positive input of the on-chip Analog Comparator.</TEXT>
+       </PIN42>
+       <PIN43>
+-        <NAME>[PB3:AIN1]</NAME>
++        <NAME>[PB3:AIN1:OC0]</NAME>
+         <TEXT>AIN1: Analog Comparator Negative Input. When configured as an input (DDB3 is cleared [zero]) and with the internal MOS pull-up resistor switched off (PB3 is cleared [zero]), this pin also serves as the negative input of the on-chip Analog Comparator.</TEXT>
+       </PIN43>
+       <PIN44>
 diff -u ../xmlPartDescriptionOriginal/ATmega2560.xml ../xmlPartDescription/ATmega2560.xml
 --- ../xmlPartDescriptionOriginal/ATmega2560.xml	2010-02-25 10:07:58.000000000 -0500
 +++ ../xmlPartDescription/ATmega2560.xml	2010-08-15 02:56:25.516567983 -0400
@@ -2482,7 +2566,25 @@ diff -u ../xmlPartDescriptionOriginal/ATmega3290.xml ../xmlPartDescription/ATmeg
        </PIN14>
 diff -u ../xmlPartDescriptionOriginal/ATmega329PA.xml ../xmlPartDescription/ATmega329PA.xml
 --- ../xmlPartDescriptionOriginal/ATmega329PA.xml	2010-02-25 10:08:10.000000000 -0500
-+++ ../xmlPartDescription/ATmega329PA.xml	2010-08-15 06:22:28.804068193 -0400
++++ ../xmlPartDescription/ATmega329PA.xml	2010-08-18 13:59:06.036569354 -0400
+@@ -1476,7 +1476,7 @@
+         <DESCRIPTION/>
+       </PIN13>
+       <PIN14>
+-        <PIN_NAME>[OC0:PCINT12]</PIN_NAME>
++        <PIN_NAME>[OC0A:PCINT12]</PIN_NAME>
+         <ALT_NAME>PB4</ALT_NAME>
+         <DESCRIPTION/>
+       </PIN14>
+@@ -1491,7 +1491,7 @@
+         <DESCRIPTION/>
+       </PIN16>
+       <PIN17>
+-        <PIN_NAME>[OC2:PCINT15]</PIN_NAME>
++        <PIN_NAME>[OC2A:PCINT15]</PIN_NAME>
+         <ALT_NAME>PB7</ALT_NAME>
+         <DESCRIPTION/>
+       </PIN17>
 @@ -1531,12 +1531,12 @@
          <DESCRIPTION/>
        </PIN24>
@@ -2500,7 +2602,25 @@ diff -u ../xmlPartDescriptionOriginal/ATmega329PA.xml ../xmlPartDescription/ATme
        </PIN26>
 diff -u ../xmlPartDescriptionOriginal/ATmega329P.xml ../xmlPartDescription/ATmega329P.xml
 --- ../xmlPartDescriptionOriginal/ATmega329P.xml	2010-02-25 10:08:10.000000000 -0500
-+++ ../xmlPartDescription/ATmega329P.xml	2010-08-15 06:22:08.444068519 -0400
++++ ../xmlPartDescription/ATmega329P.xml	2010-08-18 13:58:50.657818242 -0400
+@@ -1476,7 +1476,7 @@
+         <DESCRIPTION/>
+       </PIN13>
+       <PIN14>
+-        <PIN_NAME>[OC0:PCINT12]</PIN_NAME>
++        <PIN_NAME>[OC0A:PCINT12]</PIN_NAME>
+         <ALT_NAME>PB4</ALT_NAME>
+         <DESCRIPTION/>
+       </PIN14>
+@@ -1491,7 +1491,7 @@
+         <DESCRIPTION/>
+       </PIN16>
+       <PIN17>
+-        <PIN_NAME>[OC2:PCINT15]</PIN_NAME>
++        <PIN_NAME>[OC2A:PCINT15]</PIN_NAME>
+         <ALT_NAME>PB7</ALT_NAME>
+         <DESCRIPTION/>
+       </PIN17>
 @@ -1531,12 +1531,12 @@
          <DESCRIPTION/>
        </PIN24>
@@ -2518,7 +2638,25 @@ diff -u ../xmlPartDescriptionOriginal/ATmega329P.xml ../xmlPartDescription/ATmeg
        </PIN26>
 diff -u ../xmlPartDescriptionOriginal/ATmega329.xml ../xmlPartDescription/ATmega329.xml
 --- ../xmlPartDescriptionOriginal/ATmega329.xml	2010-02-25 10:08:08.000000000 -0500
-+++ ../xmlPartDescription/ATmega329.xml	2010-08-15 06:21:51.746571894 -0400
++++ ../xmlPartDescription/ATmega329.xml	2010-08-18 13:58:20.466567926 -0400
+@@ -1489,7 +1489,7 @@
+         <DESCRIPTION/>
+       </PIN13>
+       <PIN14>
+-        <PIN_NAME>[OC0:PCINT12]</PIN_NAME>
++        <PIN_NAME>[OC0A:PCINT12]</PIN_NAME>
+         <ALT_NAME>PB4</ALT_NAME>
+         <DESCRIPTION/>
+       </PIN14>
+@@ -1504,7 +1504,7 @@
+         <DESCRIPTION/>
+       </PIN16>
+       <PIN17>
+-        <PIN_NAME>[OC2:PCINT15]</PIN_NAME>
++        <PIN_NAME>[OC2A:PCINT15]</PIN_NAME>
+         <ALT_NAME>PB7</ALT_NAME>
+         <DESCRIPTION/>
+       </PIN17>
 @@ -1544,12 +1544,12 @@
          <DESCRIPTION/>
        </PIN24>
@@ -3383,7 +3521,25 @@ diff -u ../xmlPartDescriptionOriginal/ATmega6490.xml ../xmlPartDescription/ATmeg
        </PIN14>
 diff -u ../xmlPartDescriptionOriginal/ATmega649P.xml ../xmlPartDescription/ATmega649P.xml
 --- ../xmlPartDescriptionOriginal/ATmega649P.xml	2010-02-25 10:08:28.000000000 -0500
-+++ ../xmlPartDescription/ATmega649P.xml	2010-08-15 06:11:38.435318007 -0400
++++ ../xmlPartDescription/ATmega649P.xml	2010-08-18 13:59:41.244071167 -0400
+@@ -295,7 +295,7 @@
+         <DESCRIPTION/>
+       </PIN13>
+       <PIN14>
+-        <PIN_NAME>[OC0:PCINT12]</PIN_NAME>
++        <PIN_NAME>[OC0A:PCINT12]</PIN_NAME>
+         <ALT_NAME>PB4</ALT_NAME>
+         <DESCRIPTION/>
+       </PIN14>
+@@ -310,7 +310,7 @@
+         <DESCRIPTION/>
+       </PIN16>
+       <PIN17>
+-        <PIN_NAME>[OC2:PCINT15]</PIN_NAME>
++        <PIN_NAME>[OC2A:PCINT15]</PIN_NAME>
+         <ALT_NAME>PB7</ALT_NAME>
+         <DESCRIPTION/>
+       </PIN17>
 @@ -350,12 +350,12 @@
          <DESCRIPTION/>
        </PIN24>
@@ -3401,7 +3557,25 @@ diff -u ../xmlPartDescriptionOriginal/ATmega649P.xml ../xmlPartDescription/ATmeg
        </PIN26>
 diff -u ../xmlPartDescriptionOriginal/ATmega649.xml ../xmlPartDescription/ATmega649.xml
 --- ../xmlPartDescriptionOriginal/ATmega649.xml	2010-02-25 10:08:26.000000000 -0500
-+++ ../xmlPartDescription/ATmega649.xml	2010-08-15 06:11:17.004067974 -0400
++++ ../xmlPartDescription/ATmega649.xml	2010-08-18 13:59:26.494067959 -0400
+@@ -295,7 +295,7 @@
+         <DESCRIPTION/>
+       </PIN13>
+       <PIN14>
+-        <PIN_NAME>[OC0:PCINT12]</PIN_NAME>
++        <PIN_NAME>[OC0A:PCINT12]</PIN_NAME>
+         <ALT_NAME>PB4</ALT_NAME>
+         <DESCRIPTION/>
+       </PIN14>
+@@ -310,7 +310,7 @@
+         <DESCRIPTION/>
+       </PIN16>
+       <PIN17>
+-        <PIN_NAME>[OC2:PCINT15]</PIN_NAME>
++        <PIN_NAME>[OC2A:PCINT15]</PIN_NAME>
+         <ALT_NAME>PB7</ALT_NAME>
+         <DESCRIPTION/>
+       </PIN17>
 @@ -350,12 +350,12 @@
          <DESCRIPTION/>
        </PIN24>
@@ -3603,3 +3777,131 @@ diff -u ../xmlPartDescriptionOriginal/ATmega8U2.xml ../xmlPartDescription/ATmega
    <PROGRAMMING>
      <ISPInterface>
        <FuseReadMask>0xff,0xff</FuseReadMask>
+diff -u ../xmlPartDescriptionOriginal/ATtiny43U.xml ../xmlPartDescription/ATtiny43U.xml
+--- ../xmlPartDescriptionOriginal/ATtiny43U.xml	2010-02-25 10:08:46.000000000 -0500
++++ ../xmlPartDescription/ATtiny43U.xml	2010-08-18 15:24:57.006568064 -0400
+@@ -726,90 +726,90 @@
+     </VECTOR16>
+   </INTERRUPT_VECTOR>
+   <PACKAGE>
+-    <PACKAGES>[PDIP:SOIC]</PACKAGES>
+-    <PDIP>
++    <PACKAGES>[SOIC]</PACKAGES>
++    <SOIC>
+       <NMB_PIN>20</NMB_PIN>
+       <PIN1>
+-        <NAME>[MOSI:DI_B:SDA_B:'_OC1A:PCINT8:PB0]</NAME>
++        <NAME>[T0PCINT8:PB0]</NAME>
+         <TEXT>DI: Data input in USI 3-wire mode. USI 3-wire mode does not override normal port functions., so pin must be configure as an input. SDA: Serial data in USI 2-wire mode. Serial data pin is bi-directional and uses open-col-lector output. The SDA pin is enabled by setting the pin as an output. The pin is pulled low when the PORTB0 or USI shiftregister is zero when DDB0 is set (one). Pull-up is disabled in USI 2-wire mode. OC1A: Inverted Timer/Counter1 PWM Output A: The PB0 pin can serve as an Inverted output for the PWM mode if not used in programming or USI. The PB0 pin has to be configured as an output (DDB0 set (one)) to serve this function. For further reading on PCINT0 please refer to the man</TEXT>
+       </PIN1>
+       <PIN2>
+-        <NAME>[MISO:DO_B:OC1A:PCINT9:PB1]</NAME>
++        <NAME>[OC0A:PCINT9:PB1]</NAME>
+         <TEXT>DO: Data output in USI 3-wire mode. Data output (DO) overrides PORTB1 value and it is driven to the port when the data direction bit DDB1 is set (one). However the PORTB1 bit still controls the pullup, enabling pullup if direction is input and PORTB1 is set(one). OC1A: Output compare match output: The PB1 pin can serve as an output for the Timer/Counter1 compare match A. The PB1 pin has to be configured as an output (DDB3 set (one)) to serve this function. The OC1B pin is also the output pin for the PWM mode timer function if not used in programming or USI. PCINT0: Pin Change Interrupt 0 pin. Pin change interrupt is enabled on pin when global interrupt is enabled, pin change interrupt is enabled and the alternate functions do not mask the interrupt. The masking alternate functions are the output compare match out-put OC1A and data output DO in USI 3-wire mode. Digital input is enabled on pin PB4 also in SLEEP modes, if the pin change interrupt is enabled and not masked by the alternate functi</TEXT>
+       </PIN2>
+       <PIN3>
+-        <NAME>[SCK:USCK_B:SCL_B:'OC1B:PCINT10:PB2]</NAME>
++        <NAME>[OC0B:PCINT10:PB2]</NAME>
+         <TEXT>SCK: Clock input or output in USI 3-wire mode. When the SPI is enabled this pin is con-figured</TEXT>
+       </PIN3>
+       <PIN4>
+-        <NAME>[OC1B:PCINT11:PB3]</NAME>
++        <NAME>[T1:CLKO:PCINT11:PB3]</NAME>
+         <TEXT>OC1B: Output compare match output: The PB3 pin can serve as an output for the Timer/Counter1 compare match B. The PB3 pin has to be configured as an output (DDB3 set (one)) to serve this function. The OC1B pin is also the output pin for the PWM mode. PCINT0: Pin Change Interrupt 0 pin. Pin change interrupt is enabled on pin when global interrupt is enabled, pin change interrupt is enabled and the alternate functions do not mask the interrupt. The masking alternate function is the output compare match output OC1B. Digital input is enabled on pin PB3 also in SLEEP modes, if the pin change interrupt is enabled and not masked by the alternate functi</TEXT>
+       </PIN4>
+       <PIN5>
+-        <NAME>[VCC]</NAME>
++        <NAME>[DI:OC1A:PCINT12:PB4]</NAME>
+         <TEXT/>
+       </PIN5>
+       <PIN6>
+-        <NAME>[GND]</NAME>
++        <NAME>[DO:OC1B:PCINT13:PB5]</NAME>
+         <TEXT/>
+       </PIN6>
+       <PIN7>
+-        <NAME>[ADC7:XTAL1:PCINT12:'_OC1D:CLKI:PB4]</NAME>
+-        <TEXT>ADC7: ADC input channel 7. Configure the port pins as inputs with the internal pull-ups switched off to avoid the digital port function from interfering with the function of the ana-log to digital converter. XTAL1: Chip clock oscillator pin 1. Used for all chip clock sources except internal cali-brateble RC oscillator and PLL clock. When used as a clock pin, the pin can not be used as an I/O pin. When using internal calibratable RC oscillator or PLL clock as chip clock sources, PB4 serves as an ordinary I/O pin. PCINT1: Pin Change Interrupt 1 pin. Pin change interrupt is enabled on pin when global interrupt is enabled, pin change interrupt is enabled and the alternate functions do not mask the interrupt. The masking alternate functions are the XTAL1 inputs. Digital input is enabled on pin PB4 also in SLEEP modes, if the pin change interrupt is enabled and not masked by the alternate functi</TEXT>
++        <NAME>[USCK:SCL:PCINT14:PB6]</NAME>
++        <TEXT/>
+       </PIN7>
+       <PIN8>
+-        <NAME>[ADC8:XTAL2:PCINT13:OC1D:CKLO:PB5]</NAME>
+-        <TEXT>ADC8: ADC input channel 8. Configure the port pins as inputs with the internal pull-ups switched off to avoid the digital port function from interfering with the function of the ana-log to digital converter. XTAL2: Chip clock oscillator pin 2. Used as clock pin for all chip clock sources except internal calibrateble RC oscillator, external clock and PLL clock. When used as a clock pin, the pin can not be used as an I/O pin. When using internal calibratable RC oscillator, external clock or PLL clock as chip clock sources, PB5 serves as an ordinary I/O pin. PCINT1: Pin Change Interrupt 1 pin. Pin change interrupt is enabled on pin when global interrupt is enabled, pin change interrupt is enabled and the alternate functions do not mask the interrupt. The masking alternate functions are the XTAL2 outputs. Digital input is enabled on pin PB5 also in SLEEP modes, if the pin change interrupt is enabled and not masked by the alternate functio</TEXT>
++        <NAME>[INT0:PCINT15:PB7]</NAME>
++        <TEXT/>
+       </PIN8>
+       <PIN9>
+-        <NAME>[ADC9:INT0:T0:PCINT14:PB6]</NAME>
+-        <TEXT>ADC9: ADC input channel 9. Configure the port pins as inputs with the internal pull-ups switched off to avoid the digital port function from interfering with the function of the analog to digital converter. INT0: External Interrupt source 0: The PB6 pin can serve as an external interrupt source enabled by setting (one) the bit INT0 in the general input mask register (GIMSK). T0: Timer/Counter0 External Counter Clock Input is enabled by setting (one) the bits CS02 and CS01 in the Timer/Counter0 control register (TCCR0). PCINT1: Pin Change Interrupt 1 pin. Pin change interrupt is enabled on pin when global interrupt is enabled, pin change interrupt is enabled and the alternate functions do not mask the interrupt. The masking alternate functions are the external low level Interrupt source 0 (INT0) and the Timer/Counter0 external counter clock input (T0). Digital input is enabled on pin PB6 also in SLEEP modes, if the pin change interrupt is enabled and not masked by the alternate func</TEXT>
++        <NAME>[VCC]</NAME>
++        <TEXT/>
+       </PIN9>
+       <PIN10>
+-        <NAME>[ADC10:'RESET:PCINT15:PB7]</NAME>
+-        <TEXT>ADC10: ADC input channel 10. Configure the port pins as inputs with the internal pull-ups switched off to avoid the digital port function from interfering with the function of the analog to digital converter. RESET: External Reset Input is active low and enabled by unprogramming (&#x201C;1&#x201D;) the RSTDISBL fuse. Pullup is activated and output driver and digital input are deactivated when the pin is used as the RESET pin. PCINT1: Pin Change Interrupt 1 pin. Pin change interrupt is enabled on pin when global interrupt is enabled, pin change interrupt is enabled and the alternate function do not mask the interrupt. The masking alternate function is the pin usage as RESET. Digital input is enabled on pin PB7 also in SLEEP modes, if the pin change interrupt is enabled and not masked by the alternate func</TEXT>
++        <NAME>[GND]</NAME>
++        <TEXT/>
+       </PIN10>
+       <PIN11>
+-        <NAME>[ADC6:AIN1:PCINT7:PA7]</NAME>
+-        <TEXT>AIN1: Analog Comparator Negative Input and ADC6: ADC input channel 6. Configure the port pin as input with the internal pull-up switched off to avoid the digital port function from interfering with the function of the analog comparator or analog to digital converter. PCINT1: Pin Change Interrupt 1 pin. Pin change interrupt is enabled on pin when global interrupt is enabled, pin change interrupt is enabled and the alternate function do not mask the interrupt. The masking alternate function is the analog comparator.Digital input is enabled on pin PA7 also in SLEEP modes, if the pin change interrupt is enabled and not masked by the alternate functi</TEXT>
++        <NAME>[LSW]</NAME>
++        <TEXT/>
+       </PIN11>
+       <PIN12>
+-        <NAME>[ADC5:AIN0:PCINT6:PA6]</NAME>
+-        <TEXT>AIN0: Analog Comparator Positive Input and ADC5: ADC input channel 5. Configure the port pin as input with the internal pull-up switched off to avoid the digital port function from interfering with the function of the analog comparator or analog to digital converter. PCINT1: Pin Change Interrupt 1 pin. Pin change interrupt is enabled on pin when global interrupt is enabled, pin change interrupt is enabled and the alternate function do not mask the interrupt. The masking alternate function is the analog comparator.Digital input is enabled on pin PA6 also in SLEEP modes, if the pin change interrupt is enabled and not masked by the alternate funct</TEXT>
++        <NAME>[VBAT]</NAME>
++        <TEXT/>
+       </PIN12>
+       <PIN13>
+-        <NAME>[ADC4:AIN2:PCINT5:PA5]</NAME>
+-        <TEXT>ADC4/ADC3: ADC input channel 4 and 3. Configure the port pins as inputs with the internal pull-ups switched off to avoid the digital port function from interfering with the function of the analog to digital converter.</TEXT>
++        <NAME>[ADC0:PCINT0:PA0]</NAME>
++        <TEXT/>
+       </PIN13>
+       <PIN14>
+-        <NAME>[ADC3:ICP0:PCINT4:PA4]</NAME>
+-        <TEXT>ADC4/ADC3: ADC input channel 4 and 3. Configure the port pins as inputs with the internal pull-ups switched off to avoid the digital port function from interfering with the function of the analog to digital converter.</TEXT>
++        <NAME>[ADC1:PCINT1:PA1]</NAME>
++        <TEXT/>
+       </PIN14>
+       <PIN15>
+-        <NAME>[AVCC]</NAME>
++        <NAME>[ADC2:PCINT2:PA2]</NAME>
+         <TEXT/>
+       </PIN15>
+       <PIN16>
+-        <NAME>[AGND]</NAME>
++        <NAME>[ADC3:PCINT3:PA3]</NAME>
+         <TEXT/>
+       </PIN16>
+       <PIN17>
+-        <NAME>[AREF:PCINT3:PA3]</NAME>
+-        <TEXT>AREF: External reference for ADC. Pullup and output driver are disabled on PA3 when the pin is used as an external reference or Internal Voltage Reference (2.56V) with external capacitor at the AREF pin by setting (one) the bit REFS0 in the ADC Multiplexer Selection Register (ADMUX). PCINT1: Pin Change Interrupt 1 pin. Pin change interrupt is enabled on pin when global interrupt is enabled, pin change interrupt is enabled and the alternate function do not mask the interrupt. The masking alternate function is the pin usage as an analog refer-ence for the ADC. Digital input is enabled on pin PA3 also in SLEEP modes, if the pin change interrupt is enabled and not masked by the alternate function. Please refer to the manual for further detail</TEXT>
++        <NAME>[AIN0:PCINT4:PA4]</NAME>
++        <TEXT/>
+       </PIN17>
+       <PIN18>
+-        <NAME>[ADC2:INT1:USCK_A:SCL_A:PCINT2:PA2]</NAME>
++        <NAME>[AIN1:PA5]</NAME>
+         <TEXT/>
+       </PIN18>
+       <PIN19>
+-        <NAME>[ADC1:DO_A:PCINT1:PA1]</NAME>
++        <NAME>[CLKI:PCINT6:PA6]</NAME>
+         <TEXT/>
+       </PIN19>
+       <PIN20>
+-        <NAME>[ADC0:DI_A:SDA_A:PCINT0:PA0]</NAME>
++        <NAME>['RESET:dW:PCINT7:PA7]</NAME>
+         <TEXT/>
+       </PIN20>
+-    </PDIP>
++    </SOIC>
+   </PACKAGE>
+   <FUSE>
+     <LIST>[LOW:HIGH:EXTENDED]</LIST>
+Seulement dans ../xmlPartDescription/: README
+Seulement dans ../xmlPartDescription/: .svn

@@ -190,35 +190,5 @@
 #define T0_PIN   PIND
 #define T0_BIT   0
 
-#define PD1_DDR   DDRD
-#define PD1_PORT  PORTD
-#define PD1_PIN   PIND
-#define PD1_BIT   1
-
-#define PC0_DDR   DDRC
-#define PC0_PORT  PORTC
-#define PC0_PIN   PINC
-#define PC0_BIT   0
-
-#define PV4_DDR   DDRV
-#define PV4_PORT  PORTV
-#define PV4_PIN   PINV
-#define PV4_BIT   4
-
-#define PV3_DDR   DDRV
-#define PV3_PORT  PORTV
-#define PV3_PIN   PINV
-#define PV3_BIT   3
-
-#define PV2_DDR   DDRV
-#define PV2_PORT  PORTV
-#define PV2_PIN   PINV
-#define PV2_BIT   2
-
-#define PV1_DDR   DDRV
-#define PV1_PORT  PORTV
-#define PV1_PIN   PINV
-#define PV1_BIT   1
-
 #endif /* _AVR_PIN_ATMEGA406_H_ */
 

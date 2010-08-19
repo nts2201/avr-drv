@@ -55,11 +55,6 @@
 #define CLOCK_PIN   PINB
 #define CLOCK_BIT   3
 
-#define PB4_DDR   DDRB
-#define PB4_PORT  PORTB
-#define PB4_PIN   PINB
-#define PB4_BIT   4
-
 #define MOSI_DDR   DDRB
 #define MOSI_PORT  PORTB
 #define MOSI_PIN   PINB

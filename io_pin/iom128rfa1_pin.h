@@ -165,10 +165,10 @@
 #define T0_PIN   PIND
 #define T0_BIT   7
 
-#define SSN_DDR   DDRB
-#define SSN_PORT  PORTB
-#define SSN_PIN   PINB
-#define SSN_BIT   0
+#define SS_DDR   DDRB
+#define SS_PORT  PORTB
+#define SS_PIN   PINB
+#define SS_BIT   0
 
 #define PCINT0_DDR   DDRB
 #define PCINT0_PORT  PORTB

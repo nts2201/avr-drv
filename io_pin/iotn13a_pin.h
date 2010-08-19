@@ -50,6 +50,36 @@
 
 
 /* Device Pin Definitions */
+#define PCINT5_DDR   DDRB
+#define PCINT5_PORT  PORTB
+#define PCINT5_PIN   PINB
+#define PCINT5_BIT   5
+
+#define ADC0_DDR   DDRB
+#define ADC0_PORT  PORTB
+#define ADC0_PIN   PINB
+#define ADC0_BIT   5
+
+#define PCINT3_DDR   DDRB
+#define PCINT3_PORT  PORTB
+#define PCINT3_PIN   PINB
+#define PCINT3_BIT   3
+
+#define ADC3_DDR   DDRB
+#define ADC3_PORT  PORTB
+#define ADC3_PIN   PINB
+#define ADC3_BIT   3
+
+#define PCINT4_DDR   DDRB
+#define PCINT4_PORT  PORTB
+#define PCINT4_PIN   PINB
+#define PCINT4_BIT   4
+
+#define ADC2_DDR   DDRB
+#define ADC2_PORT  PORTB
+#define ADC2_PIN   PINB
+#define ADC2_BIT   4
+
 #define MOSI_DDR   DDRB
 #define MOSI_PORT  PORTB
 #define MOSI_PIN   PINB

@@ -50,55 +50,5 @@
 
 
 /* Device Pin Definitions */
-#define PV2_DDR   DDRV
-#define PV2_PORT  PORTV
-#define PV2_PIN   PINV
-#define PV2_BIT   2
-
-#define PV1_DDR   DDRV
-#define PV1_PORT  PORTV
-#define PV1_PIN   PINV
-#define PV1_BIT   1
-
-#define PA0_DDR   DDRA
-#define PA0_PORT  PORTA
-#define PA0_PIN   PINA
-#define PA0_BIT   0
-
-#define PA1_DDR   DDRA
-#define PA1_PORT  PORTA
-#define PA1_PIN   PINA
-#define PA1_BIT   1
-
-#define PA2_DDR   DDRA
-#define PA2_PORT  PORTA
-#define PA2_PIN   PINA
-#define PA2_BIT   2
-
-#define PB0_DDR   DDRB
-#define PB0_PORT  PORTB
-#define PB0_PIN   PINB
-#define PB0_BIT   0
-
-#define PB1_DDR   DDRB
-#define PB1_PORT  PORTB
-#define PB1_PIN   PINB
-#define PB1_BIT   1
-
-#define PB2_DDR   DDRB
-#define PB2_PORT  PORTB
-#define PB2_PIN   PINB
-#define PB2_BIT   2
-
-#define PB3_DDR   DDRB
-#define PB3_PORT  PORTB
-#define PB3_PIN   PINB
-#define PB3_BIT   3
-
-#define PC0_DDR   DDRC
-#define PC0_PORT  PORTC
-#define PC0_PIN   PINC
-#define PC0_BIT   0
-
 #endif /* _AVR_PIN_ATMEGA16HVA2_H_ */
 

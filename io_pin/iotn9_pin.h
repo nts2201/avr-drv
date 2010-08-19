@@ -50,5 +50,95 @@
 
 
 /* Device Pin Definitions */
+#define PCINT0_DDR   DDRB
+#define PCINT0_PORT  PORTB
+#define PCINT0_PIN   PINB
+#define PCINT0_BIT   0
+
+#define SPDATA_DDR   DDRB
+#define SPDATA_PORT  PORTB
+#define SPDATA_PIN   PINB
+#define SPDATA_BIT   0
+
+#define OC0A_DDR   DDRB
+#define OC0A_PORT  PORTB
+#define OC0A_PIN   PINB
+#define OC0A_BIT   0
+
+#define ADC0_DDR   DDRB
+#define ADC0_PORT  PORTB
+#define ADC0_PIN   PINB
+#define ADC0_BIT   0
+
+#define AIN0_DDR   DDRB
+#define AIN0_PORT  PORTB
+#define AIN0_PIN   PINB
+#define AIN0_BIT   0
+
+#define PCINT1_DDR   DDRB
+#define PCINT1_PORT  PORTB
+#define PCINT1_PIN   PINB
+#define PCINT1_BIT   1
+
+#define SPCLK_DDR   DDRB
+#define SPCLK_PORT  PORTB
+#define SPCLK_PIN   PINB
+#define SPCLK_BIT   1
+
+#define CLKI_DDR   DDRB
+#define CLKI_PORT  PORTB
+#define CLKI_PIN   PINB
+#define CLKI_BIT   1
+
+#define ICP0_DDR   DDRB
+#define ICP0_PORT  PORTB
+#define ICP0_PIN   PINB
+#define ICP0_BIT   1
+
+#define OC0B_DDR   DDRB
+#define OC0B_PORT  PORTB
+#define OC0B_PIN   PINB
+#define OC0B_BIT   1
+
+#define ADC1_DDR   DDRB
+#define ADC1_PORT  PORTB
+#define ADC1_PIN   PINB
+#define ADC1_BIT   1
+
+#define AIN1_DDR   DDRB
+#define AIN1_PORT  PORTB
+#define AIN1_PIN   PINB
+#define AIN1_BIT   1
+
+#define T0_DDR   DDRB
+#define T0_PORT  PORTB
+#define T0_PIN   PINB
+#define T0_BIT   2
+
+#define PCINT2_DDR   DDRB
+#define PCINT2_PORT  PORTB
+#define PCINT2_PIN   PINB
+#define PCINT2_BIT   2
+
+#define INT0_DDR   DDRB
+#define INT0_PORT  PORTB
+#define INT0_PIN   PINB
+#define INT0_BIT   2
+
+#define ADC2_DDR   DDRB
+#define ADC2_PORT  PORTB
+#define ADC2_PIN   PINB
+#define ADC2_BIT   2
+
+#define PCINT3_DDR   DDRB
+#define PCINT3_PORT  PORTB
+#define PCINT3_PIN   PINB
+#define PCINT3_BIT   3
+
+#define ADC3_DDR   DDRB
+#define ADC3_PORT  PORTB
+#define ADC3_PIN   PINB
+#define ADC3_BIT   3
+
 #endif /* _AVR_PIN_ATTINY9_H_ */
 

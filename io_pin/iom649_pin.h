@@ -180,10 +180,10 @@
 #define PCINT11_PIN   PINB
 #define PCINT11_BIT   3
 
-#define OC0_DDR   DDRB
-#define OC0_PORT  PORTB
-#define OC0_PIN   PINB
-#define OC0_BIT   4
+#define OC0A_DDR   DDRB
+#define OC0A_PORT  PORTB
+#define OC0A_PIN   PINB
+#define OC0A_BIT   4
 
 #define PCINT12_DDR   DDRB
 #define PCINT12_PORT  PORTB
@@ -210,10 +210,10 @@
 #define PCINT14_PIN   PINB
 #define PCINT14_BIT   6
 
-#define OC2_DDR   DDRB
-#define OC2_PORT  PORTB
-#define OC2_PIN   PINB
-#define OC2_BIT   7
+#define OC2A_DDR   DDRB
+#define OC2A_PORT  PORTB
+#define OC2A_PIN   PINB
+#define OC2A_BIT   7
 
 #define PCINT15_DDR   DDRB
 #define PCINT15_PORT  PORTB

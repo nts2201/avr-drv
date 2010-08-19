@@ -50,5 +50,160 @@
 
 
 /* Device Pin Definitions */
+#define T0PCINT8_DDR   DDRB
+#define T0PCINT8_PORT  PORTB
+#define T0PCINT8_PIN   PINB
+#define T0PCINT8_BIT   0
+
+#define OC0A_DDR   DDRB
+#define OC0A_PORT  PORTB
+#define OC0A_PIN   PINB
+#define OC0A_BIT   1
+
+#define PCINT9_DDR   DDRB
+#define PCINT9_PORT  PORTB
+#define PCINT9_PIN   PINB
+#define PCINT9_BIT   1
+
+#define OC0B_DDR   DDRB
+#define OC0B_PORT  PORTB
+#define OC0B_PIN   PINB
+#define OC0B_BIT   2
+
+#define PCINT10_DDR   DDRB
+#define PCINT10_PORT  PORTB
+#define PCINT10_PIN   PINB
+#define PCINT10_BIT   2
+
+#define PCINT11_DDR   DDRB
+#define PCINT11_PORT  PORTB
+#define PCINT11_PIN   PINB
+#define PCINT11_BIT   3
+
+#define DI_DDR   DDRB
+#define DI_PORT  PORTB
+#define DI_PIN   PINB
+#define DI_BIT   4
+
+#define OC1A_DDR   DDRB
+#define OC1A_PORT  PORTB
+#define OC1A_PIN   PINB
+#define OC1A_BIT   4
+
+#define PCINT12_DDR   DDRB
+#define PCINT12_PORT  PORTB
+#define PCINT12_PIN   PINB
+#define PCINT12_BIT   4
+
+#define DO_DDR   DDRB
+#define DO_PORT  PORTB
+#define DO_PIN   PINB
+#define DO_BIT   5
+
+#define OC1B_DDR   DDRB
+#define OC1B_PORT  PORTB
+#define OC1B_PIN   PINB
+#define OC1B_BIT   5
+
+#define PCINT13_DDR   DDRB
+#define PCINT13_PORT  PORTB
+#define PCINT13_PIN   PINB
+#define PCINT13_BIT   5
+
+#define USCK_DDR   DDRB
+#define USCK_PORT  PORTB
+#define USCK_PIN   PINB
+#define USCK_BIT   6
+
+#define SCL_DDR   DDRB
+#define SCL_PORT  PORTB
+#define SCL_PIN   PINB
+#define SCL_BIT   6
+
+#define PCINT14_DDR   DDRB
+#define PCINT14_PORT  PORTB
+#define PCINT14_PIN   PINB
+#define PCINT14_BIT   6
+
+#define INT0_DDR   DDRB
+#define INT0_PORT  PORTB
+#define INT0_PIN   PINB
+#define INT0_BIT   7
+
+#define PCINT15_DDR   DDRB
+#define PCINT15_PORT  PORTB
+#define PCINT15_PIN   PINB
+#define PCINT15_BIT   7
+
+#define ADC0_DDR   DDRA
+#define ADC0_PORT  PORTA
+#define ADC0_PIN   PINA
+#define ADC0_BIT   0
+
+#define PCINT0_DDR   DDRA
+#define PCINT0_PORT  PORTA
+#define PCINT0_PIN   PINA
+#define PCINT0_BIT   0
+
+#define ADC1_DDR   DDRA
+#define ADC1_PORT  PORTA
+#define ADC1_PIN   PINA
+#define ADC1_BIT   1
+
+#define PCINT1_DDR   DDRA
+#define PCINT1_PORT  PORTA
+#define PCINT1_PIN   PINA
+#define PCINT1_BIT   1
+
+#define ADC2_DDR   DDRA
+#define ADC2_PORT  PORTA
+#define ADC2_PIN   PINA
+#define ADC2_BIT   2
+
+#define PCINT2_DDR   DDRA
+#define PCINT2_PORT  PORTA
+#define PCINT2_PIN   PINA
+#define PCINT2_BIT   2
+
+#define ADC3_DDR   DDRA
+#define ADC3_PORT  PORTA
+#define ADC3_PIN   PINA
+#define ADC3_BIT   3
+
+#define PCINT3_DDR   DDRA
+#define PCINT3_PORT  PORTA
+#define PCINT3_PIN   PINA
+#define PCINT3_BIT   3
+
+#define AIN0_DDR   DDRA
+#define AIN0_PORT  PORTA
+#define AIN0_PIN   PINA
+#define AIN0_BIT   4
+
+#define PCINT4_DDR   DDRA
+#define PCINT4_PORT  PORTA
+#define PCINT4_PIN   PINA
+#define PCINT4_BIT   4
+
+#define AIN1_DDR   DDRA
+#define AIN1_PORT  PORTA
+#define AIN1_PIN   PINA
+#define AIN1_BIT   5
+
+#define CLKI_DDR   DDRA
+#define CLKI_PORT  PORTA
+#define CLKI_PIN   PINA
+#define CLKI_BIT   6
+
+#define PCINT6_DDR   DDRA
+#define PCINT6_PORT  PORTA
+#define PCINT6_PIN   PINA
+#define PCINT6_BIT   6
+
+#define PCINT7_DDR   DDRA
+#define PCINT7_PORT  PORTA
+#define PCINT7_PIN   PINA
+#define PCINT7_BIT   7
+
 #endif /* _AVR_PIN_ATTINY43U_H_ */
 

@@ -50,80 +50,35 @@
 
 
 /* Device Pin Definitions */
-#define PD3_DDR   DDRD
-#define PD3_PORT  PORTD
-#define PD3_PIN   PIND
-#define PD3_BIT   3
+#define AIN0_DDR   DDRB
+#define AIN0_PORT  PORTB
+#define AIN0_PIN   PINB
+#define AIN0_BIT   0
 
-#define PD4_DDR   DDRD
-#define PD4_PORT  PORTD
-#define PD4_PIN   PIND
-#define PD4_BIT   4
+#define AIN1_DDR   DDRB
+#define AIN1_PORT  PORTB
+#define AIN1_PIN   PINB
+#define AIN1_BIT   1
 
-#define PD5_DDR   DDRD
-#define PD5_PORT  PORTD
-#define PD5_PIN   PIND
-#define PD5_BIT   5
+#define T0_DDR   DDRB
+#define T0_PORT  PORTB
+#define T0_PIN   PINB
+#define T0_BIT   2
 
-#define PD6_DDR   DDRD
-#define PD6_PORT  PORTD
-#define PD6_PIN   PIND
-#define PD6_BIT   6
+#define INT0_DDR   DDRB
+#define INT0_PORT  PORTB
+#define INT0_PIN   PINB
+#define INT0_BIT   3
 
-#define PD7_DDR   DDRD
-#define PD7_PORT  PORTD
-#define PD7_PIN   PIND
-#define PD7_BIT   7
-
-#define PB5_DDR   DDRB
-#define PB5_PORT  PORTB
-#define PB5_PIN   PINB
-#define PB5_BIT   5
-
-#define PB6_DDR   DDRB
-#define PB6_PORT  PORTB
-#define PB6_PIN   PINB
-#define PB6_BIT   6
-
-#define PB7_DDR   DDRB
-#define PB7_PORT  PORTB
-#define PB7_PIN   PINB
-#define PB7_BIT   7
+#define INT1_DDR   DDRB
+#define INT1_PORT  PORTB
+#define INT1_PIN   PINB
+#define INT1_BIT   4
 
 #define IR_DDR   DDRA
 #define IR_PORT  PORTA
 #define IR_PIN   PINA
 #define IR_BIT   2
-
-#define PA3_DDR   DDRA
-#define PA3_PORT  PORTA
-#define PA3_PIN   PINA
-#define PA3_BIT   3
-
-#define PA1_DDR   DDRA
-#define PA1_PORT  PORTA
-#define PA1_PIN   PINA
-#define PA1_BIT   1
-
-#define PA0_DDR   DDRA
-#define PA0_PORT  PORTA
-#define PA0_PIN   PINA
-#define PA0_BIT   0
-
-#define PD0_DDR   DDRD
-#define PD0_PORT  PORTD
-#define PD0_PIN   PIND
-#define PD0_BIT   0
-
-#define PD1_DDR   DDRD
-#define PD1_PORT  PORTD
-#define PD1_PIN   PIND
-#define PD1_BIT   1
-
-#define PD2_DDR   DDRD
-#define PD2_PORT  PORTD
-#define PD2_PIN   PIND
-#define PD2_BIT   2
 
 #endif /* _AVR_PIN_ATTINY28_H_ */
 

@@ -60,6 +60,16 @@
 #define AIN0_PIN   PINE
 #define AIN0_BIT   6
 
+#define INT7_DDR   DDRE
+#define INT7_PORT  PORTE
+#define INT7_PIN   PINE
+#define INT7_BIT   7
+
+#define AIN1_DDR   DDRE
+#define AIN1_PORT  PORTE
+#define AIN1_PIN   PINE
+#define AIN1_BIT   7
+
 #define SS_DDR   DDRB
 #define SS_PORT  PORTB
 #define SS_PIN   PINB

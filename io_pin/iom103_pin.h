@@ -180,11 +180,6 @@
 #define IC1_PIN   PIND
 #define IC1_BIT   4
 
-#define PD5_DDR   DDRD
-#define PD5_PORT  PORTD
-#define PD5_PIN   PIND
-#define PD5_BIT   5
-
 #define A8_DDR   DDRC
 #define A8_PORT  PORTC
 #define A8_PIN   PINC

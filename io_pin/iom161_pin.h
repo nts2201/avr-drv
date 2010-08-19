@@ -85,11 +85,6 @@
 #define INT1_PIN   PIND
 #define INT1_BIT   3
 
-#define PD4_DDR   DDRD
-#define PD4_PORT  PORTD
-#define PD4_PIN   PIND
-#define PD4_BIT   4
-
 #define OC1A_DDR   DDRD
 #define OC1A_PORT  PORTD
 #define OC1A_PIN   PIND

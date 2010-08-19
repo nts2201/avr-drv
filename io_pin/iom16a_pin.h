@@ -115,21 +115,6 @@
 #define SDA_PIN   PINC
 #define SDA_BIT   1
 
-#define PC3_DDR   DDRC
-#define PC3_PORT  PORTC
-#define PC3_PIN   PINC
-#define PC3_BIT   3
-
-#define PC4_DDR   DDRC
-#define PC4_PORT  PORTC
-#define PC4_PIN   PINC
-#define PC4_BIT   4
-
-#define PC5_DDR   DDRC
-#define PC5_PORT  PORTC
-#define PC5_PIN   PINC
-#define PC5_BIT   5
-
 #define ADC7_DDR   DDRA
 #define ADC7_PORT  PORTA
 #define ADC7_PIN   PINA
@@ -189,6 +174,11 @@
 #define AIN1_PORT  PORTB
 #define AIN1_PIN   PINB
 #define AIN1_BIT   3
+
+#define OC0_DDR   DDRB
+#define OC0_PORT  PORTB
+#define OC0_PIN   PINB
+#define OC0_BIT   3
 
 #define SS_DDR   DDRB
 #define SS_PORT  PORTB

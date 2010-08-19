@@ -185,10 +185,10 @@
 #define ADC8_PIN   PIND
 #define ADC8_BIT   4
 
-#define OC4D_DDR   DDRD
-#define OC4D_PORT  PORTD
-#define OC4D_PIN   PIND
-#define OC4D_BIT   6
+#define INV_OC4D_DDR   DDRD
+#define INV_OC4D_PORT  PORTD
+#define INV_OC4D_PIN   PIND
+#define INV_OC4D_BIT   6
 
 #define ADC9_DDR   DDRD
 #define ADC9_PORT  PORTD
@@ -230,10 +230,10 @@
 #define OC1A_PIN   PINB
 #define OC1A_BIT   5
 
-#define OC4B_DDR   DDRB
-#define OC4B_PORT  PORTB
-#define OC4B_PIN   PINB
-#define OC4B_BIT   5
+#define INV_OC4B_DDR   DDRB
+#define INV_OC4B_PORT  PORTB
+#define INV_OC4B_PIN   PINB
+#define INV_OC4B_BIT   5
 
 #define ADC12_DDR   DDRB
 #define ADC12_PORT  PORTB
@@ -265,10 +265,10 @@
 #define OC3A_PIN   PINC
 #define OC3A_BIT   6
 
-#define OC4A_DDR   DDRC
-#define OC4A_PORT  PORTC
-#define OC4A_PIN   PINC
-#define OC4A_BIT   6
+#define INV_OC4A_DDR   DDRC
+#define INV_OC4A_PORT  PORTC
+#define INV_OC4A_PIN   PINC
+#define INV_OC4A_BIT   6
 
 #define ICP3_DDR   DDRC
 #define ICP3_PORT  PORTC
