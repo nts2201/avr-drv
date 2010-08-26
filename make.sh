@@ -15,5 +15,5 @@
 ./make_twi_int.sh
 ./make_usart.sh
 
-mkdir -p ./avr-drv/io_pin
-cp ./io_pin/*.h ./avr-drv/io_pin
+mkdir -p ./avr-drv/include/io_pin
+cp ./io_pin/*.h ./avr-drv/include/io_pin
