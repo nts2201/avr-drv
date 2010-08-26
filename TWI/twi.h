@@ -34,7 +34,7 @@
 
 #include <stdint.h>
 
-void twi_init(uint32_t clkio);
+void twi_init(uint32_t clkio, uint8_t uwBitrateKHz);
 void twi_set_bitrate(uint32_t clkio, uint8_t uwBitrateKHz);
 void twi_enable_pullup(void);
 void twi_set_slave_address( void );

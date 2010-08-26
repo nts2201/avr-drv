@@ -43,10 +43,10 @@
 #define TWCR_CMD_MASK 0x0F
 
 // functions
-void twi_init(uint32_t clkio)
+void twi_init(uint32_t clkio, uint8_t uwBitrateKHz)
 {
-	// set i2c bit rate to 100KHz
-	twi_set_bitrate(clkio, 100);
+	// set i2c bit rate
+	twi_set_bitrate(uwBitrateKHz, 100);
 	// enable TWI (two-wire interface)
 	TWCR |= (1<<TWEN);
 }
