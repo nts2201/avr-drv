@@ -1877,21 +1877,6 @@ diff -u ../xmlPartDescriptionOriginal/ATmega169PA.xml ../xmlPartDescription/ATme
          <ALT_NAME>PB7</ALT_NAME>
          <DESCRIPTION/>
        </PIN17>
-@@ -1486,12 +1486,12 @@
-         <DESCRIPTION/>
-       </PIN24>
-       <PIN25>
--        <PIN_NAME>[ICP/SEG22]</PIN_NAME>
-+        <PIN_NAME>[ICP:SEG22]</PIN_NAME>
-         <ALT_NAME>PD0</ALT_NAME>
-         <DESCRIPTION/>
-       </PIN25>
-       <PIN26>
--        <PIN_NAME>[INT0/SEG21]</PIN_NAME>
-+        <PIN_NAME>[INT0:SEG21]</PIN_NAME>
-         <ALT_NAME>PD1</ALT_NAME>
-         <DESCRIPTION/>
-       </PIN26>
 diff -u ../xmlPartDescriptionOriginal/ATmega169P.xml ../xmlPartDescription/ATmega169P.xml
 --- ../xmlPartDescriptionOriginal/ATmega169P.xml	2010-02-25 10:07:50.000000000 -0500
 +++ ../xmlPartDescription/ATmega169P.xml	2010-08-18 13:33:45.894070018 -0400
@@ -1913,21 +1898,6 @@ diff -u ../xmlPartDescriptionOriginal/ATmega169P.xml ../xmlPartDescription/ATmeg
          <ALT_NAME>PB7</ALT_NAME>
          <DESCRIPTION/>
        </PIN17>
-@@ -1484,12 +1484,12 @@
-         <DESCRIPTION/>
-       </PIN24>
-       <PIN25>
--        <PIN_NAME>[ICP/SEG22]</PIN_NAME>
-+        <PIN_NAME>[ICP:SEG22]</PIN_NAME>
-         <ALT_NAME>PD0</ALT_NAME>
-         <DESCRIPTION/>
-       </PIN25>
-       <PIN26>
--        <PIN_NAME>[INT0/SEG21]</PIN_NAME>
-+        <PIN_NAME>[INT0:SEG21]</PIN_NAME>
-         <ALT_NAME>PD1</ALT_NAME>
-         <DESCRIPTION/>
-       </PIN26>
 diff -u ../xmlPartDescriptionOriginal/ATmega169.xml ../xmlPartDescription/ATmega169.xml
 --- ../xmlPartDescriptionOriginal/ATmega169.xml	2010-02-25 10:07:50.000000000 -0500
 +++ ../xmlPartDescription/ATmega169.xml	2010-08-18 13:33:18.255320569 -0400
@@ -1949,21 +1919,6 @@ diff -u ../xmlPartDescriptionOriginal/ATmega169.xml ../xmlPartDescription/ATmega
          <ALT_NAME>PB7</ALT_NAME>
          <DESCRIPTION/>
        </PIN17>
-@@ -1496,12 +1496,12 @@
-         <DESCRIPTION/>
-       </PIN24>
-       <PIN25>
--        <PIN_NAME>[ICP/SEG22]</PIN_NAME>
-+        <PIN_NAME>[ICP:SEG22]</PIN_NAME>
-         <ALT_NAME>PD0</ALT_NAME>
-         <DESCRIPTION/>
-       </PIN25>
-       <PIN26>
--        <PIN_NAME>[INT0/SEG21]</PIN_NAME>
-+        <PIN_NAME>[INT0:SEG21]</PIN_NAME>
-         <ALT_NAME>PD1</ALT_NAME>
-         <DESCRIPTION/>
-       </PIN26>
 diff -u ../xmlPartDescriptionOriginal/ATmega16A.xml ../xmlPartDescription/ATmega16A.xml
 --- ../xmlPartDescriptionOriginal/ATmega16A.xml	2010-02-25 10:07:52.000000000 -0500
 +++ ../xmlPartDescription/ATmega16A.xml	2010-08-17 22:22:20.637818301 -0400
@@ -2585,21 +2540,6 @@ diff -u ../xmlPartDescriptionOriginal/ATmega329PA.xml ../xmlPartDescription/ATme
          <ALT_NAME>PB7</ALT_NAME>
          <DESCRIPTION/>
        </PIN17>
-@@ -1531,12 +1531,12 @@
-         <DESCRIPTION/>
-       </PIN24>
-       <PIN25>
--        <PIN_NAME>[ICP/SEG22]</PIN_NAME>
-+        <PIN_NAME>[ICP:SEG22]</PIN_NAME>
-         <ALT_NAME>PD0</ALT_NAME>
-         <DESCRIPTION/>
-       </PIN25>
-       <PIN26>
--        <PIN_NAME>[INT0/SEG21]</PIN_NAME>
-+        <PIN_NAME>[INT0:SEG21]</PIN_NAME>
-         <ALT_NAME>PD1</ALT_NAME>
-         <DESCRIPTION/>
-       </PIN26>
 diff -u ../xmlPartDescriptionOriginal/ATmega329P.xml ../xmlPartDescription/ATmega329P.xml
 --- ../xmlPartDescriptionOriginal/ATmega329P.xml	2010-02-25 10:08:10.000000000 -0500
 +++ ../xmlPartDescription/ATmega329P.xml	2010-08-18 13:58:50.657818242 -0400
@@ -2621,21 +2561,6 @@ diff -u ../xmlPartDescriptionOriginal/ATmega329P.xml ../xmlPartDescription/ATmeg
          <ALT_NAME>PB7</ALT_NAME>
          <DESCRIPTION/>
        </PIN17>
-@@ -1531,12 +1531,12 @@
-         <DESCRIPTION/>
-       </PIN24>
-       <PIN25>
--        <PIN_NAME>[ICP/SEG22]</PIN_NAME>
-+        <PIN_NAME>[ICP:SEG22]</PIN_NAME>
-         <ALT_NAME>PD0</ALT_NAME>
-         <DESCRIPTION/>
-       </PIN25>
-       <PIN26>
--        <PIN_NAME>[INT0/SEG21]</PIN_NAME>
-+        <PIN_NAME>[INT0:SEG21]</PIN_NAME>
-         <ALT_NAME>PD1</ALT_NAME>
-         <DESCRIPTION/>
-       </PIN26>
 diff -u ../xmlPartDescriptionOriginal/ATmega329.xml ../xmlPartDescription/ATmega329.xml
 --- ../xmlPartDescriptionOriginal/ATmega329.xml	2010-02-25 10:08:08.000000000 -0500
 +++ ../xmlPartDescription/ATmega329.xml	2010-08-18 13:58:20.466567926 -0400
@@ -2657,21 +2582,6 @@ diff -u ../xmlPartDescriptionOriginal/ATmega329.xml ../xmlPartDescription/ATmega
          <ALT_NAME>PB7</ALT_NAME>
          <DESCRIPTION/>
        </PIN17>
-@@ -1544,12 +1544,12 @@
-         <DESCRIPTION/>
-       </PIN24>
-       <PIN25>
--        <PIN_NAME>[ICP/SEG22]</PIN_NAME>
-+        <PIN_NAME>[ICP:SEG22]</PIN_NAME>
-         <ALT_NAME>PD0</ALT_NAME>
-         <DESCRIPTION/>
-       </PIN25>
-       <PIN26>
--        <PIN_NAME>[INT0/SEG21]</PIN_NAME>
-+        <PIN_NAME>[INT0:SEG21]</PIN_NAME>
-         <ALT_NAME>PD1</ALT_NAME>
-         <DESCRIPTION/>
-       </PIN26>
 diff -u ../xmlPartDescriptionOriginal/ATmega32A.xml ../xmlPartDescription/ATmega32A.xml
 --- ../xmlPartDescriptionOriginal/ATmega32A.xml	2010-02-25 10:08:12.000000000 -0500
 +++ ../xmlPartDescription/ATmega32A.xml	2010-08-17 13:48:00.144069219 -0400
@@ -3540,21 +3450,6 @@ diff -u ../xmlPartDescriptionOriginal/ATmega649P.xml ../xmlPartDescription/ATmeg
          <ALT_NAME>PB7</ALT_NAME>
          <DESCRIPTION/>
        </PIN17>
-@@ -350,12 +350,12 @@
-         <DESCRIPTION/>
-       </PIN24>
-       <PIN25>
--        <PIN_NAME>[ICP/SEG22]</PIN_NAME>
-+        <PIN_NAME>[ICP:SEG22]</PIN_NAME>
-         <ALT_NAME>PD0</ALT_NAME>
-         <DESCRIPTION/>
-       </PIN25>
-       <PIN26>
--        <PIN_NAME>[INT0/SEG21]</PIN_NAME>
-+        <PIN_NAME>[INT0:SEG21]</PIN_NAME>
-         <ALT_NAME>PD1</ALT_NAME>
-         <DESCRIPTION/>
-       </PIN26>
 diff -u ../xmlPartDescriptionOriginal/ATmega649.xml ../xmlPartDescription/ATmega649.xml
 --- ../xmlPartDescriptionOriginal/ATmega649.xml	2010-02-25 10:08:26.000000000 -0500
 +++ ../xmlPartDescription/ATmega649.xml	2010-08-18 13:59:26.494067959 -0400
@@ -3576,21 +3471,6 @@ diff -u ../xmlPartDescriptionOriginal/ATmega649.xml ../xmlPartDescription/ATmega
          <ALT_NAME>PB7</ALT_NAME>
          <DESCRIPTION/>
        </PIN17>
-@@ -350,12 +350,12 @@
-         <DESCRIPTION/>
-       </PIN24>
-       <PIN25>
--        <PIN_NAME>[ICP/SEG22]</PIN_NAME>
-+        <PIN_NAME>[ICP:SEG22]</PIN_NAME>
-         <ALT_NAME>PD0</ALT_NAME>
-         <DESCRIPTION/>
-       </PIN25>
-       <PIN26>
--        <PIN_NAME>[INT0/SEG21]</PIN_NAME>
-+        <PIN_NAME>[INT0:SEG21]</PIN_NAME>
-         <ALT_NAME>PD1</ALT_NAME>
-         <DESCRIPTION/>
-       </PIN26>
 diff -u ../xmlPartDescriptionOriginal/ATmega64C1.xml ../xmlPartDescription/ATmega64C1.xml
 --- ../xmlPartDescriptionOriginal/ATmega64C1.xml	2010-02-25 10:08:30.000000000 -0500
 +++ ../xmlPartDescription/ATmega64C1.xml	2010-08-15 11:22:25.764069858 -0400
