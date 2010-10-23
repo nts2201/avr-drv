@@ -1,5 +1,8 @@
 #!/bin/bash
 
+mkdir -p ./avr-drv/include/io_pin
+cp ./io_pin/*.h ./avr-drv/include/io_pin
+
 ./make_errno.sh
 ./make_adc.sh
 ./make_can.sh
@@ -15,5 +18,4 @@
 ./make_twi_int.sh
 ./make_usart.sh
 
-mkdir -p ./avr-drv/include/io_pin
-cp ./io_pin/*.h ./avr-drv/include/io_pin
+
