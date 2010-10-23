@@ -132,7 +132,7 @@ attiny4313)
 rm buildDir/avr-drv-tmrcnt1
 for name in ${AVR_TARGET[@]}
 do
-  echo -n "Making Timer/Counter 0 librairy for" $name
+  echo -n "Making Timer/Counter 1 librairy for" $name
   mkdir -p avr-drv/lib/$name
   MCU=$name OUTDIR=../avr-drv/lib/$name TARGET=tmrcnt1 make -s -C TimerCounter clean
   MCU=$name OUTDIR=../avr-drv/lib/$name TARGET=tmrcnt1 make -s -k -C TimerCounter
