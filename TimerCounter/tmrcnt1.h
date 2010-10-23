@@ -107,7 +107,35 @@ uint16_t tmrcnt1_get_occ(void);
 
 void tmrcnt1_set_oca(uint16_t value);
 void tmrcnt1_set_ocb(uint16_t value);
+
+#if defined(__AVR_AT90CAN32__) \
+|| defined(__AVR_AT90CAN64__) \
+|| defined(__AVR_AT90CAN128__) \
+|| defined(__AVR_AT90USB82__) \
+|| defined(__AVR_AT90USB162__) \
+|| defined(__AVR_AT90USB646__) \
+|| defined(__AVR_AT90USB647__) \
+|| defined(__AVR_AT90USB1286__) \
+|| defined(__AVR_AT90USB1287__) \
+|| defined(__AVR_ATmega8U2__) \
+|| defined(__AVR_ATmega16U2__) \
+|| defined(__AVR_ATmega16U4__) \
+|| defined(__AVR_ATmega32U2__) \
+|| defined(__AVR_ATmega32U4__) \
+|| defined(__AVR_ATmega32U6__) \
+|| defined(__AVR_ATmega64__) \
+|| defined(__AVR_ATmega64A__) \
+|| defined(__AVR_ATmega103__) \
+|| defined(__AVR_ATmega128__) \
+|| defined(__AVR_ATmega128A__) \
+|| defined(__AVR_ATmega128RFA1__) \
+|| defined(__AVR_ATmega640__) \
+|| defined(__AVR_ATmega1280__) \
+|| defined(__AVR_ATmega1281__) \
+|| defined(__AVR_ATmega2560__) \
+|| defined(__AVR_ATmega2561__)
 void tmrcnt1_set_occ(uint16_t value);
+#endif
 
 uint16_t tmrcnt1_get_ic(void);
 
@@ -116,10 +144,66 @@ void tmrcnt1_ic_match_int_disable(void);
 
 void tmrcnt1_oca_match_int_enable(void);
 void tmrcnt1_ocb_match_int_enable(void);
+
+#if defined(__AVR_AT90CAN32__) \
+|| defined(__AVR_AT90CAN64__) \
+|| defined(__AVR_AT90CAN128__) \
+|| defined(__AVR_AT90USB82__) \
+|| defined(__AVR_AT90USB162__) \
+|| defined(__AVR_AT90USB646__) \
+|| defined(__AVR_AT90USB647__) \
+|| defined(__AVR_AT90USB1286__) \
+|| defined(__AVR_AT90USB1287__) \
+|| defined(__AVR_ATmega8U2__) \
+|| defined(__AVR_ATmega16U2__) \
+|| defined(__AVR_ATmega16U4__) \
+|| defined(__AVR_ATmega32U2__) \
+|| defined(__AVR_ATmega32U4__) \
+|| defined(__AVR_ATmega32U6__) \
+|| defined(__AVR_ATmega64__) \
+|| defined(__AVR_ATmega64A__) \
+|| defined(__AVR_ATmega103__) \
+|| defined(__AVR_ATmega128__) \
+|| defined(__AVR_ATmega128A__) \
+|| defined(__AVR_ATmega128RFA1__) \
+|| defined(__AVR_ATmega640__) \
+|| defined(__AVR_ATmega1280__) \
+|| defined(__AVR_ATmega1281__) \
+|| defined(__AVR_ATmega2560__) \
+|| defined(__AVR_ATmega2561__)
 void tmrcnt1_occ_match_int_enable(void);
+#endif
 
 void tmrcnt1_oca_match_int_disable(void);
 void tmrcnt1_ocb_match_int_disable(void);
+
+#if defined(__AVR_AT90CAN32__) \
+|| defined(__AVR_AT90CAN64__) \
+|| defined(__AVR_AT90CAN128__) \
+|| defined(__AVR_AT90USB82__) \
+|| defined(__AVR_AT90USB162__) \
+|| defined(__AVR_AT90USB646__) \
+|| defined(__AVR_AT90USB647__) \
+|| defined(__AVR_AT90USB1286__) \
+|| defined(__AVR_AT90USB1287__) \
+|| defined(__AVR_ATmega8U2__) \
+|| defined(__AVR_ATmega16U2__) \
+|| defined(__AVR_ATmega16U4__) \
+|| defined(__AVR_ATmega32U2__) \
+|| defined(__AVR_ATmega32U4__) \
+|| defined(__AVR_ATmega32U6__) \
+|| defined(__AVR_ATmega64__) \
+|| defined(__AVR_ATmega64A__) \
+|| defined(__AVR_ATmega103__) \
+|| defined(__AVR_ATmega128__) \
+|| defined(__AVR_ATmega128A__) \
+|| defined(__AVR_ATmega128RFA1__) \
+|| defined(__AVR_ATmega640__) \
+|| defined(__AVR_ATmega1280__) \
+|| defined(__AVR_ATmega1281__) \
+|| defined(__AVR_ATmega2560__) \
+|| defined(__AVR_ATmega2561__)
 void tmrcnt1_occ_match_int_disable(void);
+#endif
 
 #endif /* TMR_CNT_1_H_ */
