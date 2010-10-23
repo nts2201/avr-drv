@@ -58,7 +58,7 @@
 #         F_CPU =  7372800
 #         F_CPU =  8000000
 #         F_CPU = 11059200
-#         F_CPU = 14745600
+#         F_CPU = 14745600errno_avrdrv
 #         F_CPU = 16000000
 #         F_CPU = 18432000
 #         F_CPU = 20000000
@@ -147,7 +147,7 @@ CSTANDARD = -std=gnu99
 #  -Wall...:     warning level
 #  -Wa,...:      tell GCC to pass this to the assembler.
 #    -adhlns...: create assembler listing
-CFLAGS = -g$(DEBUG)
+#CFLAGS = -g$(DEBUG)
 CFLAGS += $(CDEFS)
 CFLAGS += -O$(OPT)
 CFLAGS += -funsigned-char
@@ -229,8 +229,8 @@ SCANF_LIB =
 #SCANF_LIB = $(SCANF_LIB_MIN)
 #SCANF_LIB = $(SCANF_LIB_FLOAT)
 
-
-MATH_LIB = -lm
+MATH_LIB =
+#MATH_LIB = -lm
 
 
 # List any extra directories to look for libraries here.
