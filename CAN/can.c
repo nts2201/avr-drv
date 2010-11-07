@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2010 Frédéric Nadeau
+﻿/* Copyright (c) 2008-2010 Frédéric Nadeau
    Copyright (c) 2008 François-Pierre Pépin
    Copyright (c) 2008 Sy Sech Vong
    All rights reserved.
@@ -879,35 +879,36 @@ int can_set_baud_rate(uint32_t ulBaudrate, uint32_t ulClkFreq,
     uint8_t ubTprs;
     uint8_t ubTphs1;
     uint8_t ubTphs2;
-    uint8_t ubBRP = 0;
+    uint8_t ubBRP = 1;
 
     ubDivider = ulClkFreq / ulBaudrate; /* Trouve le diviseur total de la fréquence du Can */
 
     ubTbit = ubDivider;
     while ((ubTbit >= CAN_MAX_TQ) | (ubTbit <= CAN_MIN_TQ))
     {
-        ubTbit = (ubTbit >> 2);
-        ubBRP++;
+        ubTbit = (ubTbit >> 1);
+        ubBRP *= 2;
     }
 
     ubTphs2 = (ubTbit * (100 - ubSamplingRate) / 100);
 
-    if (0 == ubBRP)
+    if (1 == ubBRP)
     {
         ubTphs1 = ubTphs2 + 1;
+        ubTphs2 -= 1;
     }
     else
     {
         ubTphs1 = ubTphs2;
     }
 
-    ubTprs = ubTbit - ubTphs1 - ubTphs2 - 1;
+    ubTprs = ubTbit - ubTphs1 - ubTphs2 - ubTsjw;
 
-    CANBT1 = (ubBRP << BRP0);
-    CANBT2 = (ubTprs << PRS0) | (ubTsjw << SJW0);
-    CANBT3 = (ubTphs2 << PHS20) | (ubTphs1 << PHS10) | (1 << SMP);
+    CANBT1 = ((ubBRP-1) << BRP0);
+    CANBT2 = ((ubTprs-1) << PRS0) | ((ubTsjw-1) << SJW0);
+    CANBT3 = ((ubTphs2-1) << PHS20) | ((ubTphs1-1) << PHS10) | (1 << SMP);
 
-    if (ubDivider == (ubBRP + 1) * (ubTprs + ubTphs1 + ubTphs2 + 1))
+    if (ubDivider == (ubBRP) * (ubTprs + ubTphs1 + ubTphs2 + 1))
     {
         return 0;
     }
