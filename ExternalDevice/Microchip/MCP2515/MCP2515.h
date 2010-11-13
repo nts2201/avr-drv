@@ -57,31 +57,6 @@ typedef struct mcp2515_can_frame_s{
 }mcp2515_can_frame_t;   /**< Typedef of #mcp2515_can_frame_s*/
 
 
-/*! \fn uint8_t mcp2515_spi_port_init(void)
- *  \brief	Provide the initiation of the SPI port to be use for the MCP2515 transmission.
- */
-extern void mcp2515_spi_port_init(void);
-
-/*! \fn void mcp2515_spi_select(void)
- *  \brief	Provide the selection of the MCP2515 on the SPI bus to be use for the transmission.
- */
-extern void mcp2515_spi_select(void);
-
-/*! \fn void mcp2515_spi_unselect(void)
- *  \brief	Provide the remove of the MCP2515 on the SPI bus.
- *  \param
- *  \return
- */
-extern void mcp2515_spi_unselect(void);
-
-/*! \fn uint8_t mcp2515_spi_transfer(uint8_t dataOut, uint8_t *dataIn)
- *  \brief Provide the tranmission service on the SPI port to MCP2515.
- *  \param dataOut Data to be send.
- *  \param dataIn Pointer to 8 bits data space. Read value will be saved at specified address.
- */
-extern void mcp2515_spi_transfer(uint8_t dataOut, uint8_t *dataIn);
-
-
 /*! \fn uint8_t mcp2515_reset(void)
  *  \brief Send the RESET command over SPI bus. It has the same effect as
  *  lowing the RESET pin of MCP2515.
