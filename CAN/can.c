@@ -1,4 +1,4 @@
-﻿/* Copyright (c) 2008-2010 Frédéric Nadeau
+/* Copyright (c) 2008-2010 Frédéric Nadeau
    Copyright (c) 2008 François-Pierre Pépin
    Copyright (c) 2008 Sy Sech Vong
    All rights reserved.
