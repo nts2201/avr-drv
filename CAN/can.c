@@ -891,25 +891,29 @@ int can_set_baud_rate(uint32_t ulBaudrate, uint32_t ulClkFreq,
     }
 
     ubTphs2 = (ubTbit * (100 - ubSamplingRate) / 100);
+    ubTphs1 = 0;
+
+    for(ubTprs = 8; ubTprs > 0; ubTprs--)
+    {
+    	if((1 + ubTprs + ubTphs2 + ubTphs2) <= (ubTbit + 8 - ubTphs2)
+    			&& ((ubTbit - 1 - ubTprs - ubTphs2) >= ubTphs2))
+    	{
+    		ubTphs1 = ubTbit - 1 - ubTprs - ubTphs2;
+    		break;
+    	}
+    }
 
     if (1 == ubBRP)
     {
         ubTphs1 = ubTphs2 + 1;
         ubTphs2 -= 1;
     }
-    else
-    {
-        ubTphs1 = ubTphs2;
-    }
-
-    ubTprs = ubTbit - ubTphs1 - ubTphs2 - ubTsjw;
-
-    CANBT1 = ((ubBRP-1) << BRP0);
-    CANBT2 = ((ubTprs-1) << PRS0) | ((ubTsjw-1) << SJW0);
-    CANBT3 = ((ubTphs2-1) << PHS20) | ((ubTphs1-1) << PHS10) | (1 << SMP);
 
     if (ubDivider == (ubBRP) * (ubTprs + ubTphs1 + ubTphs2 + 1))
     {
+    	CANBT1 = ((ubBRP-1) << BRP0);
+		CANBT2 = ((ubTprs-1) << PRS0) | ((ubTsjw-1) << SJW0);
+		CANBT3 = ((ubTphs2-1) << PHS20) | ((ubTphs1-1) << PHS10) | (1 << SMP);
         return 0;
     }
     else
