@@ -1,0 +1,151 @@
+# Hey Emacs, this is a -*- makefile -*-
+
+include Makefile.mk
+
+DEVICES = at90can32
+DEVICES += at90can64
+DEVICES += at90can128
+DEVICES += at90pwm1
+DEVICES += at90pwm2
+DEVICES += at90pwm2b
+DEVICES += at90pwm3
+DEVICES += at90pwm3b
+DEVICES += at90pwm81
+DEVICES += at90pwm216
+DEVICES += at90pwm316
+DEVICES += at90usb646
+DEVICES += at90usb647
+DEVICES += at90usb1286
+DEVICES += at90usb1287
+DEVICES += atmega8
+DEVICES += atmega16
+DEVICES += atmega16a
+DEVICES += atmega16m1
+DEVICES += atmega16u4
+DEVICES += atmega32
+DEVICES += atmega32c1
+DEVICES += atmega32m1
+DEVICES += atmega32u4
+DEVICES += atmega32u6
+DEVICES += atmega48
+DEVICES += atmega48a
+DEVICES += atmega48p
+DEVICES += atmega64
+DEVICES += atmega64c1
+DEVICES += atmega64m1
+DEVICES += atmega88
+DEVICES += atmega88a
+DEVICES += atmega88p
+DEVICES += atmega88pa
+DEVICES += atmega103
+DEVICES += atmega128
+DEVICES += atmega128rfa1
+DEVICES += atmega163
+DEVICES += atmega164p
+DEVICES += atmega164a
+DEVICES += atmega165
+DEVICES += atmega165p
+DEVICES += atmega168
+DEVICES += atmega168a
+DEVICES += atmega168p
+DEVICES += atmega169
+DEVICES += atmega169a
+DEVICES += atmega169p
+DEVICES += atmega169pa
+DEVICES += atmega323
+DEVICES += atmega324p
+DEVICES += atmega324a
+DEVICES += atmega324pa
+DEVICES += atmega325
+DEVICES += atmega325p
+DEVICES += atmega328p
+DEVICES += atmega328
+DEVICES += atmega329
+DEVICES += atmega329p
+DEVICES += atmega329pa
+DEVICES += atmega640
+DEVICES += atmega644
+DEVICES += atmega644a
+DEVICES += atmega644p
+DEVICES += atmega644pa
+DEVICES += atmega645
+DEVICES += atmega645a
+DEVICES += atmega645p
+DEVICES += atmega649
+DEVICES += atmega649a
+DEVICES += atmega649p
+DEVICES += atmega1280
+DEVICES += atmega1281
+DEVICES += atmega1284p
+DEVICES += atmega2560
+DEVICES += atmega2561
+DEVICES += atmega3250
+DEVICES += atmega3250p
+DEVICES += atmega3290
+DEVICES += atmega3290p
+DEVICES += atmega6450
+DEVICES += atmega6450a
+DEVICES += atmega6450p
+DEVICES += atmega6490
+DEVICES += atmega6490a
+DEVICES += atmega6490p
+DEVICES += atmega8535
+DEVICES += attiny13
+DEVICES += attiny13a
+DEVICES += attiny24
+DEVICES += attiny24a
+DEVICES += attiny25
+DEVICES += attiny26
+DEVICES += attiny43u
+DEVICES += attiny44
+DEVICES += attiny44a
+DEVICES += attiny45
+DEVICES += attiny48
+DEVICES += attiny84
+DEVICES += attiny85
+DEVICES += attiny88
+DEVICES += attiny87
+DEVICES += attiny167
+DEVICES += attiny261
+DEVICES += attiny261a
+DEVICES += attiny461
+DEVICES += attiny861
+DEVICES += attiny861a
+
+OBJS=$(DEVICES:%=$(OBJDIR)/%/adcCommun.o)
+OBJS+=$(DEVICES:%=$(OBJDIR)/%/adcDigitalInput.o)
+OBJS+=$(DEVICES:%=$(OBJDIR)/%/adcMux.o)
+OBJS+=$(DEVICES:%=$(OBJDIR)/%/adcTriggerSelect.o)
+
+TARGETS=$(DEVICES:%=$(OUTDIR)/%/adc.a)
+
+OBJDIRS=$(DEVICES:%=$(OBJDIR)/%)
+OUTDIRS=$(DEVICES:%=$(OUTDIR)/%)
+
+all: $(TARGETS)
+
+$(OBJDIR)/%/adcCommun.o : adcCommun.c adcDef.h
+	$(CC) -c -mmcu=$* $(ALL_CFLAGS) $< -o $@ 
+
+$(OBJDIR)/%/adcDigitalInput.o : adcDigitalInput.c adcDef.h
+	$(CC) -c -mmcu=$* $(ALL_CFLAGS) $< -o $@
+
+$(OBJDIR)/%/adcMux.o : adcMux.c adcDef.h
+	$(CC) -c -mmcu=$* $(ALL_CFLAGS) $< -o $@
+
+$(OBJDIR)/%/adcTriggerSelect.o : adcTriggerSelect.c adcDef.h
+	$(CC) -c -mmcu=$* $(ALL_CFLAGS) $< -o $@
+
+$(OUTDIR)/%/adc.a: $(OBJS)
+	$(AR) $@ $(OBJDIR)/%/adcCommun.o $(OBJDIR)/%/adcDigitalInput.o $(OBJDIR)/%/adcMux.o $(OBJDIR)/%/adcTriggerSelect.o
+
+clean:
+	$(REMOVE) $(TARGETS)
+	$(REMOVE) $(OBJS)
+
+# Create object files directory
+$(shell mkdir -p $(OBJDIRS))
+$(shell mkdir -p $(OUTDIRS))
+
+# Listing of phony targets.
+.PHONY : all clean

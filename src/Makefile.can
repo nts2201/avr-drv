@@ -1,0 +1,38 @@
+# Hey Emacs, this is a -*- makefile -*-
+
+include Makefile.mk
+
+DEVICES = at90can32
+DEVICES += at90can64
+DEVICES += at90can128
+DEVICES += atmega32c1
+DEVICES += atmega64c1
+DEVICES += atmega16m1
+DEVICES += atmega32m1
+DEVICES += atmega64m1
+
+OBJS=$(DEVICES:%=$(OBJDIR)/%/can.o)
+
+TARGETS=$(DEVICES:%=$(OUTDIR)/%/can.a)
+
+OBJDIRS=$(DEVICES:%=$(OBJDIR)/%)
+OUTDIRS=$(DEVICES:%=$(OUTDIR)/%)
+
+all: $(TARGETS)
+
+$(OBJDIR)/%/can.o : can.c can.h
+	$(CC) -c -mmcu=$* $(ALL_CFLAGS) $< -o $@
+
+$(OUTDIR)/%/can.a: $(OBJS)
+	$(AR) $@ $(OBJDIR)/%/can.o
+
+clean:
+	$(REMOVE) $(TARGETS)
+	$(REMOVE) $(OBJS)
+
+# Create object files directory
+$(shell mkdir -p $(OBJDIRS))
+$(shell mkdir -p $(OUTDIRS))
+
+# Listing of phony targets.
+.PHONY : all clean
