@@ -43,9 +43,8 @@
 
 #include "avr-drv-errno.h"
 #include "usart.h"
+#include "usartBaudRate.h"
 #include "io_pin/io_pin.h"
-
-#include "usartBaudRate.c"
 
 #define USART_RX_ERR_MASK   (_BV(PE) | _BV(DOR) | _BV(FE)) //0b0001 1100
 

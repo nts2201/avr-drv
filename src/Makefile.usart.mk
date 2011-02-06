@@ -1,0 +1,99 @@
+# Hey Emacs, this is a -*- makefile -*-
+
+USART_DEVICES = at90can32
+USART_DEVICES += at90can64
+USART_DEVICES += at90can128
+USART_DEVICES += at90pwm2
+USART_DEVICES += at90pwm2b
+USART_DEVICES += at90pwm3
+USART_DEVICES += at90pwm3b
+USART_DEVICES += at90pwm216
+USART_DEVICES += at90pwm316
+USART_DEVICES += at90usb82
+USART_DEVICES += at90usb162
+USART_DEVICES += at90usb646
+USART_DEVICES += at90usb647
+USART_DEVICES += at90usb1286
+USART_DEVICES += at90usb1287
+USART_DEVICES += atmega8
+USART_DEVICES += atmega8u2
+USART_DEVICES += atmega16
+USART_DEVICES += atmega16a
+USART_DEVICES += atmega16u4
+USART_DEVICES += atmega32
+USART_DEVICES += atmega32u2
+USART_DEVICES += atmega32u4
+USART_DEVICES += atmega32u6
+USART_DEVICES += atmega48
+USART_DEVICES += atmega48a
+USART_DEVICES += atmega48p
+USART_DEVICES += atmega64
+USART_DEVICES += atmega88
+USART_DEVICES += atmega88a
+USART_DEVICES += atmega88p
+USART_DEVICES += atmega88pa
+USART_DEVICES += atmega128
+USART_DEVICES += atmega128rfa1
+USART_DEVICES += atmega162
+USART_DEVICES += atmega164p
+USART_DEVICES += atmega164a
+USART_DEVICES += atmega165
+USART_DEVICES += atmega165p
+USART_DEVICES += atmega168
+USART_DEVICES += atmega168a
+USART_DEVICES += atmega168p
+USART_DEVICES += atmega169
+USART_DEVICES += atmega169p
+USART_DEVICES += atmega169pa
+USART_DEVICES += atmega323
+USART_DEVICES += atmega324p
+USART_DEVICES += atmega324a
+USART_DEVICES += atmega324pa
+USART_DEVICES += atmega325
+USART_DEVICES += atmega325p
+USART_DEVICES += atmega328
+USART_DEVICES += atmega328p
+USART_DEVICES += atmega329
+USART_DEVICES += atmega329p
+USART_DEVICES += atmega329pa
+USART_DEVICES += atmega640
+USART_DEVICES += atmega644
+USART_DEVICES += atmega644a
+USART_DEVICES += atmega644p
+USART_DEVICES += atmega644pa
+USART_DEVICES += atmega645
+USART_DEVICES += atmega649
+USART_DEVICES += atmega649p
+USART_DEVICES += atmega1280
+USART_DEVICES += atmega1281
+USART_DEVICES += atmega1284p
+USART_DEVICES += atmega2560
+USART_DEVICES += atmega2561
+USART_DEVICES += atmega3250
+USART_DEVICES += atmega3250p
+USART_DEVICES += atmega3290
+USART_DEVICES += atmega3290p
+USART_DEVICES += atmega6450
+USART_DEVICES += atmega6490
+USART_DEVICES += atmega8535
+
+USART_OBJS=$(USART_DEVICES:%=$(OBJDIR)/%/usart.o)
+USART_OBJS+=$(USART_DEVICES:%=$(OBJDIR)/%/usartBaudRate.o)
+
+USART_TARGETS=$(USART_DEVICES:%=$(OUTDIR)/%/usart.a)
+
+USART_OBJDIRS=$(USART_DEVICES:%=$(OBJDIR)/%)
+USART_OUTDIRS=$(USART_DEVICES:%=$(OUTDIR)/%)
+
+$(OBJDIR)/%/usart.o : usart.c usart.h
+	$(CC) -c -mmcu=$* $(ALL_CFLAGS) $< -o $@
+
+$(OBJDIR)/%/usartBaudRate.o : usartBaudRate.c usartBaudRate.h usart.h 
+	$(CC) -c -mmcu=$* $(ALL_CFLAGS) $< -o $@
+
+$(OUTDIR)/%/usart.a: $(USART_OBJS)
+	$(AR) $@ $(OBJDIR)/$*/usart.o $(OBJDIR)/$*/usartBaudRate.o
+
+# Create object files directory
+$(shell mkdir -p $(USART_OBJDIRS))
+$(shell mkdir -p $(USART_OUTDIRS))
