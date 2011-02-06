@@ -9,6 +9,8 @@ OPT = s
 DEBUG = dwarf-2
 CSTANDARD = -std=gnu99
 
+EXTRAINCDIRS = $(OUTDIR)/inc
+
 
 #---------------- Compiler Options C ----------------
 #  -g*:          generate debugging information
@@ -31,7 +33,7 @@ CFLAGS += -Wstrict-prototypes
 #CFLAGS += -Wundef
 #CFLAGS += -Wunreachable-code
 #CFLAGS += -Wsign-compare
-CFLAGS += -Wa,-adhlns=$(<:%.c=$(OBJDIR)/%.lst)
+#CFLAGS += -Wa,-adhlns=$(<:%.c=$(OBJDIR)/%.lst)
 CFLAGS += $(patsubst %,-I%,$(EXTRAINCDIRS))
 CFLAGS += $(CSTANDARD)
 
