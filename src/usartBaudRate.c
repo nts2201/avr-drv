@@ -41,9 +41,11 @@
  */
 
 #include <stdbool.h>
+#include <stdlib.h>
 #include <stdint.h>
 
 #include "avr-drv-errno.h"
+#include "usart.h"
 
 static uint16_t get_ubrb(uint32_t uiBaudRate, uint32_t uiClk, uint8_t ubTol,
         uint8_t factor)
@@ -69,20 +71,6 @@ static _Bool check_Tol(uint32_t uiBaudRate, uint32_t uiClk, uint16_t uwUbrr,
     return true;
 }
 
-/*! \fn int usart_baud_rate_get_ubrb(uint32_t uiBaudRate, uint32_t uiClk, uint8_t ubTol, usart_mode_t mode, uint16_t* puwUbrr)
- *  \brief  Compute value for UBRR.
- *
- *  \param  uiBaudRate Desired baud rate.
- *  \param  uiClk Clock frequency in Hz.
- *  \param  ubTol Mismatch tolerance. 2 should be use, witch mean 2%.
- *  \param  mode Whether it is Asyn or Sync USART mode.
- *  \param  puwUbrr Pointer to where UBRR value will be saved.
- *  \return On success, value can be 0 or 1. If value is 0, X2 mode shall be desactivated and if
- *          it is 1, it shall be activated. Value -1 indicate that an error occurred.
- *          See \c errno for detail on error.\n
- *          #EINVAL Invalid argument was provided.\n
- *          #EBAUDRATE Desired baud rate can not be achieved.
- */
 int usart_baud_rate_get_ubrb(uint32_t uiBaudRate, uint32_t uiClk,
         uint8_t ubTol, usart_mode_t mode, uint16_t* puwUbrr)
 {
