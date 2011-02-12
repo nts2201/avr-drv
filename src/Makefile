@@ -22,7 +22,9 @@ adc: $(ADC_TARGETS)
 
 iopin:
 	mkdir -p $(OUTDIR)/inc/io_pin
-	cp ../io_pin/* $(OUTDIR)/inc/io_pin
+	$(COPY) ./io_pin/* $(OUTDIR)/inc/io_pin
+	mkdir -p $(OUTDIR)/example
+	$(COPY) -R ./example $(OUTDIR)/example
 
 clean:
 	$(REMOVE) $(ADC_TARGETS)
