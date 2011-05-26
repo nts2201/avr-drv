@@ -115,7 +115,7 @@ typedef enum adc_voltage_ref_e
     adc_voltage_ref_avcc_wcap,
     adc_voltage_ref_internal_2_56_wcap = 3,
 }adc_voltage_ref_t;
-#elif  (__AVR_ATmega16M1__) \
+#elif  defined(__AVR_ATmega16M1__) \
 || defined (__AVR_ATmega32C1__) \
 || defined (__AVR_ATmega32M1__) \
 || defined (__AVR_ATmega64C1__) \
@@ -439,7 +439,7 @@ typedef enum adc_trigger_source_e
 {
     adc_trigger_source_free_running
 } adc_trigger_source_t;
-#elif (__AVR_ATmega16M1__) \
+#elif defined(__AVR_ATmega16M1__) \
 || defined (__AVR_ATmega32C1__) \
 || defined (__AVR_ATmega32M1__) \
 || defined (__AVR_ATmega64C1__) \
@@ -461,7 +461,7 @@ typedef enum adc_trigger_source_e
     adc_trigger_source_analog_comparator_2,
     adc_trigger_source_analog_comparator_3
 } adc_trigger_source_t;
-#elif (__AVR_ATmega16M1__) \
+#elif defined(__AVR_ATmega16M1__) \
 || defined (__AVR_ATmega32C1__) \
 || defined (__AVR_ATmega32M1__) \
 || defined (__AVR_ATmega64C1__) \
@@ -796,7 +796,7 @@ typedef enum adc_input_channel_e
     adc_input_channel_vbg = 0x0E,
     adc_input_channel_gnd = 0x0F
 } adc_input_channel_t;
-#elif (__AVR_ATmega16M1__) \
+#elif defined(__AVR_ATmega16M1__) \
 || defined (__AVR_ATmega32C1__) \
 || defined (__AVR_ATmega32M1__) \
 || defined (__AVR_ATmega64C1__) \
