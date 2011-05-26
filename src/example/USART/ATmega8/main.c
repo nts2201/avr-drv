@@ -31,15 +31,10 @@
  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "avr-drv.h"
+#include "usart.h"
 
 int main(void)
 {
-	usartSetBaudRate(USART_Port_0, 115200L);
-	usartSetNumBit(USART_Port_0, USART_NumBits_8);
-	usartSetParity(USART_Port_0, USART_Parity_None);
-	usartSetStopBit(USART_Port_0, USART_StopBit_1);
-	usartSetMode(USART_Port_0, USART_Mode_Async);
 
 	for(;;);
 	return 0;

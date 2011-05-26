@@ -1,6 +1,6 @@
 # Hey Emacs, this is a -*- makefile -*-
 #----------------------------------------------------------------------------
-# WinAVR Makefile Template written by Eric B. Weddington, Jörg Wunsch, et al.
+# WinAVR Makefile Template written by Eric B. Weddington, Jï¿½rg Wunsch, et al.
 #
 # Released to the Public Domain
 #
@@ -64,8 +64,6 @@ MCU = atmega8
 #         F_CPU = 20000000
 F_CPU = 14745600
 
-AVR_DRV_DIR = ../../..
-
 
 # Output format. (can be srec, ihex, binary)
 FORMAT = ihex
@@ -82,8 +80,7 @@ OBJDIR = .
 
 
 # List C source files here. (C dependencies are automatically generated.)
-SRC = $(TARGET).c \
-$(AVR_DRV_DIR)/avr-drv.c
+SRC = $(TARGET).c 
 
 
 # List C++ source files here. (C dependencies are automatically generated.)
@@ -117,7 +114,7 @@ DEBUG = dwarf-2
 #     Each directory must be seperated by a space.
 #     Use forward slashes for directory separators.
 #     For a directory that has spaces, enclose it in quotes.
-EXTRAINCDIRS = $(AVR_DRV_DIR)
+EXTRAINCDIRS = ../../../deliver/include
 
 
 # Compiler flag to set the C Standard level.
@@ -235,12 +232,13 @@ SCANF_LIB =
 
 MATH_LIB = -lm
 
+AVR_DRV_LIB = -lusart
 
 # List any extra directories to look for libraries here.
 #     Each directory must be seperated by a space.
 #     Use forward slashes for directory separators.
 #     For a directory that has spaces, enclose it in quotes.
-EXTRALIBDIRS = 
+EXTRALIBDIRS = ../../../deliver/lib/$(MCU)
 
 
 
@@ -265,7 +263,7 @@ EXTMEMOPTS =
 LDFLAGS = -Wl,-Map=$(TARGET).map,--cref
 LDFLAGS += $(EXTMEMOPTS)
 LDFLAGS += $(patsubst %,-L%,$(EXTRALIBDIRS))
-LDFLAGS += $(PRINTF_LIB) $(SCANF_LIB) $(MATH_LIB)
+LDFLAGS += $(PRINTF_LIB) $(SCANF_LIB) $(MATH_LIB) $(AVR_DRV_LIB)
 #LDFLAGS += -T linker_script.x
 
 
