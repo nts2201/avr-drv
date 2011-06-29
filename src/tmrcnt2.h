@@ -1,4 +1,4 @@
-/* Copyright (c) 2010 Frédéric Nadeau
+/* Copyright (c) 2010-2011 Frédéric Nadeau
    All rights reserved.
 
    Redistribution and use in source and binary forms,
@@ -29,6 +29,13 @@
    (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
+/*! \file tmrcnt2.h
+ \brief API for Atmel Timer/Counter 2.
+
+ This is usually an asynchronous counter.
+
+ \author Frédéric Nadeau
+ */
 #ifndef TMR_CNT_2_H_
 #define TMR_CNT_2_H_
 
@@ -67,16 +74,16 @@ typedef enum tmrcnt2_wgm_e
 typedef enum tmrcnt2_com_e
 {
     tmrcnt2_com_port_disconnected = 0,
-    tmrcnt2_com_normal_toggle_oc0a_compare_match = 1,
-    tmrcnt2_com_ctc_toggle_oc0a_compare_match = 1,
-    tmrcnt2_com_normal_clear_oc0a_compare_match = 2,
-    tmrcnt2_com_pwm_phase_correct_clear_oc0a_upcounting_set_oc0a_downcounting = 2,
-    tmrcnt2_com_ctc_clear_oc0a_compare_match = 2,
-    tmrcnt2_com_fast_pwm_clear_oc0a_compare_match_set_oc0a_top = 2,
-    tmrcnt2_com_normal_set_oc0a_compare_match = 3,
-    tmrcnt2_com_pwm_phase_correct_set_oc0a_upcounting_clear_oc0a_downcounting = 3,
-    tmrcnt2_com_ctc_set_oc0a_compare_match = 3,
-    tmrcnt2_com_fast_pwm_set_oc0a_compare_match_clear_oc0a_top = 3,
+    tmrcnt2_com_normal_toggle_oc2a_compare_match = 1,
+    tmrcnt2_com_ctc_toggle_oc2a_compare_match = 1,
+    tmrcnt2_com_normal_clear_oc2a_compare_match = 2,
+    tmrcnt2_com_pwm_phase_correct_clear_oc2a_upcounting_set_oc2a_downcounting = 2,
+    tmrcnt2_com_ctc_clear_oc2a_compare_match = 2,
+    tmrcnt2_com_fast_pwm_clear_oc2a_compare_match_set_oc2a_top = 2,
+    tmrcnt2_com_normal_set_oc2a_compare_match = 3,
+    tmrcnt2_com_pwm_phase_correct_set_oc2a_upcounting_clear_oc2a_downcounting = 3,
+    tmrcnt2_com_ctc_set_oc2a_compare_match = 3,
+    tmrcnt2_com_fast_pwm_set_oc2a_compare_match_clear_oc2a_top = 3,
 } tmrcnt2_com_t;
 
 void tmrcnt2_init(tmrcnt2_wgm_t wgm, tmrcnt2_clk_select_t prescale);

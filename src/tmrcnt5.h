@@ -1,4 +1,4 @@
-/* Copyright (c) 2010 Frédéric Nadeau
+/* Copyright (c) 2010-2011 Frédéric Nadeau
    All rights reserved.
 
    Redistribution and use in source and binary forms,
@@ -68,16 +68,16 @@ typedef enum tmrcnt5_wgm_e
 typedef enum tmrcnt5_com_e
 {
     tmrcnt5_com_port_disconnected = 0,
-    tmrcnt5_com_normal_toggle_oc0a_compare_match = 1,
-    tmrcnt5_com_ctc_toggle_oc0a_compare_match = 1,
-    tmrcnt5_com_normal_clear_oc0a_compare_match = 2,
-    tmrcnt5_com_pwm_phase_correct_clear_oc0a_upcounting_set_oc0a_downcounting = 2,
-    tmrcnt5_com_ctc_clear_oc0a_compare_match = 2,
-    tmrcnt5_com_fast_pwm_clear_oc0a_compare_match_set_oc0a_top = 2,
-    tmrcnt5_com_normal_set_oc0a_compare_match = 3,
-    tmrcnt5_com_pwm_phase_correct_set_oc0a_upcounting_clear_oc0a_downcounting = 3,
-    tmrcnt5_com_ctc_set_oc0a_compare_match = 3,
-    tmrcnt5_com_fast_pwm_set_oc0a_compare_match_clear_oc0a_top = 3,
+    tmrcnt5_com_normal_toggle_0c5a_compare_match = 1,
+    tmrcnt5_com_ctc_toggle_0c5a_compare_match = 1,
+    tmrcnt5_com_normal_clear_0c5a_compare_match = 2,
+    tmrcnt5_com_pwm_phase_correct_clear_0c5a_upcounting_set_0c5a_downcounting = 2,
+    tmrcnt5_com_ctc_clear_0c5a_compare_match = 2,
+    tmrcnt5_com_fast_pwm_clear_0c5a_compare_match_set_0c5a_top = 2,
+    tmrcnt5_com_normal_set_0c5a_compare_match = 3,
+    tmrcnt5_com_pwm_phase_correct_set_0c5a_upcounting_clear_0c5a_downcounting = 3,
+    tmrcnt5_com_ctc_set_0c5a_compare_match = 3,
+    tmrcnt5_com_fast_pwm_set_0c5a_compare_match_clear_0c5a_top = 3,
 } tmrcnt5_com_t;
 
 void tmrcnt5_init (tmrcnt5_wgm_t mode, tmrcnt5_clk_select_t prescale);

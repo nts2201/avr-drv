@@ -1,4 +1,4 @@
-/* Copyright (c) 2010 Frédéric Nadeau
+/* Copyright (c) 2010-2011 Frédéric Nadeau
    All rights reserved.
 
    Redistribution and use in source and binary forms,
@@ -52,32 +52,32 @@ typedef enum tmrcnt4_wgm_e
     tmrcnt4_wgm_pwm_phase_correct_8bit_00ff_top_btm,
     tmrcnt4_wgm_pwm_phase_correct_9bit_01ff_top_btm,
     tmrcnt4_wgm_pwm_phase_correct_10bit_03ff_top_btm,
-    tmrcnt4_wgm_ctc_ocr5a_imd_max,
+    tmrcnt4_wgm_ctc_ocr4a_imd_max,
     tmrcnt4_wgm_fast_pwm_8bit_00ff_btm_top,
     tmrcnt4_wgm_fast_pwm_9bit_01ff_btm_top,
     tmrcnt4_wgm_fast_pwm_10bit_03ff_btm_top,
-    tmrcnt4_wgm_pwm_phase_freq_correct_icr5_btm_btm,
-    tmrcnt4_wgm_pwm_phase_freq_correct_ocr5a_btm_btm,
-    tmrcnt4_wgm_pwm_phase_correct_icr5_top_btm,
-    tmrcnt4_wgm_pwm_phase_correct_ocr5a_top_btm,
-    tmrcnt4_wgm_ctc_icr5_imd_max,
-    tmrcnt4_wgm_fast_pwm_icr5_top_top = 14,
-    tmrcnt4_wgm_fast_pwm_ocr5a_top_top
+    tmrcnt4_wgm_pwm_phase_freq_correct_icr4_btm_btm,
+    tmrcnt4_wgm_pwm_phase_freq_correct_ocr4a_btm_btm,
+    tmrcnt4_wgm_pwm_phase_correct_icr4_top_btm,
+    tmrcnt4_wgm_pwm_phase_correct_ocr4a_top_btm,
+    tmrcnt4_wgm_ctc_icr4_imd_max,
+    tmrcnt4_wgm_fast_pwm_icr4_top_top = 14,
+    tmrcnt4_wgm_fast_pwm_ocr4a_top_top
 } tmrcnt4_wgm_t;
 
 typedef enum tmrcnt4_com_e
 {
     tmrcnt4_com_port_disconnected = 0,
-    tmrcnt4_com_normal_toggle_oc0a_compare_match = 1,
-    tmrcnt4_com_ctc_toggle_oc0a_compare_match = 1,
-    tmrcnt4_com_normal_clear_oc0a_compare_match = 2,
-    tmrcnt4_com_pwm_phase_correct_clear_oc0a_upcounting_set_oc0a_downcounting = 2,
-    tmrcnt4_com_ctc_clear_oc0a_compare_match = 2,
-    tmrcnt4_com_fast_pwm_clear_oc0a_compare_match_set_oc0a_top = 2,
-    tmrcnt4_com_normal_set_oc0a_compare_match = 3,
-    tmrcnt4_com_pwm_phase_correct_set_oc0a_upcounting_clear_oc0a_downcounting = 3,
-    tmrcnt4_com_ctc_set_oc0a_compare_match = 3,
-    tmrcnt4_com_fast_pwm_set_oc0a_compare_match_clear_oc0a_top = 3,
+    tmrcnt4_com_normal_toggle_0c4a_compare_match = 1,
+    tmrcnt4_com_ctc_toggle_0c4a_compare_match = 1,
+    tmrcnt4_com_normal_clear_0c4a_compare_match = 2,
+    tmrcnt4_com_pwm_phase_correct_clear_0c4a_upcounting_set_0c4a_downcounting = 2,
+    tmrcnt4_com_ctc_clear_0c4a_compare_match = 2,
+    tmrcnt4_com_fast_pwm_clear_0c4a_compare_match_set_0c4a_top = 2,
+    tmrcnt4_com_normal_set_0c4a_compare_match = 3,
+    tmrcnt4_com_pwm_phase_correct_set_0c4a_upcounting_clear_0c4a_downcounting = 3,
+    tmrcnt4_com_ctc_set_0c4a_compare_match = 3,
+    tmrcnt4_com_fast_pwm_set_0c4a_compare_match_clear_0c4a_top = 3,
 } tmrcnt4_com_t;
 
 void tmrcnt4_init (tmrcnt4_wgm_t mode, tmrcnt4_clk_select_t prescale);
