@@ -37,6 +37,7 @@ This file uses generic preprocessor macro in order to generate code.
  \author Frédéric Nadeau
  */
 
+#include <stdbool.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <avr/io.h>

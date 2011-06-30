@@ -41,8 +41,6 @@
 #ifndef TMR_CNT_2_H_
 #define TMR_CNT_2_H_
 
-#include <stdbool.h>
-
 /*! List of clock source for Timer/Counter 2. */
 enum tmrcnt2_clk_src_e
 {
@@ -68,7 +66,7 @@ enum tmrcnt2_clk_select_e
 };
 
 /*! List of available prescaler for Timer/Counter 2 typedef. */
-typedef enum tmrcnt2_clk_select_e tmrcnt2_clk_select_t
+typedef enum tmrcnt2_clk_select_e tmrcnt2_clk_select_t;
 
 #if defined(__DOXYGEN__)
 /*! List of waveform generation mode for Timer/Counter 2.
@@ -94,9 +92,7 @@ enum tmrcnt2_wgm_e
 /*! List of waveform generation mode for Timer/Counter 2 typedef. */
 typedef enum tmrcnt2_wgm_e tmrcnt2_wgm_t;
 
-#elif defined(__AVR_AT90CAN32__) \
-|| defined(__AVR_AT90CAN64__) \
-|| defined(__AVR_AT90CAN128__)
+#else
 // Name are tmrcnt0_wgm_W_X_Y_Z
 // W: mode: normal, pwm_phaze_correct, ctc, fast_pwm
 // X: TOP
@@ -142,9 +138,6 @@ typedef enum tmrcnt2_wgm_e
     tmrcnt2_wgm_fast_pwm_ocra_top_top = 7
 #endif
 } tmrcnt2_wgm_t;
-#else
-#	error "device not supported"
-#endif
 #endif
 
 typedef enum tmrcnt2_com_e
