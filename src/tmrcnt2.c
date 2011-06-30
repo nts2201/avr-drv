@@ -1,4 +1,4 @@
-/* Copyright (c) 2010 Frédéric Nadeau
+/* Copyright (c) 2010-2011 Frédéric Nadeau
    All rights reserved.
 
    Redistribution and use in source and binary forms,
@@ -29,6 +29,14 @@
    (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
+/*! \file tmrcnt2.c
+ \brief This file handle AVR Timer/Counter 2 module.
+
+This file uses generic preprocessor macro in order to generate code.
+
+ \author Frédéric Nadeau
+ */
+
 #include <stdint.h>
 #include <stdlib.h>
 #include <avr/io.h>
@@ -39,7 +47,59 @@
 #include "tmrcntCommon.h"
 
 
-tmrcnt_init_7(2, TCCR2B, ((1 << CS22) | (1 << CS21) | (1 << CS20)), CS20, TCCR2A, TCCR2B);
+//for those devices, XML pin definition does not include the trailing
+//character 'A'. Most likely, this is because there is only one output
+//compare pin.
+#if defined(__AVR_AT90CAN32__) \
+|| defined(__AVR_AT90CAN64__) \
+|| defined(__AVR_AT90CAN128__)
+
+#define OC2A_DDR	OC2_DDR
+#define OC2A_BIT	OC2_BIT
+
+#endif
+
+
+#if defined(__AVR_AT90CAN32__) \
+|| defined(__AVR_AT90CAN64__) \
+|| defined(__AVR_AT90CAN128__)
+	tmrcnt_init_3(2, TCCR2A, ((1 << CS22) | (1 << CS21) | (1 << CS20)), CS20, TCCR2A);
+#elif defined(__AVR_AT90USB646__) \
+|| defined(__AVR_AT90USB647__) \
+|| defined(__AVR_AT90USB1286__) \
+|| defined(__AVR_AT90USB1287__) \
+|| defined(__AVR_ATmega32U6__) \
+|| defined(__AVR_ATmega48__) \
+|| defined(__AVR_ATmega48A__) \
+|| defined(__AVR_ATmega48P__) \
+|| defined(__AVR_ATmega88__) \
+|| defined(__AVR_ATmega88A__) \
+|| defined(__AVR_ATmega88P__) \
+|| defined(__AVR_ATmega88PA__) \
+|| defined(__AVR_ATmega164A__) \
+|| defined(__AVR_ATmega164P__) \
+|| defined(__AVR_ATmega168__) \
+|| defined(__AVR_ATmega168A__) \
+|| defined(__AVR_ATmega168P__) \
+|| defined(__AVR_ATmega324A__) \
+|| defined(__AVR_ATmega324P__) \
+|| defined(__AVR_ATmega324PA__) \
+|| defined(__AVR_ATmega328__) \
+|| defined(__AVR_ATmega328P__) \
+|| defined(__AVR_ATmega640__) \
+|| defined(__AVR_ATmega644__) \
+|| defined(__AVR_ATmega644A__) \
+|| defined(__AVR_ATmega644P__) \
+|| defined(__AVR_ATmega644PA__) \
+|| defined(__AVR_ATmega1280__) \
+|| defined(__AVR_ATmega1284P__) \
+|| defined(__AVR_ATmega2560__)
+    tmrcnt_init_7(2, TCCR2B, ((1 << CS22) | (1 << CS21) | (1 << CS20)), CS20, TCCR2A, TCCR2B);
+#else
+#	error "device not supported"
+#endif
+
+
 
 
 void tmrcnt2_set_clk_source(tmrcnt2_clk_src_t source)
@@ -73,23 +133,241 @@ tmrcnt_overflow_int_disable(2, 2);
 tmrcnt_is_overflow_int_flag_set(2, 2);
 
 tmrcnt_oc_set_pin_mode(2,A,a);
+#if defined(__AVR_AT90USB646__) \
+|| defined(__AVR_AT90USB647__) \
+|| defined(__AVR_AT90USB1286__) \
+|| defined(__AVR_AT90USB1287__) \
+|| defined(__AVR_ATmega32U6__) \
+|| defined(__AVR_ATmega48__) \
+|| defined(__AVR_ATmega48A__) \
+|| defined(__AVR_ATmega48P__) \
+|| defined(__AVR_ATmega88__) \
+|| defined(__AVR_ATmega88A__) \
+|| defined(__AVR_ATmega88P__) \
+|| defined(__AVR_ATmega88PA__) \
+|| defined(__AVR_ATmega164A__) \
+|| defined(__AVR_ATmega164P__) \
+|| defined(__AVR_ATmega168__) \
+|| defined(__AVR_ATmega168A__) \
+|| defined(__AVR_ATmega168P__) \
+|| defined(__AVR_ATmega324A__) \
+|| defined(__AVR_ATmega324P__) \
+|| defined(__AVR_ATmega324PA__) \
+|| defined(__AVR_ATmega328__) \
+|| defined(__AVR_ATmega328P__) \
+|| defined(__AVR_ATmega640__) \
+|| defined(__AVR_ATmega644__) \
+|| defined(__AVR_ATmega644A__) \
+|| defined(__AVR_ATmega644P__) \
+|| defined(__AVR_ATmega644PA__) \
+|| defined(__AVR_ATmega1280__) \
+|| defined(__AVR_ATmega1284P__) \
+|| defined(__AVR_ATmega2560__)
 tmrcnt_oc_set_pin_mode(2,B,b);
+#endif
 
 tmrcnt_oc_set_pin_as_ouput(2,A,a);
+#if defined(__AVR_AT90USB646__) \
+|| defined(__AVR_AT90USB647__) \
+|| defined(__AVR_AT90USB1286__) \
+|| defined(__AVR_AT90USB1287__) \
+|| defined(__AVR_ATmega32U6__) \
+|| defined(__AVR_ATmega48__) \
+|| defined(__AVR_ATmega48A__) \
+|| defined(__AVR_ATmega48P__) \
+|| defined(__AVR_ATmega88__) \
+|| defined(__AVR_ATmega88A__) \
+|| defined(__AVR_ATmega88P__) \
+|| defined(__AVR_ATmega88PA__) \
+|| defined(__AVR_ATmega164A__) \
+|| defined(__AVR_ATmega164P__) \
+|| defined(__AVR_ATmega168__) \
+|| defined(__AVR_ATmega168A__) \
+|| defined(__AVR_ATmega168P__) \
+|| defined(__AVR_ATmega324A__) \
+|| defined(__AVR_ATmega324P__) \
+|| defined(__AVR_ATmega324PA__) \
+|| defined(__AVR_ATmega328__) \
+|| defined(__AVR_ATmega328P__) \
+|| defined(__AVR_ATmega640__) \
+|| defined(__AVR_ATmega644__) \
+|| defined(__AVR_ATmega644A__) \
+|| defined(__AVR_ATmega644P__) \
+|| defined(__AVR_ATmega644PA__) \
+|| defined(__AVR_ATmega1280__) \
+|| defined(__AVR_ATmega1284P__) \
+|| defined(__AVR_ATmega2560__)
 tmrcnt_oc_set_pin_as_ouput(2,B,b);
+#endif
 
 tmrcnt_oc_force_ouput_compare(2,A,a);
+#if defined(__AVR_AT90USB646__) \
+|| defined(__AVR_AT90USB647__) \
+|| defined(__AVR_AT90USB1286__) \
+|| defined(__AVR_AT90USB1287__) \
+|| defined(__AVR_ATmega32U6__) \
+|| defined(__AVR_ATmega48__) \
+|| defined(__AVR_ATmega48A__) \
+|| defined(__AVR_ATmega48P__) \
+|| defined(__AVR_ATmega88__) \
+|| defined(__AVR_ATmega88A__) \
+|| defined(__AVR_ATmega88P__) \
+|| defined(__AVR_ATmega88PA__) \
+|| defined(__AVR_ATmega164A__) \
+|| defined(__AVR_ATmega164P__) \
+|| defined(__AVR_ATmega168__) \
+|| defined(__AVR_ATmega168A__) \
+|| defined(__AVR_ATmega168P__) \
+|| defined(__AVR_ATmega324A__) \
+|| defined(__AVR_ATmega324P__) \
+|| defined(__AVR_ATmega324PA__) \
+|| defined(__AVR_ATmega328__) \
+|| defined(__AVR_ATmega328P__) \
+|| defined(__AVR_ATmega640__) \
+|| defined(__AVR_ATmega644__) \
+|| defined(__AVR_ATmega644A__) \
+|| defined(__AVR_ATmega644P__) \
+|| defined(__AVR_ATmega644PA__) \
+|| defined(__AVR_ATmega1280__) \
+|| defined(__AVR_ATmega1284P__) \
+|| defined(__AVR_ATmega2560__)
 tmrcnt_oc_force_ouput_compare(2,B,b);
+#endif
 
 tmrcnt_get_oc(2,A,a,8);
+#if defined(__AVR_AT90USB646__) \
+|| defined(__AVR_AT90USB647__) \
+|| defined(__AVR_AT90USB1286__) \
+|| defined(__AVR_AT90USB1287__) \
+|| defined(__AVR_ATmega32U6__) \
+|| defined(__AVR_ATmega48__) \
+|| defined(__AVR_ATmega48A__) \
+|| defined(__AVR_ATmega48P__) \
+|| defined(__AVR_ATmega88__) \
+|| defined(__AVR_ATmega88A__) \
+|| defined(__AVR_ATmega88P__) \
+|| defined(__AVR_ATmega88PA__) \
+|| defined(__AVR_ATmega164A__) \
+|| defined(__AVR_ATmega164P__) \
+|| defined(__AVR_ATmega168__) \
+|| defined(__AVR_ATmega168A__) \
+|| defined(__AVR_ATmega168P__) \
+|| defined(__AVR_ATmega324A__) \
+|| defined(__AVR_ATmega324P__) \
+|| defined(__AVR_ATmega324PA__) \
+|| defined(__AVR_ATmega328__) \
+|| defined(__AVR_ATmega328P__) \
+|| defined(__AVR_ATmega640__) \
+|| defined(__AVR_ATmega644__) \
+|| defined(__AVR_ATmega644A__) \
+|| defined(__AVR_ATmega644P__) \
+|| defined(__AVR_ATmega644PA__) \
+|| defined(__AVR_ATmega1280__) \
+|| defined(__AVR_ATmega1284P__) \
+|| defined(__AVR_ATmega2560__)
 tmrcnt_get_oc(2,B,b,8);
+#endif
 
 tmrcnt_set_oc(2,A,a,8);
+#if defined(__AVR_AT90USB646__) \
+|| defined(__AVR_AT90USB647__) \
+|| defined(__AVR_AT90USB1286__) \
+|| defined(__AVR_AT90USB1287__) \
+|| defined(__AVR_ATmega32U6__) \
+|| defined(__AVR_ATmega48__) \
+|| defined(__AVR_ATmega48A__) \
+|| defined(__AVR_ATmega48P__) \
+|| defined(__AVR_ATmega88__) \
+|| defined(__AVR_ATmega88A__) \
+|| defined(__AVR_ATmega88P__) \
+|| defined(__AVR_ATmega88PA__) \
+|| defined(__AVR_ATmega164A__) \
+|| defined(__AVR_ATmega164P__) \
+|| defined(__AVR_ATmega168__) \
+|| defined(__AVR_ATmega168A__) \
+|| defined(__AVR_ATmega168P__) \
+|| defined(__AVR_ATmega324A__) \
+|| defined(__AVR_ATmega324P__) \
+|| defined(__AVR_ATmega324PA__) \
+|| defined(__AVR_ATmega328__) \
+|| defined(__AVR_ATmega328P__) \
+|| defined(__AVR_ATmega640__) \
+|| defined(__AVR_ATmega644__) \
+|| defined(__AVR_ATmega644A__) \
+|| defined(__AVR_ATmega644P__) \
+|| defined(__AVR_ATmega644PA__) \
+|| defined(__AVR_ATmega1280__) \
+|| defined(__AVR_ATmega1284P__) \
+|| defined(__AVR_ATmega2560__)
 tmrcnt_set_oc(2,B,b,8);
+#endif
+
 
 tmrcnt_oc_match_int_enable(2,A,a,2);
+#if defined(__AVR_AT90USB646__) \
+|| defined(__AVR_AT90USB647__) \
+|| defined(__AVR_AT90USB1286__) \
+|| defined(__AVR_AT90USB1287__) \
+|| defined(__AVR_ATmega32U6__) \
+|| defined(__AVR_ATmega48__) \
+|| defined(__AVR_ATmega48A__) \
+|| defined(__AVR_ATmega48P__) \
+|| defined(__AVR_ATmega88__) \
+|| defined(__AVR_ATmega88A__) \
+|| defined(__AVR_ATmega88P__) \
+|| defined(__AVR_ATmega88PA__) \
+|| defined(__AVR_ATmega164A__) \
+|| defined(__AVR_ATmega164P__) \
+|| defined(__AVR_ATmega168__) \
+|| defined(__AVR_ATmega168A__) \
+|| defined(__AVR_ATmega168P__) \
+|| defined(__AVR_ATmega324A__) \
+|| defined(__AVR_ATmega324P__) \
+|| defined(__AVR_ATmega324PA__) \
+|| defined(__AVR_ATmega328__) \
+|| defined(__AVR_ATmega328P__) \
+|| defined(__AVR_ATmega640__) \
+|| defined(__AVR_ATmega644__) \
+|| defined(__AVR_ATmega644A__) \
+|| defined(__AVR_ATmega644P__) \
+|| defined(__AVR_ATmega644PA__) \
+|| defined(__AVR_ATmega1280__) \
+|| defined(__AVR_ATmega1284P__) \
+|| defined(__AVR_ATmega2560__)
 tmrcnt_oc_match_int_enable(2,B,b,2);
+#endif
 
 tmrcnt_oc_match_int_disable(2,A,a,2);
+#if defined(__AVR_AT90USB646__) \
+|| defined(__AVR_AT90USB647__) \
+|| defined(__AVR_AT90USB1286__) \
+|| defined(__AVR_AT90USB1287__) \
+|| defined(__AVR_ATmega32U6__) \
+|| defined(__AVR_ATmega48__) \
+|| defined(__AVR_ATmega48A__) \
+|| defined(__AVR_ATmega48P__) \
+|| defined(__AVR_ATmega88__) \
+|| defined(__AVR_ATmega88A__) \
+|| defined(__AVR_ATmega88P__) \
+|| defined(__AVR_ATmega88PA__) \
+|| defined(__AVR_ATmega164A__) \
+|| defined(__AVR_ATmega164P__) \
+|| defined(__AVR_ATmega168__) \
+|| defined(__AVR_ATmega168A__) \
+|| defined(__AVR_ATmega168P__) \
+|| defined(__AVR_ATmega324A__) \
+|| defined(__AVR_ATmega324P__) \
+|| defined(__AVR_ATmega324PA__) \
+|| defined(__AVR_ATmega328__) \
+|| defined(__AVR_ATmega328P__) \
+|| defined(__AVR_ATmega640__) \
+|| defined(__AVR_ATmega644__) \
+|| defined(__AVR_ATmega644A__) \
+|| defined(__AVR_ATmega644P__) \
+|| defined(__AVR_ATmega644PA__) \
+|| defined(__AVR_ATmega1280__) \
+|| defined(__AVR_ATmega1284P__) \
+|| defined(__AVR_ATmega2560__)
 tmrcnt_oc_match_int_disable(2,B,b,2);
+#endif
 
