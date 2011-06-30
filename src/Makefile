@@ -20,6 +20,18 @@ all: iopin $(ADC_TARGETS) $(CAN_TARGETS) $(ERRNO_TARGETS) $(EXTINT_TARGETS) $(SP
 
 adc: $(ADC_TARGETS)
 
+tmrcnt0: iopin $(TMRCNT0_TARGETS)
+
+tmrcnt1: iopin $(TMRCNT1_TARGETS)
+
+tmrcnt2: iopin $(TMRCNT2_TARGETS)
+
+tmrcnt3: iopin $(TMRCNT3_TARGETS)
+
+tmrcnt4: iopin $(TMRCNT4_TARGETS)
+
+tmrcnt5: iopin $(TMRCNT5_TARGETS)
+
 iopin:
 	mkdir -p $(OUTDIR)/inc/io_pin
 	$(COPY) ./io_pin/* $(OUTDIR)/inc/io_pin
@@ -58,4 +70,4 @@ clean:
 
 
 # Listing of phony.
-.PHONY : all clean adc iopin
+.PHONY : all clean adc iopin tmrcnt0 tmrcnt1 tmrcnt2 tmrcnt3 tmrcnt4 tmrcnt5
