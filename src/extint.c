@@ -1,4 +1,4 @@
-/* Copyright (c) 2010 Frédéric Nadeau
+/* Copyright (c) 2010-2011 Frédéric Nadeau
    All rights reserved.
 
    Redistribution and use in source and binary forms,
@@ -28,12 +28,17 @@
    THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
    (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
+/*! \file extint.c
+ \brief External Interrupt module.
 
+ \author Frédéric Nadeau
+ */
 #include <stdint.h>
 #include <avr/io.h>
 
 #include "extint.h"
 
+// \todo Change this for a per device #ifdef
 #ifdef EICRB
 void extint_set_sense_control(extint_sense_ctrl_t senseCtrl, uint8_t pin)
 {
