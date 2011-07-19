@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2010 Frédéric Nadeau
+/* Copyright (c) 2008-2011 Frédéric Nadeau
    Copyright (c) 2008 François-Pierre Pépin
    Copyright (c) 2008 Sy Sech Vong
    All rights reserved.
@@ -45,6 +45,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <avr/io.h>
+#include <util/atomic.h>
 
 #include "avr-drv-errno.h"
 #include "can.h"
@@ -852,22 +853,21 @@ void can_clear_all_mob(void)
     }
 }
 
-uint8_t can_get_free_mob_number(uint8_t *ubFreeMOb)
+_Bool can_find_free_mob(void)
 {
-    uint8_t ubCurrentMOb;
-    uint8_t ubRetVal = false;
+	_Bool ubRetVal = false;
+    uint8_t ubFreeMOb;
 
-    ubCurrentMOb = CANPAGE;//Save current value
-    for (*ubFreeMOb = 0; *ubFreeMOb < 15; (*ubFreeMOb)++)
+    for (ubFreeMOb = 0; ubFreeMOb < 15; ubFreeMOb++)
     {
-        can_set_mob_page(*ubFreeMOb);
-        if ((CANCDMOB & 0xC0) == 0x00) //! Disable configuration
+        can_set_mob_page(ubFreeMOb);
+        if ( ( CANCDMOB & ( _BV(CONMOB1) | _BV(CONMOB0) ) ) == 0x00) //! Disable configuration
         {
             ubRetVal = true;
             break;
         }
     }
-    CANPAGE = ubCurrentMOb;//Restore page
+
     return ubRetVal;
 }
 

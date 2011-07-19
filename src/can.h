@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2010 Frédéric Nadeau
+/* Copyright (c) 2008-2011 Frédéric Nadeau
    Copyright (c) 2008 François-Pierre Pépin
    Copyright (c) 2008 Sy Sech Vong
 
@@ -402,7 +402,16 @@ uint8_t can_get_data_mob(void);
 void can_set_data_mob(uint8_t ubData);
 void can_clear_mob(void);
 void can_clear_all_mob(void);
-uint8_t can_get_free_mob_number(uint8_t *ubFreeMOb);
+
+/*! \fn _Bool can_find_free_mob(void)
+ *  \brief Find a free MOB.
+ *  \return True if an empty MOB has been found, false if all MOB are in use.
+ *
+ *  This function scan all 15 MOB starting from MOB 0 to MOB 14 (highest
+ *  priority first) and set MOB page to either the first empty MOB encounter
+ *  or to MOB 14.
+ */
+_Bool can_find_free_mob(void);
 
 /***************************************************************************************
  * Vitesse de CAN Bus
@@ -416,7 +425,8 @@ void can_set_baud_rate_precalc(uint8_t canbt1, uint8_t canbt2, uint8_t canbt3);
  *  \brief Return interrupt source.
  *  \return Source of interrupt, see #can_int_src_t.
  *
- *  \warning This function cannot be used in polling mode. Should be called in a ISR.
+ *  \warning This function cannot be used in polling mode. Should be called within
+ *  an ISR.
  */
 can_int_src_t can_get_int_src(void);
 
