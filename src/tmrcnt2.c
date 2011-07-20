@@ -114,10 +114,10 @@ void tmrcnt2_set_clk_source(tmrcnt2_clk_src_t source)
 
     case tmrcnt2_clk_src_ExtClk:
         ASSR |= _BV(EXCLK);
+        ASSR |= _BV(AS2);
         break;
 
     case tmrcnt2_clk_src_ExtOsc:
-        ASSR |= _BV(EXCLK);
         ASSR |= _BV(AS2);
         break;
 
