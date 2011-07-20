@@ -20,6 +20,8 @@ all: iopin $(ADC_TARGETS) $(CAN_TARGETS) $(ERRNO_TARGETS) $(EXTINT_TARGETS) $(SP
 
 adc: $(ADC_TARGETS)
 
+can: $(CAN_TARGETS)
+
 tmrcnt0: iopin $(TMRCNT0_TARGETS)
 
 tmrcnt1: iopin $(TMRCNT1_TARGETS)
@@ -70,4 +72,4 @@ clean:
 
 
 # Listing of phony.
-.PHONY : all clean adc iopin tmrcnt0 tmrcnt1 tmrcnt2 tmrcnt3 tmrcnt4 tmrcnt5
+.PHONY : all clean adc can iopin tmrcnt0 tmrcnt1 tmrcnt2 tmrcnt3 tmrcnt4 tmrcnt5
