@@ -57,8 +57,6 @@ ERRNO_DEVICES += atmega88pa
 ERRNO_DEVICES += atmega8515
 ERRNO_DEVICES += atmega8535
 ERRNO_DEVICES += atmega8hva
-ERRNO_DEVICES += atmega4hvd
-ERRNO_DEVICES += atmega8hvd
 ERRNO_DEVICES += at90pwm1
 ERRNO_DEVICES += at90pwm2
 ERRNO_DEVICES += at90pwm2b
@@ -81,7 +79,6 @@ ERRNO_DEVICES += atmega169
 ERRNO_DEVICES += atmega169a
 ERRNO_DEVICES += atmega169p
 ERRNO_DEVICES += atmega169pa
-ERRNO_DEVICES += atmega16c1
 ERRNO_DEVICES += atmega16hva
 ERRNO_DEVICES += atmega16hva2
 ERRNO_DEVICES += atmega16hvb
@@ -146,15 +143,16 @@ ERRNO_DEVICES += atmega128rfa1
 ERRNO_DEVICES += at90can128
 ERRNO_DEVICES += at90usb1286
 ERRNO_DEVICES += at90usb1287
-ERRNO_DEVICES += m3000f
-ERRNO_DEVICES += m3000s
-ERRNO_DEVICES += m3001b
 ERRNO_DEVICES += atmega2560
 ERRNO_DEVICES += atmega2561
 
+#ERRNO_DEVICES += atmega4hvd
+#ERRNO_DEVICES += atmega8hvd
+#ERRNO_DEVICES += atmega16c1
+
 ERRNO_OBJS=$(ERRNO_DEVICES:%=$(OBJDIR)/%/avr-drv-errno.o)
 
-ERRNO_TARGETS=$(ERRNO_DEVICES:%=$(OUTDIR)/%/avr-drv-errno.a)
+ERRNO_TARGETS=$(ERRNO_DEVICES:%=$(OUTDIR)/%/libavr-drv-errno.a)
 
 ERRNO_OBJDIRS=$(ERRNO_DEVICES:%=$(OBJDIR)/%)
 ERRNO_OUTDIRS=$(ERRNO_DEVICES:%=$(OUTDIR)/%)
@@ -162,7 +160,7 @@ ERRNO_OUTDIRS=$(ERRNO_DEVICES:%=$(OUTDIR)/%)
 $(OBJDIR)/%/avr-drv-errno.o : avr-drv-errno.c avr-drv-errno.h
 	$(CC) -c -mmcu=$* $(ALL_CFLAGS) $< -o $@
 
-$(OUTDIR)/%/avr-drv-errno.a: $(ERRNO_OBJS)
+$(OUTDIR)/%/libavr-drv-errno.a: $(ERRNO_OBJS)
 	$(AR) $@ $(OBJDIR)/$*/avr-drv-errno.o
 
 # Create object files directory

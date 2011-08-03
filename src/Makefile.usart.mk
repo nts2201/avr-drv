@@ -80,7 +80,7 @@ USART_DEVICES += atmega8535
 USART_OBJS=$(USART_DEVICES:%=$(OBJDIR)/%/usart.o)
 USART_OBJS+=$(USART_DEVICES:%=$(OBJDIR)/%/usartBaudRate.o)
 
-USART_TARGETS=$(USART_DEVICES:%=$(OUTDIR)/%/usart.a)
+USART_TARGETS=$(USART_DEVICES:%=$(OUTDIR)/%/libusart.a)
 
 USART_OBJDIRS=$(USART_DEVICES:%=$(OBJDIR)/%)
 USART_OUTDIRS=$(USART_DEVICES:%=$(OUTDIR)/%)
@@ -91,7 +91,7 @@ $(OBJDIR)/%/usart.o : usart.c usart.h
 $(OBJDIR)/%/usartBaudRate.o : usartBaudRate.c usartBaudRate.h usart.h 
 	$(CC) -c -mmcu=$* $(ALL_CFLAGS) $< -o $@
 
-$(OUTDIR)/%/usart.a: $(USART_OBJS)
+$(OUTDIR)/%/libusart.a: $(USART_OBJS)
 	$(AR) $@ $(OBJDIR)/$*/usart.o $(OBJDIR)/$*/usartBaudRate.o
 
 # Create object files directory

@@ -1,6 +1,9 @@
 # Hey Emacs, this is a -*- makefile -*-
 
-TMRCNT2_DEVICES = at90usb646
+TMRCNT2_DEVICES = at90can32
+TMRCNT2_DEVICES += at90can64
+TMRCNT2_DEVICES += at90can128
+TMRCNT2_DEVICES += at90usb646
 TMRCNT2_DEVICES += at90usb647
 TMRCNT2_DEVICES += at90usb1286
 TMRCNT2_DEVICES += at90usb1287
@@ -32,9 +35,6 @@ TMRCNT2_DEVICES += atmega1284p
 TMRCNT2_DEVICES += atmega2560
 
 #Broken device
-#TMRCNT2_DEVICES = at90can32
-#TMRCNT2_DEVICES += at90can64
-#TMRCNT2_DEVICES += at90can128
 #TMRCNT2_DEVICES += atmega8
 #TMRCNT2_DEVICES += atmega8u2
 #TMRCNT2_DEVICES += atmega16
@@ -95,7 +95,7 @@ TMRCNT2_DEVICES += atmega2560
 
 TMRCNT2_OBJS=$(TMRCNT2_DEVICES:%=$(OBJDIR)/%/tmrcnt2.o)
 
-TMRCNT2_TARGETS=$(TMRCNT2_DEVICES:%=$(OUTDIR)/%/tmrcnt2.a)
+TMRCNT2_TARGETS=$(TMRCNT2_DEVICES:%=$(OUTDIR)/%/libtmrcnt2.a)
 
 TMRCNT2_OBJDIRS=$(TMRCNT2_DEVICES:%=$(OBJDIR)/%)
 TMRCNT2_OUTDIRS=$(TMRCNT2_DEVICES:%=$(OUTDIR)/%)
@@ -103,7 +103,7 @@ TMRCNT2_OUTDIRS=$(TMRCNT2_DEVICES:%=$(OUTDIR)/%)
 $(OBJDIR)/%/tmrcnt2.o : tmrcnt2.c tmrcnt2.h
 	$(CC) -c -mmcu=$* $(ALL_CFLAGS) $< -o $@
 
-$(OUTDIR)/%/tmrcnt2.a: $(TMRCNT2_OBJS)
+$(OUTDIR)/%/libtmrcnt2.a: $(TMRCNT2_OBJS)
 	$(AR) $@ $(OBJDIR)/$*/tmrcnt2.o
 
 # Create object files directory

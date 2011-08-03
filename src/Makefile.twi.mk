@@ -55,7 +55,7 @@ TWI_DEVICES += attiny88
 
 TWI_OBJS=$(TWI_DEVICES:%=$(OBJDIR)/%/twi.o)
 
-TWI_TARGETS=$(TWI_DEVICES:%=$(OUTDIR)/%/twi.a)
+TWI_TARGETS=$(TWI_DEVICES:%=$(OUTDIR)/%/libtwi.a)
 
 TWI_OBJDIRS=$(TWI_DEVICES:%=$(OBJDIR)/%)
 TWI_OUTDIRS=$(TWI_DEVICES:%=$(OUTDIR)/%)
@@ -63,7 +63,7 @@ TWI_OUTDIRS=$(TWI_DEVICES:%=$(OUTDIR)/%)
 $(OBJDIR)/%/twi.o : twi.c twi.h
 	$(CC) -c -mmcu=$* $(ALL_CFLAGS) $< -o $@
 
-$(OUTDIR)/%/twi.a: $(TWI_OBJS)
+$(OUTDIR)/%/libtwi.a: $(TWI_OBJS)
 	$(AR) $@ $(OBJDIR)/$*/twi.o
 
 # Create object files directory

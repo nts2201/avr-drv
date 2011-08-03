@@ -38,7 +38,7 @@ iopin:
 	mkdir -p $(OUTDIR)/inc/io_pin
 	$(COPY) ./io_pin/* $(OUTDIR)/inc/io_pin
 	mkdir -p $(OUTDIR)/example
-	$(COPY) -R ./example $(OUTDIR)/example
+	$(RSYNC) -r --exclude=.svn ./example/ $(OUTDIR)/example
 
 clean:
 	$(REMOVE) $(ADC_TARGETS)
@@ -69,6 +69,8 @@ clean:
 	$(REMOVE) $(TWIINT_OBJS)
 	$(REMOVE) $(USART_TARGETS)
 	$(REMOVE) $(USART_OBJS)
+	$(REMOVEDIR) $(OUTDIR)/example
+	$(REMOVEDIR) $(OUTDIR)/inc
 
 
 # Listing of phony.

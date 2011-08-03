@@ -89,7 +89,7 @@ SPI_DEVICES += attiny88
 
 SPI_OBJS=$(SPI_DEVICES:%=$(OBJDIR)/%/spi.o)
 
-SPI_TARGETS=$(SPI_DEVICES:%=$(OUTDIR)/%/spi.a)
+SPI_TARGETS=$(SPI_DEVICES:%=$(OUTDIR)/%/libspi.a)
 
 SPI_OBJDIRS=$(SPI_DEVICES:%=$(OBJDIR)/%)
 SPI_OUTDIRS=$(SPI_DEVICES:%=$(OUTDIR)/%)
@@ -97,7 +97,7 @@ SPI_OUTDIRS=$(SPI_DEVICES:%=$(OUTDIR)/%)
 $(OBJDIR)/%/spi.o : spi.c spi.h
 	$(CC) -c -mmcu=$* $(ALL_CFLAGS) $< -o $@
 
-$(OUTDIR)/%/spi.a: $(SPI_OBJS)
+$(OUTDIR)/%/libspi.a: $(SPI_OBJS)
 	$(AR) $@ $(OBJDIR)/$*/spi.o
 
 # Create object files directory

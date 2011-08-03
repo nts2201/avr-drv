@@ -9,7 +9,7 @@ TMRCNT4_DEVICES += atmega2561
 
 TMRCNT4_OBJS=$(TMRCNT4_DEVICES:%=$(OBJDIR)/%/tmrcnt4.o)
 
-TMRCNT4_TARGETS=$(TMRCNT4_DEVICES:%=$(OUTDIR)/%/tmrcnt4.a)
+TMRCNT4_TARGETS=$(TMRCNT4_DEVICES:%=$(OUTDIR)/%/libtmrcnt4.a)
 
 TMRCNT4_OBJDIRS=$(TMRCNT4_DEVICES:%=$(OBJDIR)/%)
 TMRCNT4_OUTDIRS=$(TMRCNT4_DEVICES:%=$(OUTDIR)/%)
@@ -17,7 +17,7 @@ TMRCNT4_OUTDIRS=$(TMRCNT4_DEVICES:%=$(OUTDIR)/%)
 $(OBJDIR)/%/tmrcnt4.o : tmrcnt4.c tmrcnt4.h
 	$(CC) -c -mmcu=$* $(ALL_CFLAGS) $< -o $@
 
-$(OUTDIR)/%/tmrcnt4.a: $(TMRCNT4_OBJS)
+$(OUTDIR)/%/libtmrcnt4.a: $(TMRCNT4_OBJS)
 	$(AR) $@ $(OBJDIR)/$*/tmrcnt4.o
 
 # Create object files directory

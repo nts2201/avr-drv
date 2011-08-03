@@ -62,6 +62,8 @@ REMOVE = rm -f
 REMOVEDIR = rm -rf
 COPY = cp
 WINSHELL = cmd
+RSYNC = rsync
+
 
 # Combine all necessary flags and optional flags.
 # Add target processor to flags.
