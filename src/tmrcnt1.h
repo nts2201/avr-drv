@@ -52,17 +52,17 @@ typedef enum tmrcnt1_wgm_e
     tmrcnt1_wgm_pwm_phase_correct_8bit_00ff_top_btm,
     tmrcnt1_wgm_pwm_phase_correct_9bit_01ff_top_btm,
     tmrcnt1_wgm_pwm_phase_correct_10bit_03ff_top_btm,
-    tmrcnt1_wgm_ctc_ocr5a_imd_max,
+    tmrcnt1_wgm_ctc_ocr1a_imd_max,
     tmrcnt1_wgm_fast_pwm_8bit_00ff_btm_top,
     tmrcnt1_wgm_fast_pwm_9bit_01ff_btm_top,
     tmrcnt1_wgm_fast_pwm_10bit_03ff_btm_top,
-    tmrcnt1_wgm_pwm_phase_freq_correct_icr5_btm_btm,
-    tmrcnt1_wgm_pwm_phase_freq_correct_ocr5a_btm_btm,
-    tmrcnt1_wgm_pwm_phase_correct_icr5_top_btm,
-    tmrcnt1_wgm_pwm_phase_correct_ocr5a_top_btm,
-    tmrcnt1_wgm_ctc_icr5_imd_max,
-    tmrcnt1_wgm_fast_pwm_icr5_top_top = 14,
-    tmrcnt1_wgm_fast_pwm_ocr5a_top_top
+    tmrcnt1_wgm_pwm_phase_freq_correct_icr1_btm_btm,
+    tmrcnt1_wgm_pwm_phase_freq_correct_ocr1a_btm_btm,
+    tmrcnt1_wgm_pwm_phase_correct_icr1_top_btm,
+    tmrcnt1_wgm_pwm_phase_correct_ocr1a_top_btm,
+    tmrcnt1_wgm_ctc_icr1_imd_max,
+    tmrcnt1_wgm_fast_pwm_icr1_top_top = 14,
+    tmrcnt1_wgm_fast_pwm_ocr1a_top_top
 } tmrcnt1_wgm_t;
 
 typedef enum tmrcnt1_com_e
