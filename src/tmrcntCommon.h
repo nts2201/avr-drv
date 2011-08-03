@@ -61,7 +61,7 @@
         TCCR##id##A |= (_BV(WGM##id##1) | _BV(WGM##id##0)); \
         break; \
  \
-    case tmrcnt##id##_wgm_ctc_ocr5a_imd_max: \
+    case tmrcnt##id##_wgm_ctc_ocr##id##a_imd_max: \
         TCCR##id##B &= ~_BV(WGM##id##3); \
         TCCR##id##B |= _BV(WGM##id##2); \
         TCCR##id##A &= ~(_BV(WGM##id##1) | _BV(WGM##id##0)); \
@@ -87,44 +87,44 @@
         TCCR##id##A |= (_BV(WGM##id##1) | _BV(WGM##id##0)); \
         break; \
  \
-    case tmrcnt##id##_wgm_pwm_phase_freq_correct_icr5_btm_btm: \
+    case tmrcnt##id##_wgm_pwm_phase_freq_correct_icr##id##_btm_btm: \
         TCCR##id##B |= _BV(WGM##id##3); \
         TCCR##id##B &= ~_BV(WGM##id##2); \
         TCCR##id##A &= ~(_BV(WGM##id##1) | _BV(WGM##id##0)); \
         break; \
  \
-    case tmrcnt##id##_wgm_pwm_phase_freq_correct_ocr5a_btm_btm: \
+    case tmrcnt##id##_wgm_pwm_phase_freq_correct_ocr##id##a_btm_btm: \
         TCCR##id##B |= _BV(WGM##id##3); \
         TCCR##id##B &= ~_BV(WGM##id##2); \
         TCCR##id##A &= ~_BV(WGM##id##1); \
         TCCR##id##A |= _BV(WGM##id##0); \
         break; \
  \
-    case tmrcnt##id##_wgm_pwm_phase_correct_icr5_top_btm: \
+    case tmrcnt##id##_wgm_pwm_phase_correct_icr##id##_top_btm: \
         TCCR##id##B |= _BV(WGM##id##3); \
         TCCR##id##B &= ~_BV(WGM##id##2); \
         TCCR##id##A |= _BV(WGM##id##1); \
         TCCR##id##A &= ~_BV(WGM##id##0); \
         break; \
  \
-    case tmrcnt##id##_wgm_pwm_phase_correct_ocr5a_top_btm: \
+    case tmrcnt##id##_wgm_pwm_phase_correct_ocr##id##a_top_btm: \
         TCCR##id##B |= _BV(WGM##id##3); \
         TCCR##id##B &= ~_BV(WGM##id##2); \
         TCCR##id##A |= (_BV(WGM##id##1) | _BV(WGM##id##0)); \
         break; \
  \
-    case tmrcnt##id##_wgm_ctc_icr5_imd_max: \
+    case tmrcnt##id##_wgm_ctc_icr##id##_imd_max: \
         TCCR##id##B |= (_BV(WGM##id##3) | _BV(WGM##id##2)); \
         TCCR##id##A &= ~(_BV(WGM##id##1) | _BV(WGM##id##0)); \
         break; \
  \
-    case tmrcnt##id##_wgm_fast_pwm_icr5_top_top: \
+    case tmrcnt##id##_wgm_fast_pwm_icr##id##_top_top: \
         TCCR##id##B |= (_BV(WGM##id##3) | _BV(WGM##id##2)); \
         TCCR##id##A |= _BV(WGM##id##1); \
         TCCR##id##A &= ~_BV(WGM##id##0); \
         break; \
  \
-    case tmrcnt##id##_wgm_fast_pwm_ocr5a_top_top: \
+    case tmrcnt##id##_wgm_fast_pwm_ocr##id##a_top_top: \
         TCCR##id##B |= (_BV(WGM##id##3) | _BV(WGM##id##2)); \
         TCCR##id##A |= (_BV(WGM##id##1) | _BV(WGM##id##0)); \
         break; \
