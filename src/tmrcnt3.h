@@ -68,16 +68,16 @@ typedef enum tmrcnt3_wgm_e
 typedef enum tmrcnt3_com_e
 {
     tmrcnt3_com_port_disconnected = 0,
-    tmrcnt3_com_normal_toggle_0c3a_compare_match = 1,
-    tmrcnt3_com_ctc_toggle_0c3a_compare_match = 1,
-    tmrcnt3_com_normal_clear_0c3a_compare_match = 2,
-    tmrcnt3_com_pwm_phase_correct_clear_0c3a_upcounting_set_0c3a_downcounting = 2,
-    tmrcnt3_com_ctc_clear_0c3a_compare_match = 2,
-    tmrcnt3_com_fast_pwm_clear_0c3a_compare_match_set_0c3a_top = 2,
-    tmrcnt3_com_normal_set_0c3a_compare_match = 3,
-    tmrcnt3_com_pwm_phase_correct_set_0c3a_upcounting_clear_0c3a_downcounting = 3,
-    tmrcnt3_com_ctc_set_0c3a_compare_match = 3,
-    tmrcnt3_com_fast_pwm_set_0c3a_compare_match_clear_0c3a_top = 3,
+    tmrcnt3_com_normal_toggle_oc3a_compare_match = 1,
+    tmrcnt3_com_ctc_toggle_oc3a_compare_match = 1,
+    tmrcnt3_com_normal_clear_oc3a_compare_match = 2,
+    tmrcnt3_com_pwm_phase_correct_clear_oc3a_upcounting_set_oc3a_downcounting = 2,
+    tmrcnt3_com_ctc_clear_oc3a_compare_match = 2,
+    tmrcnt3_com_fast_pwm_clear_oc3a_compare_match_set_0c3a_top = 2,
+    tmrcnt3_com_normal_set_oc3a_compare_match = 3,
+    tmrcnt3_com_pwm_phase_correct_set_oc3a_upcounting_clear_oc3a_downcounting = 3,
+    tmrcnt3_com_ctc_set_oc3a_compare_match = 3,
+    tmrcnt3_com_fast_pwm_set_oc3a_compare_match_clear_oc3a_top = 3,
 } tmrcnt3_com_t;
 
 void tmrcnt3_init (tmrcnt3_wgm_t mode, tmrcnt3_clk_select_t prescale);
