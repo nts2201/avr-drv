@@ -100,15 +100,17 @@ TMRCNT0_DEVICES += attiny4313
 
 TMRCNT0_OBJS=$(TMRCNT0_DEVICES:%=$(OBJDIR)/%/tmrcnt0.o)
 
-TMRCNT0_TARGETS=$(TMRCNT0_DEVICES:%=$(OUTDIR)/%/libtmrcnt0.a)
+TMRCNT0_TARGETS=$(TMRCNT0_DEVICES:%=$(OUTDIR_LIB)/%/libtmrcnt0.a)
 
 TMRCNT0_OBJDIRS=$(TMRCNT0_DEVICES:%=$(OBJDIR)/%)
-TMRCNT0_OUTDIRS=$(TMRCNT0_DEVICES:%=$(OUTDIR)/%)
+TMRCNT0_OUTDIRS=$(TMRCNT0_DEVICES:%=$(OUTDIR_LIB)/%)
+
+TMRCNT0_HEADER = $(OUTDIR_HEADER)/tmrcnt0.h
 
 $(OBJDIR)/%/tmrcnt0.o : tmrcnt0.c tmrcnt0.h
 	$(CC) -c -mmcu=$* $(ALL_CFLAGS) $< -o $@
 
-$(OUTDIR)/%/libtmrcnt0.a: $(TMRCNT0_OBJS)
+$(OUTDIR_LIB)/%/libtmrcnt0.a: $(TMRCNT0_OBJS)
 	$(AR) $@ $(OBJDIR)/$*/tmrcnt0.o
 
 # Create object files directory

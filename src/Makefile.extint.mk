@@ -95,15 +95,17 @@ EXTINT_DEVICES += attiny167
 
 EXTINT_OBJS=$(EXTINT_DEVICES:%=$(OBJDIR)/%/extint.o)
 
-EXTINT_TARGETS=$(EXTINT_DEVICES:%=$(OUTDIR)/%/libextint.a)
+EXTINT_TARGETS=$(EXTINT_DEVICES:%=$(OUTDIR_LIB)/%/libextint.a)
 
 EXTINT_OBJDIRS=$(EXTINT_DEVICES:%=$(OBJDIR)/%)
-EXTINT_OUTDIRS=$(EXTINT_DEVICES:%=$(OUTDIR)/%)
+EXTINT_OUTDIRS=$(EXTINT_DEVICES:%=$(OUTDIR_LIB)/%)
+
+EXTINT_HEADER = $(OUTDIR_HEADER)/extint.h
 
 $(OBJDIR)/%/extint.o : extint.c extint.h
 	$(CC) -c -mmcu=$* $(ALL_CFLAGS) $< -o $@
 
-$(OUTDIR)/%/libextint.a: $(EXTINT_OBJS)
+$(OUTDIR_LIB)/%/libextint.a: $(EXTINT_OBJS)
 	$(AR) $@ $(OBJDIR)/$*/extint.o
 
 # Create object files directory

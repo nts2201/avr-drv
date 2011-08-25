@@ -30,7 +30,10 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 /*! \file adc.h
+ \defgroup drv_adc <adc.h>: Analog to Digital Converter
  \brief Function definition for ADC module.
+
+ This driver handles the ADC module of the AVR.
 
  \todo Add Bipolar input selection
  \todo Add Gain Select
@@ -38,6 +41,40 @@
  \todo ADNCDIS: ADC Noise Canceller Disable
  \todo ADSSEN: ADC Single Shot Enable on PSC’s synchronization signals
  \todo ADASCR: Analog to Digital Conversion on Amplified Channel Start Conversion Request Bit
+
+ Here is a little exaple tested on AT90CAN128.
+
+ \code
+	#include <adc.h>
+	#include <stdint.h>
+	#include <avr/interrupt.h>
+
+	ISR(ADC_vect)
+	{
+		uint16_t adcValue = adc_read();
+		//Do someting with adcValue;
+	}
+
+	int main(void)
+	{
+		adc_select_vref(adc_voltage_ref_internal_2_56_wcap);
+		adc_select_input(adc_input_channel_p1_n0_200x);
+		adc_left_adjust(false);
+		adc_prescaler_selection(adc_prescaler_128);
+		adc_set_trigger_source(adc_trigger_source_free_running);
+		adc_trigger_enable(true);
+		adc_interrupt_enable(true);
+
+		adc_enable(true);
+		adc_start_conversion();
+
+		sei();
+
+		for(;;);
+
+		return 0;
+	}
+ \endcode
 
  \author Frédéric Nadeau
  */
@@ -50,7 +87,8 @@
 
 #if !defined(__AVR_ATmega103__) \
 || defined(__DOXYGEN__)
-/*! \fn void adc_select_vref(adc_voltage_ref_t ref)
+/*! \ingroup drv_adc
+ *  \fn void adc_select_vref(adc_voltage_ref_t ref)
  *  \brief Select voltage reference to be used by the ADC.
  *
  *  \note Not all device share same voltages references.
@@ -64,7 +102,8 @@ void adc_select_vref(adc_voltage_ref_t ref);
 #   define adc_select_vref(x)
 #endif
 
-/*! \fn void adc_select_input(adc_input_channel_t channel)
+/*! \ingroup drv_adc
+ *  \fn void adc_select_input(adc_input_channel_t channel)
  *  \brief Select input channel of the ADC.
  *
  *  \note Not all device share same inputs channels.
@@ -79,7 +118,8 @@ void adc_select_input(adc_input_channel_t channel);
 && !defined(__AVR_ATtiny10__) \
 && !defined(__AVR_ATmega103__) \
 || defined(__DOXYGEN__)
-/*! \fn void adc_left_adjust(_Bool adjust)
+/*! \ingroup drv_adc
+ *  \fn void adc_left_adjust(_Bool adjust)
  *  \brief Select how conversion result will be stored in register.
  *
  *  For 8-bits result, use:
@@ -97,21 +137,24 @@ void adc_select_input(adc_input_channel_t channel);
 void adc_left_adjust(_Bool adjust);
 #endif
 
-/*! \fn void adc_prescaler_selection(adc_prescaler_t prescaler)
+/*! \ingroup drv_adc
+ *  \fn void adc_prescaler_selection(adc_prescaler_t prescaler)
  *  \brief Select ADC core clock prescaler.
  *
  *  \param prescaler Prescaler clock. See #adc_prescaler_t for option list.
  */
 void adc_prescaler_selection(adc_prescaler_t prescaler);
 
-/*! \fn void adc_enable(_Bool status)
+/*! \ingroup drv_adc
+ *  \fn void adc_enable(_Bool status)
  *  \brief Enable or disable ADC core.
  *
  *  \param status Status of the ADC core.
  */
 void adc_enable(_Bool status);
 
-/*! \fn void adc_interrupt_enable (_Bool intEn)
+/*! \ingroup drv_adc
+ *  \fn void adc_interrupt_enable (_Bool intEn)
  *  \brief Enable or disable ADC core interrupt.
  *
  *  \warning Interrupt service routine are not provided by AVR-drv.
@@ -121,7 +164,8 @@ void adc_enable(_Bool status);
  */
 void adc_interrupt_enable (_Bool intEn);
 
-/*! \fn void adc_start_conversion(void)
+/*! \ingroup drv_adc
+ *  \fn void adc_start_conversion(void)
  *  \brief Start a conversion.
  */
 void adc_start_conversion(void);
@@ -131,7 +175,8 @@ void adc_start_conversion(void);
 && !defined(__AVR_ATtiny9__) \
 && !defined(__AVR_ATtiny10__) \
 || defined(__DOXYGEN__)
-/*! \fn uint16_t adc_read(void)
+/*! \ingroup drv_adc
+ *  \fn uint16_t adc_read(void)
  *  \brief Read conversion result register.
  *
  *  \return Value in the conversion result register.
@@ -141,7 +186,8 @@ void adc_start_conversion(void);
  */
 uint16_t adc_read(void);
 
-/*! \fn uint8_t adc_read_high(void)
+/*! \ingroup drv_adc
+ *  \fn uint8_t adc_read_high(void)
  *  \brief Read high byte of the conversion result register.
  *
  *  \return Value in the high byte of the conversion result register.
@@ -152,7 +198,8 @@ uint16_t adc_read(void);
 uint8_t adc_read_high(void);
 #endif
 
-/*! \fn uint8_t adc_read_low(void)
+/*! \ingroup drv_adc
+ *  \fn uint8_t adc_read_low(void)
  *  \brief Read low byte of the conversion result register.
  *
  *  \return Value in the low byte of the conversion result register.
@@ -167,7 +214,8 @@ uint8_t adc_read_low(void);
 && !defined(__AVR_ATtiny15__) \
 && !defined(__AVR_ATtiny26__) \
 || defined(__DOXYGEN__)
-/*! \fn void adc_set_trigger_source (adc_trigger_source_t trigger)
+/*! \ingroup drv_adc
+ *  \fn void adc_set_trigger_source (adc_trigger_source_t trigger)
  *  \brief Set the auto trigger source.
  *
  *  \note Not all device have the trigger source.
@@ -184,7 +232,8 @@ void adc_set_trigger_source (adc_trigger_source_t trigger);
 
 #if !defined(__AVR_ATmega103__) \
 || defined(__DOXYGEN__)
-/*! \fn void adc_trigger_enable(_Bool trigEn)
+/*! \ingroup drv_adc
+ *  \fn void adc_trigger_enable(_Bool trigEn)
  *  \brief Enable or disable the auto trigger.
  *
  *  \note For devices like \c ATmega8 and \c ATmega128,
@@ -278,7 +327,8 @@ void adc_trigger_enable(_Bool trigEn);
 || defined(__AVR_ATtiny9__)  \
 || defined(__DOXYGEN__)
 
-/*! \fn void adc_digital_input_disable(adc_digital_channel_t chanList)
+/*! \ingroup drv_adc
+ *  \fn void adc_digital_input_disable(adc_digital_channel_t chanList)
  *  \brief Disable digital input for selected channel.
  *
  *  \note Devices that do not support this feature will not have
@@ -288,7 +338,8 @@ void adc_trigger_enable(_Bool trigEn);
  */
 void adc_digital_input_disable(adc_digital_channel_t chanList);
 
-/*! \fn void adc_digital_input_enable(adc_digital_channel_t chanList)
+/*! \ingroup drv_adc
+ *  \fn void adc_digital_input_enable(adc_digital_channel_t chanList)
  *  \brief Enable digital input for selected channel.
  *
  *  \note Devices that do not support this feature will not have

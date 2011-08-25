@@ -11,15 +11,17 @@ CAN_DEVICES += atmega64m1
 
 CAN_OBJS=$(CAN_DEVICES:%=$(OBJDIR)/%/can.o)
 
-CAN_TARGETS=$(CAN_DEVICES:%=$(OUTDIR)/%/libcan.a)
+CAN_TARGETS=$(CAN_DEVICES:%=$(OUTDIR_LIB)/%/libcan.a)
 
 CAN_OBJDIRS=$(CAN_DEVICES:%=$(OBJDIR)/%)
-CAN_OUTDIRS=$(CAN_DEVICES:%=$(OUTDIR)/%)
+CAN_OUTDIRS=$(CAN_DEVICES:%=$(OUTDIR_LIB)/%)
+
+CAN_HEADER = $(OUTDIR_HEADER)/can.h
 
 $(OBJDIR)/%/can.o : can.c can.h
 	$(CC) -c -mmcu=$* $(ALL_CFLAGS) $< -o $@
 
-$(OUTDIR)/%/libcan.a: $(CAN_OBJS)
+$(OUTDIR_LIB)/%/libcan.a: $(CAN_OBJS)
 	$(AR) $@ $(OBJDIR)/$*/can.o
 
 # Create object files directory

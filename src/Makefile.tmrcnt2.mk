@@ -95,15 +95,17 @@ TMRCNT2_DEVICES += atmega2560
 
 TMRCNT2_OBJS=$(TMRCNT2_DEVICES:%=$(OBJDIR)/%/tmrcnt2.o)
 
-TMRCNT2_TARGETS=$(TMRCNT2_DEVICES:%=$(OUTDIR)/%/libtmrcnt2.a)
+TMRCNT2_TARGETS=$(TMRCNT2_DEVICES:%=$(OUTDIR_LIB)/%/libtmrcnt2.a)
 
 TMRCNT2_OBJDIRS=$(TMRCNT2_DEVICES:%=$(OBJDIR)/%)
-TMRCNT2_OUTDIRS=$(TMRCNT2_DEVICES:%=$(OUTDIR)/%)
+TMRCNT2_OUTDIRS=$(TMRCNT2_DEVICES:%=$(OUTDIR_LIB)/%)
+
+TMRCNT2_HEADER = $(OUTDIR_HEADER)/tmrcnt2.h
 
 $(OBJDIR)/%/tmrcnt2.o : tmrcnt2.c tmrcnt2.h
 	$(CC) -c -mmcu=$* $(ALL_CFLAGS) $< -o $@
 
-$(OUTDIR)/%/libtmrcnt2.a: $(TMRCNT2_OBJS)
+$(OUTDIR_LIB)/%/libtmrcnt2.a: $(TMRCNT2_OBJS)
 	$(AR) $@ $(OBJDIR)/$*/tmrcnt2.o
 
 # Create object files directory

@@ -55,15 +55,17 @@ TWIINT_DEVICES += attiny88
 
 TWIINT_OBJS=$(TWIINT_DEVICES:%=$(OBJDIR)/%/twiInt.o)
 
-TWIINT_TARGETS=$(TWIINT_DEVICES:%=$(OUTDIR)/%/libtwiInt.a)
+TWIINT_TARGETS=$(TWIINT_DEVICES:%=$(OUTDIR_LIB)/%/libtwiInt.a)
 
 TWIINT_OBJDIRS=$(TWIINT_DEVICES:%=$(OBJDIR)/%)
-TWIINT_OUTDIRS=$(TWIINT_DEVICES:%=$(OUTDIR)/%)
+TWIINT_OUTDIRS=$(TWIINT_DEVICES:%=$(OUTDIR_LIB)/%)
+
+TWIINT_HEADER = $(OUTDIR_HEADER)/twiInt.h
 
 $(OBJDIR)/%/twiInt.o : twiInt.c twiInt.h
 	$(CC) -c -mmcu=$* $(ALL_CFLAGS) $< -o $@
 
-$(OUTDIR)/%/libtwiInt.a: $(TWIINT_OBJS)
+$(OUTDIR_LIB)/%/libtwiInt.a: $(TWIINT_OBJS)
 	$(AR) $@ $(OBJDIR)/$*/twiInt.o
 
 # Create object files directory

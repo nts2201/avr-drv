@@ -16,15 +16,17 @@ TMRCNT3_DEVICES += atmega2561
 
 TMRCNT3_OBJS=$(TMRCNT3_DEVICES:%=$(OBJDIR)/%/tmrcnt3.o)
 
-TMRCNT3_TARGETS=$(TMRCNT3_DEVICES:%=$(OUTDIR)/%/libtmrcnt3.a)
+TMRCNT3_TARGETS=$(TMRCNT3_DEVICES:%=$(OUTDIR_LIB)/%/libtmrcnt3.a)
 
 TMRCNT3_OBJDIRS=$(TMRCNT3_DEVICES:%=$(OBJDIR)/%)
-TMRCNT3_OUTDIRS=$(TMRCNT3_DEVICES:%=$(OUTDIR)/%)
+TMRCNT3_OUTDIRS=$(TMRCNT3_DEVICES:%=$(OUTDIR_LIB)/%)
+
+TMRCNT3_HEADER = $(OUTDIR_HEADER)/tmrcnt3.h
 
 $(OBJDIR)/%/tmrcnt3.o : tmrcnt3.c tmrcnt3.h
 	$(CC) -c -mmcu=$* $(ALL_CFLAGS) $< -o $@
 
-$(OUTDIR)/%/libtmrcnt3.a: $(TMRCNT3_OBJS)
+$(OUTDIR_LIB)/%/libtmrcnt3.a: $(TMRCNT3_OBJS)
 	$(AR) $@ $(OBJDIR)/$*/tmrcnt3.o
 
 # Create object files directory

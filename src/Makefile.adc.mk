@@ -117,24 +117,27 @@ ADC_OBJS+=$(ADC_DEVICES:%=$(OBJDIR)/%/adcDigitalInput.o)
 ADC_OBJS+=$(ADC_DEVICES:%=$(OBJDIR)/%/adcMux.o)
 ADC_OBJS+=$(ADC_DEVICES:%=$(OBJDIR)/%/adcTriggerSelect.o)
 
-ADC_TARGETS=$(ADC_DEVICES:%=$(OUTDIR)/%/libadc.a)
+ADC_TARGETS=$(ADC_DEVICES:%=$(OUTDIR_LIB)/%/libadc.a)
 
 ADC_OBJDIRS=$(ADC_DEVICES:%=$(OBJDIR)/%)
-ADC_OUTDIRS=$(ADC_DEVICES:%=$(OUTDIR)/%)
+ADC_OUTDIRS=$(ADC_DEVICES:%=$(OUTDIR_LIB)/%)
 
-$(OBJDIR)/%/adcCommun.o : adcCommun.c adcDef.h
+ADC_HEADER = $(OUTDIR_HEADER)/adc.h
+ADC_HEADER += $(OUTDIR_HEADER)/adcDef.h
+
+$(OBJDIR)/%/adcCommun.o : adcCommun.c adcDef.h adc.h
 	$(CC) -c -mmcu=$* $(ALL_CFLAGS) $< -o $@ 
 
-$(OBJDIR)/%/adcDigitalInput.o : adcDigitalInput.c adcDef.h
+$(OBJDIR)/%/adcDigitalInput.o : adcDigitalInput.c adcDef.h adc.h
 	$(CC) -c -mmcu=$* $(ALL_CFLAGS) $< -o $@
 
-$(OBJDIR)/%/adcMux.o : adcMux.c adcDef.h
+$(OBJDIR)/%/adcMux.o : adcMux.c adcDef.h adc.h
 	$(CC) -c -mmcu=$* $(ALL_CFLAGS) $< -o $@
 
-$(OBJDIR)/%/adcTriggerSelect.o : adcTriggerSelect.c adcDef.h
+$(OBJDIR)/%/adcTriggerSelect.o : adcTriggerSelect.c adcDef.h adc.h
 	$(CC) -c -mmcu=$* $(ALL_CFLAGS) $< -o $@
 
-$(OUTDIR)/%/libadc.a: $(ADC_OBJS)
+$(OUTDIR_LIB)/%/libadc.a: $(ADC_OBJS)
 	$(AR) $@ $(OBJDIR)/$*/adcCommun.o $(OBJDIR)/$*/adcDigitalInput.o $(OBJDIR)/$*/adcMux.o $(OBJDIR)/$*/adcTriggerSelect.o
 
 # Create object files directory

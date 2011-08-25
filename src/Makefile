@@ -3,7 +3,6 @@
 include Makefile.mk
 include Makefile.adc.mk
 include Makefile.can.mk
-include Makefile.errno.mk
 include Makefile.extint.mk
 include Makefile.spi.mk
 include Makefile.tmrcnt0.mk
@@ -16,62 +15,49 @@ include Makefile.twi.mk
 include Makefile.twiInt.mk
 include Makefile.usart.mk
 
-all: iopin $(ADC_TARGETS) $(CAN_TARGETS) $(ERRNO_TARGETS) $(EXTINT_TARGETS) $(SPI_TARGETS) $(TMRCNT0_TARGETS) $(TMRCNT1_TARGETS) $(TMRCNT2_TARGETS) $(TMRCNT3_TARGETS) $(TMRCNT4_TARGETS) $(TMRCNT5_TARGETS) $(TWI_TARGETS) $(TWIINT_TARGETS) $(USART_TARGETS) 
+all: iopin adc can extint spi tmrcnt0 tmrcnt1 tmrcnt2 tmrcnt3 tmrcnt4 tmrcnt5 twi twiInt usart 
 
-adc: $(ADC_TARGETS)
+adc: $(ADC_TARGETS) $(ADC_HEADER)
 
-can: $(CAN_TARGETS)
-
-tmrcnt0: iopin $(TMRCNT0_TARGETS)
-
-tmrcnt1: iopin $(TMRCNT1_TARGETS)
-
-tmrcnt2: iopin $(TMRCNT2_TARGETS)
-
-tmrcnt3: iopin $(TMRCNT3_TARGETS)
-
-tmrcnt4: iopin $(TMRCNT4_TARGETS)
-
-tmrcnt5: iopin $(TMRCNT5_TARGETS)
+can: $(CAN_TARGETS) $(CAN_HEADER)
 
 iopin:
-	mkdir -p $(OUTDIR)/inc/io_pin
-	$(COPY) ./io_pin/* $(OUTDIR)/inc/io_pin
+	mkdir -p $(OUTDIR)/include/io_pin
+	$(COPY) ./io_pin/* $(OUTDIR)/include/io_pin
 	mkdir -p $(OUTDIR)/example
 	$(RSYNC) -r --exclude=.svn ./example/ $(OUTDIR)/example
+	mkdir -p $(OUTDIR)/include/util
+	$(RSYNC) -r --exclude=.svn ./util/ $(OUTDIR)/include/util
+	
+extint: $(EXTINT_TARGETS) $(EXTINT_HEADER)
+
+spi: $(SPI_TARGETS) $(SPI_HEADER)
+
+tmrcnt0: iopin $(TMRCNT0_TARGETS) $(TMRCNT0_HEADER)
+
+tmrcnt1: iopin $(TMRCNT1_TARGETS) $(TMRCNT1_HEADER)
+
+tmrcnt2: iopin $(TMRCNT2_TARGETS) $(TMRCNT2_HEADER)
+
+tmrcnt3: iopin $(TMRCNT3_TARGETS) $(TMRCNT3_HEADER)
+
+tmrcnt4: iopin $(TMRCNT4_TARGETS) $(TMRCNT4_HEADER)
+
+tmrcnt5: iopin $(TMRCNT5_TARGETS) $(TMRCNT5_HEADER)
+
+twi: iopin $(TWI_TARGETS) $(TWI_HEADER)
+
+twiInt: $(TWIINT_TARGETS) $(TWIINT_HEADER)
+
+usart: $(USART_TARGETS) $(USART_HEADER)
 
 clean:
-	$(REMOVE) $(ADC_TARGETS)
-	$(REMOVE) $(ADC_OBJS)
-	$(REMOVE) $(CAN_TARGETS)
-	$(REMOVE) $(CAN_OBJS)
-	$(REMOVE) $(ERRNO_TARGETS)
-	$(REMOVE) $(ERRNO_OBJS)
-	$(REMOVE) $(EXTINT_TARGETS)
-	$(REMOVE) $(EXTINT_OBJS)
-	$(REMOVE) $(SPI_TARGETS)
-	$(REMOVE) $(SPI_OBJS)
-	$(REMOVE) $(TMRCNT0_TARGETS)
-	$(REMOVE) $(TMRCNT0_OBJS)
-	$(REMOVE) $(TMRCNT1_TARGETS)
-	$(REMOVE) $(TMRCNT1_OBJS)
-	$(REMOVE) $(TMRCNT2_TARGETS)
-	$(REMOVE) $(TMRCNT2_OBJS)
-	$(REMOVE) $(TMRCNT3_TARGETS)
-	$(REMOVE) $(TMRCNT3_OBJS)
-	$(REMOVE) $(TMRCNT4_TARGETS)
-	$(REMOVE) $(TMRCNT4_OBJS)
-	$(REMOVE) $(TMRCNT5_TARGETS)
-	$(REMOVE) $(TMRCNT5_OBJS)
-	$(REMOVE) $(TWI_TARGETS)
-	$(REMOVE) $(TWI_OBJS)
-	$(REMOVE) $(TWIINT_TARGETS)
-	$(REMOVE) $(TWIINT_OBJS)
-	$(REMOVE) $(USART_TARGETS)
-	$(REMOVE) $(USART_OBJS)
-	$(REMOVEDIR) $(OUTDIR)/example
-	$(REMOVEDIR) $(OUTDIR)/inc
+	$(REMOVEDIR) $(OUTDIR)
+	$(REMOVEDIR) $(OBJDIR)
 
+# Create object files directory
+$(shell mkdir -p $(OUTDIR))
+$(shell mkdir -p $(OUTDIR_HEADER))
 
 # Listing of phony.
 .PHONY : all clean adc can iopin tmrcnt0 tmrcnt1 tmrcnt2 tmrcnt3 tmrcnt4 tmrcnt5

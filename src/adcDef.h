@@ -39,7 +39,9 @@
 #ifndef ADCDEF_H_
 #define ADCDEF_H_
 
-/*! List of available prescaler. */
+/*! \ingroup drv_adc
+ * List of available prescaler.
+ */
 enum adc_prescaler_e
 {
     adc_prescaler_2 = 0, /*!< Oscillator clock divided by 2. */
@@ -52,14 +54,18 @@ enum adc_prescaler_e
     adc_prescaler_128,/*!< Oscillator clock divided by 128. */
 };
 
-/*! List of available prescaler typedef. */
+/*! \ingroup drv_adc
+ * List of available prescaler typedef.
+ */
 typedef enum adc_prescaler_e adc_prescaler_t;
 
 #if defined(__DOXYGEN__)
-/*! List of available voltage reference. */
+/*! \ingroup drv_adc
+ * List of available voltage reference.
+ */
 enum adc_voltage_ref_e
 {
-    adc_voltage_ref_aref = 0, /*!< ADC use Aref PIN as voltage reference. */
+    adc_voltage_ref_aref, /*!< ADC use Aref PIN as voltage reference. */
     adc_voltage_ref_avcc_wcap, /*!< ADC use VCC as voltage reference with capacitor on AREF pin. */
     adc_voltage_ref_avcc_wocap, /*!< ADC use VCC as voltage reference without capacitor on AREF pin. */
     adc_voltage_ref_internal_1_1_wcap, /*!< ADC use internal 1.1 Voltage reference. */
@@ -67,7 +73,8 @@ enum adc_voltage_ref_e
     adc_voltage_ref_internal_2_56_wocap, /*!< ADC use internal 2.56 Voltage reference. */
 };
 
-/*! List of available voltage reference typedef.
+/*! \ingroup drv_adc
+ * List of available voltage reference typedef.
  *
  * Note that not all voltage references are available. Availability is determined
  * by the device used.
@@ -271,10 +278,12 @@ typedef enum adc_voltage_ref_e
 #endif
 
 #if defined(__DOXYGEN__)
-/*! List of available trigger source. */
+/*! \ingroup drv_adc
+ * List of available trigger source.
+ */
 enum adc_trigger_source_e
 {
-    adc_trigger_source_free_running = 0, /*!< ADC is in free running mode. */
+    adc_trigger_source_free_running, /*!< ADC is in free running mode. */
     adc_trigger_source_analog_comparator, /*!< Start of conversion is triggered by the analog comparator. */
     adc_trigger_source_ext_int_request0, /*!< Start of conversion is triggered by the external request 0. */
     adc_trigger_source_timer_0_compare_match, /*!< Start of conversion is triggered by timer 0 compare match. */
@@ -284,7 +293,9 @@ enum adc_trigger_source_e
     adc_trigger_source_timer_1_capture_event, /*!< Start of conversion is triggered by timer 1 capture event. */
 };
 
-/*! List of available trigger source typedef. */
+/*! \ingroup drv_adc
+ * List of available trigger source typedef.
+ */
 typedef enum adc_trigger_source_e adc_trigger_source_t;
 #elif defined(__AVR_AT90CAN32__) \
 || defined(__AVR_AT90CAN64__) \
@@ -564,10 +575,12 @@ typedef enum adc_trigger_source_e
 #endif
 
 #if defined(__DOXYGEN__)
-/*! List of available input for ADC. */
+/*! \ingroup drv_adc
+ * List of available input for ADC.
+ */
 enum adc_input_channel_e
 {
-    adc_input_channel_0 = 0, /*!< ADC use ADCpin 0. */
+    adc_input_channel_0, /*!< ADC use ADCpin 0. */
     adc_input_channel_1, /*!< ADC use ADCpin 1. */
     adc_input_channel_2, /*!< ADC use ADCpin 2. */
     adc_input_channel_3, /*!< ADC use ADCpin 3. */
@@ -631,7 +644,9 @@ enum adc_input_channel_e
     adc_input_channel_p13_n10_1x, /*!< ADC use differential input (pin13 - pin10) * 1. */
 };
 
-/*! List of available input for ADC typedef. */
+/*! \ingroup drv_adc
+ * List of available input for ADC typedef.
+ */
 typedef enum adc_input_channel_e adc_input_channel_t;
 #elif defined(__AVR_AT90PWM1__)
 typedef enum adc_input_channel_e
@@ -1161,29 +1176,44 @@ typedef enum adc_input_channel_e
 #endif
 
 #if defined(__DOXYGEN__)
-/*! List of digital input channel. */
+/*! \ingroup drv_adc
+ * List of digital input channel.
+ *
+ * Not all device are equipped with a Digital Input Disable Register.
+ * Also, not all device share the same number of input.
+ */
 enum adc_digital_channel_e
 {
-    adc_digital_channel_0 = 0x0001,    /*!< Digital input on pin0. */
-    adc_digital_channel_1 = 0x0002,    /*!< Digital input on pin1. */
-    adc_digital_channel_2 = 0x0004,    /*!< Digital input on pin2. */
-    adc_digital_channel_3 = 0x0008,    /*!< Digital input on pin3. */
-    adc_digital_channel_4 = 0x0010,    /*!< Digital input on pin4. */
-    adc_digital_channel_5 = 0x0020,    /*!< Digital input on pin5. */
-    adc_digital_channel_6 = 0x0040,    /*!< Digital input on pin6. */
-    adc_digital_channel_7 = 0x0080,    /*!< Digital input on pin7. */
-    adc_digital_channel_8 = 0x0100,    /*!< Digital input on pin8. */
-    adc_digital_channel_9 = 0x0200,    /*!< Digital input on pin9. */
-    adc_digital_channel_10 = 0x0400,   /*!< Digital input on pin10. */
-    adc_digital_channel_11 = 0x0800,   /*!< Digital input on pin11. */
-    adc_digital_channel_12 = 0x1000,   /*!< Digital input on pin12. */
-    adc_digital_channel_13 = 0x2000,   /*!< Digital input on pin13. */
-    adc_digital_channel_14 = 0x4000,   /*!< Digital input on pin14. */
-    adc_digital_channel_15 = 0x8000    /*!< Digital input on pin15. */
+    adc_digital_channel_0,    /*!< Digital input on pin0. */
+    adc_digital_channel_1,    /*!< Digital input on pin1. */
+    adc_digital_channel_2,    /*!< Digital input on pin2. */
+    adc_digital_channel_3,    /*!< Digital input on pin3. */
+    adc_digital_channel_4,    /*!< Digital input on pin4. */
+    adc_digital_channel_5,    /*!< Digital input on pin5. */
+    adc_digital_channel_6,    /*!< Digital input on pin6. */
+    adc_digital_channel_7,    /*!< Digital input on pin7. */
+    adc_digital_channel_8,    /*!< Digital input on pin8. */
+    adc_digital_channel_9,    /*!< Digital input on pin9. */
+    adc_digital_channel_10,   /*!< Digital input on pin10. */
+    adc_digital_channel_11,   /*!< Digital input on pin11. */
+    adc_digital_channel_12,   /*!< Digital input on pin12. */
+    adc_digital_channel_13,   /*!< Digital input on pin13. */
+    adc_digital_channel_14,   /*!< Digital input on pin14. */
+    adc_digital_channel_15,   /*!< Digital input on pin15. */
+    adc_digital_channel_amp0nd,
+    adc_digital_channel_amp0pd,
+    adc_digital_channel_amp1nd,
+    adc_digital_channel_amp1pd,
+    adc_digital_channel_amp2nd,
+    adc_digital_channel_amp2pd,
+    adc_digital_channel_aref, /*!< Digital input on pin AREF. */
+
 };
 
-/*! List of digital input channel typedef. */
-typedef enum adc_digital_channel_e adc_digital_channel_t
+/*! \ingroup drv_adc
+ * List of digital input channel typedef.
+ */
+typedef enum adc_digital_channel_e adc_digital_channel_t;
 #elif defined(__AVR_AT90PWM1__)
 typedef enum adc_digital_channel_e
 {

@@ -152,15 +152,17 @@ ERRNO_DEVICES += atmega2561
 
 ERRNO_OBJS=$(ERRNO_DEVICES:%=$(OBJDIR)/%/avr-drv-errno.o)
 
-ERRNO_TARGETS=$(ERRNO_DEVICES:%=$(OUTDIR)/%/libavr-drv-errno.a)
+ERRNO_TARGETS=$(ERRNO_DEVICES:%=$(OUTDIR_LIB)/%/libavr-drv-errno.a)
 
 ERRNO_OBJDIRS=$(ERRNO_DEVICES:%=$(OBJDIR)/%)
-ERRNO_OUTDIRS=$(ERRNO_DEVICES:%=$(OUTDIR)/%)
+ERRNO_OUTDIRS=$(ERRNO_DEVICES:%=$(OUTDIR_LIB)/%)
+
+ERRNO_HEADER = $(OUTDIR_HEADER)/avr-drv-errno.h
 
 $(OBJDIR)/%/avr-drv-errno.o : avr-drv-errno.c avr-drv-errno.h
 	$(CC) -c -mmcu=$* $(ALL_CFLAGS) $< -o $@
 
-$(OUTDIR)/%/libavr-drv-errno.a: $(ERRNO_OBJS)
+$(OUTDIR_LIB)/%/libavr-drv-errno.a: $(ERRNO_OBJS)
 	$(AR) $@ $(OBJDIR)/$*/avr-drv-errno.o
 
 # Create object files directory

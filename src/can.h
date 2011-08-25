@@ -33,6 +33,7 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 /*! \file can.h
+ \defgroup drv_can <can.h>: CAN bus
  \brief API for Atmel CAN module.
 
  \author Frédéric Nadeau
@@ -48,7 +49,10 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-enum can_int_src_e//Interrupt source
+/*! \ingroup drv_can
+ * Possible interrupt source.
+ */
+enum can_int_src_e//
 {
 	can_int_src_AERR_00 = 0x00,
 	can_int_src_FERR_00,
@@ -177,6 +181,7 @@ enum can_mob_conf_e
 typedef enum can_mob_conf_e can_mob_conf_t;
 
 /*! \fn void can_set_abort_request(void)
+ *  \ingroup drv_can
  *  \brief Force all message boxes to be desactivated.
  *
  * All communication currently ongoing will terminate normally.
@@ -186,12 +191,14 @@ typedef enum can_mob_conf_e can_mob_conf_t;
 void can_set_abort_request(void);
 
 /*! \fn void can_clear_abort_request(void)
+ *  \ingroup drv_can
  *  \brief After an #can_set_abort_request(), this command will reactivate
  *  message boxes.
  */
 void can_clear_abort_request(void);
 
 /*! \fn void can_set_overload_frame_request(void)
+ *  \ingroup drv_can
  *  \brief Force la transmission d'un message de surcharge imm�diatement
  * apr�s la prochaine reception.
  *
@@ -201,23 +208,27 @@ void can_clear_abort_request(void);
 void can_set_overload_frame_request(void);
 
 /*! \fn void can_clear_overload_frame_request(void)
+ *  \ingroup drv_can
  *  \brief Si une demande d'envois de message de surcharge fut plac� plust�t,
  * cette fonction permet ne plus transmettre de tel message.
  */
 void can_clear_overload_frame_request(void);
 
 /*! \fn void can_enable_time_trigger_communication(void)
+ *  \ingroup drv_can
  *  \brief Active la communication bas� sur le temps et non pas les �v�nements.
  */
 void can_enable_time_trigger_communication(void);
 
 /*! \fn void can_disable_time_trigger_communication(void)
+ *  \ingroup drv_can
  *  \brief D�sctive la communication bas�e sur le temps et
  * active donc la celle bas�e sur les �v�nements.
  */
 void can_disable_time_trigger_communication(void);
 
 /*! \fn void can_ttc_sync_on_last_bit_of_eof(void)
+ *  \ingroup drv_can
  *  \brief Force la synchronisation de TTC lors du dernier bit de EOF.
  * End Of Frame
  *
@@ -226,6 +237,7 @@ void can_disable_time_trigger_communication(void);
 void can_ttc_sync_on_last_bit_of_eof(void);
 
 /*! \fn void can_ttc_sync_on_sof(void)
+ *  \ingroup drv_can
  *  \brief Force la synchronisation de TTC lors de SOF.
  * Start Of Frame
  *
@@ -234,17 +246,20 @@ void can_ttc_sync_on_last_bit_of_eof(void);
 void can_ttc_sync_on_sof(void);
 
 /*! \fn void can_enable_listening_mode(void)
+ *  \ingroup drv_can
  *  \brief Active le mode d'�coute. Tx est connect� vers l'ext�rieure ainsi que
  * sur Rx.
  */
 void can_enable_listening_mode(void);
 
 /*! \fn void can_disable_listening_mode(void)
+ *  \ingroup drv_can
  *  \brief D�sactive le mode d'�coute. Rx est connect� vers l'ext�rieure.
  */
 void can_disable_listening_mode(void);
 
 /*! \fn void can_set_enable_mode(void)
+ *  \ingroup drv_can
  *  \brief Le Module can sera activ� suite � la lecture de 11bit.
  *
  * Puisque l'effet de ce fanion n'est pas imm�diat, il vaut mieux lire le bit
@@ -253,6 +268,7 @@ void can_disable_listening_mode(void);
 void can_set_enable_mode(void);
 
 /*! \fn void can_set_standby_mode(void)
+ *  \ingroup drv_can
  *  \brief La communication en cours se terminera comme pr�vue et le cannal CAN
  * sera suspendu(le bit CONMOB de chaque MOb ne changera pas).  Le transmetteur
  * permet donc la reception de donn�s.  Les registres de reception sont disponible
@@ -264,53 +280,61 @@ void can_set_enable_mode(void);
 void can_set_standby_mode(void);
 
 /*! \fn void can_request_reset(void)
+ *  \ingroup drv_can
  *  \brief Permet au module CAN de faire une remise � z�ro du processeur.
  */
 void can_request_reset(void);
 
-/*! \fn _Bool can_is_overload_frame_flag_set(void)
+/*! \ingroup drv_can
+ *  \fn _Bool can_is_overload_frame_flag_set(void)
  *  \brief Lit le fanion OVFG
  *  \return false Si aucune trame de surcharge est n'envoy�.
  *          true Si une trame de surcharge est en cour de transmission.
  */
 _Bool can_is_overload_frame_flag_set(void);
 
-/*! \fn _Bool can_is_transmitter_busy(void)
+/*! \ingroup drv_can
+ *  \fn _Bool can_is_transmitter_busy(void)
  *  \brief Lit le fanion TXBSY
  *  \return false Si le transmetteur est inactif.
  *          true Si le transmetteur est occup�.
  */
 _Bool can_is_transmitter_busy(void);
 
-/*! \fn _Bool can_is_receiver_busy(void)
+/*! \ingroup drv_can
+ *  \fn _Bool can_is_receiver_busy(void)
  *  \brief Lit le fanion RXBSY
  *  \return false Si le r�cepteur est inactif.
  *          true Si le r�cepteur est occup�.
  */
 _Bool can_is_receiver_busy(void);
 
-/*! \fn _Bool can_is_enabled(void)
+/*! \ingroup drv_can
+ *  \fn _Bool can_is_enabled(void)
  *  \brief Lit le fanion ENFG.
  *  \return false Si le controleur est inactif.
  *          true Si le controleur est actif.
  */
 _Bool can_is_enabled(void);
 
-/*! \fn _Bool can_is_bus_off(void)
+/*! \ingroup drv_can
+ *  \fn _Bool can_is_bus_off(void)
  *  \brief Lit le fanion BOFF.
  *  \return false Si le bus n'est pas en mode Off.
  *          true Si le bus est en mode Off.
  */
 _Bool can_is_bus_off(void);
 
-/*! \fn _Bool can_is_error_passive_set(void)
+/*! \ingroup drv_can
+ *  \fn _Bool can_is_error_passive_set(void)
  *  \brief Lit le fanion ERRP.
  *  \return false Si le bus n'est pas en mode "Error passive".
  *          true Si le bus est en mode "Error passive".
  */
 _Bool can_is_error_passive_set(void);
 
-/*! \fn _Bool can_is_general_interrupt_set(void)
+/*! \ingroup drv_can
+ *  \fn _Bool can_is_general_interrupt_set(void)
  *  \brief Indique si un fanion d'int�ruption est actif.
  *  \return 0 Si aucune int�ruption n'est en attente.
  *          1 Si une int�ruption est en attente.
@@ -403,7 +427,8 @@ void can_set_data_mob(uint8_t ubData);
 void can_clear_mob(void);
 void can_clear_all_mob(void);
 
-/*! \fn _Bool can_find_free_mob(void)
+/*! \ingroup drv_can
+ *  \fn _Bool can_find_free_mob(void)
  *  \brief Find a free MOB.
  *  \return True if an empty MOB has been found, false if all MOB are in use.
  *
@@ -421,7 +446,8 @@ int can_set_baud_rate(uint32_t ulBaudrate, uint32_t ulClkFreq,
 
 void can_set_baud_rate_precalc(uint8_t canbt1, uint8_t canbt2, uint8_t canbt3);
 
-/*! \fn can_int_src_t can_get_int_src(void)
+/*! \ingroup drv_can
+ *  \fn can_int_src_t can_get_int_src(void)
  *  \brief Return interrupt source.
  *  \return Source of interrupt, see #can_int_src_t.
  *

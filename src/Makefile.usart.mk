@@ -43,6 +43,7 @@ USART_DEVICES += atmega168
 USART_DEVICES += atmega168a
 USART_DEVICES += atmega168p
 USART_DEVICES += atmega169
+#USART_DEVICES += atmega169a
 USART_DEVICES += atmega169p
 USART_DEVICES += atmega169pa
 USART_DEVICES += atmega323
@@ -62,7 +63,10 @@ USART_DEVICES += atmega644a
 USART_DEVICES += atmega644p
 USART_DEVICES += atmega644pa
 USART_DEVICES += atmega645
+#USART_DEVICES += atmega645a
+#USART_DEVICES += atmega645p
 USART_DEVICES += atmega649
+#USART_DEVICES += atmega649a
 USART_DEVICES += atmega649p
 USART_DEVICES += atmega1280
 USART_DEVICES += atmega1281
@@ -74,16 +78,22 @@ USART_DEVICES += atmega3250p
 USART_DEVICES += atmega3290
 USART_DEVICES += atmega3290p
 USART_DEVICES += atmega6450
+#USART_DEVICES += atmega6450a
+#USART_DEVICES += atmega6450p
 USART_DEVICES += atmega6490
+#USART_DEVICES += atmega6490a
+#USART_DEVICES += atmega6490p
 USART_DEVICES += atmega8535
 
 USART_OBJS=$(USART_DEVICES:%=$(OBJDIR)/%/usart.o)
 USART_OBJS+=$(USART_DEVICES:%=$(OBJDIR)/%/usartBaudRate.o)
 
-USART_TARGETS=$(USART_DEVICES:%=$(OUTDIR)/%/libusart.a)
+USART_TARGETS=$(USART_DEVICES:%=$(OUTDIR_LIB)/%/libusart.a)
 
 USART_OBJDIRS=$(USART_DEVICES:%=$(OBJDIR)/%)
-USART_OUTDIRS=$(USART_DEVICES:%=$(OUTDIR)/%)
+USART_OUTDIRS=$(USART_DEVICES:%=$(OUTDIR_LIB)/%)
+
+USART_HEADER = $(OUTDIR_HEADER)/usart.h
 
 $(OBJDIR)/%/usart.o : usart.c usart.h
 	$(CC) -c -mmcu=$* $(ALL_CFLAGS) $< -o $@
@@ -91,7 +101,7 @@ $(OBJDIR)/%/usart.o : usart.c usart.h
 $(OBJDIR)/%/usartBaudRate.o : usartBaudRate.c usartBaudRate.h usart.h 
 	$(CC) -c -mmcu=$* $(ALL_CFLAGS) $< -o $@
 
-$(OUTDIR)/%/libusart.a: $(USART_OBJS)
+$(OUTDIR_LIB)/%/libusart.a: $(USART_OBJS)
 	$(AR) $@ $(OBJDIR)/$*/usart.o $(OBJDIR)/$*/usartBaudRate.o
 
 # Create object files directory

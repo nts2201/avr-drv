@@ -1,4 +1,4 @@
-/* Copyright (c) 2010 Frédéric Nadeau
+/* Copyright (c) 2010-2011 Frédéric Nadeau
    All rights reserved.
 
    Redistribution and use in source and binary forms,
@@ -28,6 +28,13 @@
    THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
    (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
+
+/*! \file tmrcnt0.h
+ \defgroup drv_tmrcnt0 <tmrcnt0.h>: Timer/Counter 0
+ \brief API for Atmel Timer/Counter 0.
+
+ \author Frédéric Nadeau
+ */
 
 #ifndef TMR_CNT_0_H_
 #define TMR_CNT_0_H_

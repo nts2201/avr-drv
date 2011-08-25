@@ -1,0 +1,1911 @@
+/* Copyright (c) 2011 Frédéric Nadeau
+   All rights reserved.
+
+   Redistribution and use in source and binary forms,
+   with or without modification, are permitted provided
+   that the following conditions are met:
+
+   1.Redistributions of source code must retain the above
+   copyright notice, this list of conditions and the following
+   disclaimer.
+
+   2.Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+
+   3.Neither the name of the AVR-DRV nor the names of its
+   contributors may be used to endorse or promote products derived
+   from this software without specific prior written permission.
+
+   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+   "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+   LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+   A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+   OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+   SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+   LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+   DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+   THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
+   
+/** \mainpage AVR-drv
+
+\section avr_drv_intro Introduction
+
+This project aims to provide drivers for AVR microntrollers from Atmel Corp. 
+Drivers are designed with an per-chip approach.
+
+\section device_list Device list
+
+\todo fill table
+
+This is an incomplete list of supported module per device.
+
+  <table border>
+  <tr>
+     <td><b> Device / Module </b></td>
+     <td><b> ADC </b></td>
+     <td><b> CAN </b></td>
+     <td><b> Ext Int </b></td>
+     <td><b> SPI </b></td>
+     <td><b> Tmr/Cnt 0 </b></td>
+     <td><b> Tmr/Cnt 1 </b></td>
+     <td><b> Tmr/Cnt 2 </b></td>
+     <td><b> Tmr/Cnt 3 </b></td>
+     <td><b> Tmr/Cnt 4 </b></td>
+     <td><b> Tmr/Cnt 5 </b></td>
+     <td><b> TWI </b></td>
+     <td><b> USART </b></td>
+  </tr>
+  <tr>
+     <td> AT90CAN32 </td>
+     <td> X </td>
+     <td> X </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> AT90CAN64 </td>
+     <td> X </td>
+     <td> X </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> AT90CAN128 </td>
+     <td> X </td>
+     <td> X </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> AT90PWM1 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+  </tr>
+  <tr>
+     <td> AT90PWM2 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> AT90PWM2b </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> AT90PWM3 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> AT90PWM3b </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> AT90PWM81 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+  </tr>
+  <tr>
+     <td> AT90PWM216 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> AT90PWM316 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> AT90USB82 </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> AT90USB162 </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> AT90USB646 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> AT90USB647 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> AT90USB1286 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> AT90USB1287 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega8 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega8u2 </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega16 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega16a </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega16hva2 </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+  </tr>
+  <tr>
+     <td> ATmega16hvb </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+  </tr>
+  <tr>
+     <td> ATmega16m1 </td>
+     <td> X </td>
+     <td> X </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+  </tr>
+  <tr>
+     <td> ATmega16u4 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega32 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega32c1 </td>
+     <td> X </td>
+     <td> X </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+  </tr>
+  <tr>
+     <td> ATmega32hvb </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+  </tr>
+  <tr>
+     <td> ATmega32m1 </td>
+     <td> X </td>
+     <td> X </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+  </tr>
+  <tr>
+     <td> ATmega32u2 </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega32u4 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega32u6 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega48 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega48a </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega48p </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega64 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega64c1 </td>
+     <td> X </td>
+     <td> X </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+  </tr>
+  <tr>
+     <td> ATmega64hve </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+  </tr>
+  <tr>
+     <td> ATmega64m1 </td>
+     <td> X </td>
+     <td> X </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+  </tr>
+  <tr>
+     <td> ATmega88 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega88a </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega88p </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega88pa </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega103 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+  </tr>
+  <tr>
+     <td> ATmega128 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega128rfa1 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega162 </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega163 </td>
+     <td> <span style="color:#FF0000">Broken</span> </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+  </tr>
+  <tr>
+     <td> ATmega164a </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega164p </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega165 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega165p </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega168 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega168a </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega168p </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega169 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega169a </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> <span style="color:#0000FF">Need review </span> </td>
+  </tr>
+  <tr>
+     <td> ATmega169p </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega169pa </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega323 </td>
+     <td> <span style="color:#FF0000">Broken</span> </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega324a </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega324p </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega324pa </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega325 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega325p </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega328 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega328p </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega329 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega329p </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega329pa </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega406 </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+  </tr>
+  <tr>
+     <td> ATmega640 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega644 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega644a </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega644p </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega644pa </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega645 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega645a </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> <span style="color:#0000FF">Need review </span> </td>
+  </tr>
+  <tr>
+     <td> ATmega645p </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> <span style="color:#0000FF">Need review </span> </td>
+  </tr>
+  <tr>
+     <td> ATmega649 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega649a </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> <span style="color:#0000FF">Need review </span> </td>
+  </tr>
+  <tr>
+     <td> ATmega649p </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega1280 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega1281 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega1284p </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega2560 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega2561 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega3250 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega3250p </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega3290 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega3290p </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega6450 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega6450a </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> <span style="color:#0000FF">Need review </span> </td>
+  </tr>
+  <tr>
+     <td> ATmega6450p </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> <span style="color:#0000FF">Need review </span> </td>
+  </tr>
+  <tr>
+     <td> ATmega6490 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATmega6490a </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> <span style="color:#0000FF">Need review </span> </td>
+  </tr>
+  <tr>
+     <td> ATmega6490p </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> <span style="color:#0000FF">Need review </span> </td>
+  </tr>
+  <tr>
+     <td> ATmega8535 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> X </td>
+  </tr>
+  <tr>
+     <td> ATtiny13 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+  </tr>
+  <tr>
+     <td> ATtiny13a </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+  </tr>
+  <tr>
+     <td> ATtiny24 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+  </tr>
+  <tr>
+     <td> ATtiny24a </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+  </tr>
+  <tr>
+     <td> ATtiny25 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+  </tr>
+  <tr>
+     <td> ATtiny26 </td>
+     <td> <span style="color:#FF0000">Broken</span> </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+  </tr>
+  <tr>
+     <td> ATtiny43u </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+  </tr>
+  <tr>
+     <td> ATtiny44 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+  </tr>
+  <tr>
+     <td> ATtiny44a </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+  </tr>
+  <tr>
+     <td> ATtiny45 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+  </tr>
+  <tr>
+     <td> ATtiny48 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+  </tr>
+  <tr>
+     <td> ATtiny84 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+  </tr>
+  <tr>
+     <td> ATtiny85 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+  </tr>
+  <tr>
+     <td> ATtiny87 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+  </tr>
+  <tr>
+     <td> ATtiny88 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+  </tr>
+  <tr>
+     <td> ATtiny167 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+  </tr>
+  <tr>
+     <td> ATtiny261 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+  </tr>
+  <tr>
+     <td> ATtiny261a </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+  </tr>
+  <tr>
+     <td> ATtiny461 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+  </tr>
+  <tr>
+     <td> ATtiny861 </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+  </tr>
+  <tr>
+     <td> ATtiny861a </td>
+     <td> X </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+     <td> - </td>
+  </tr>
+  </table>
+
+
+
+\section dependency Dependency
+
+This project depend on <a href="http://www.nongnu.org/avr-libc/">AVR-Libc</a>.
+
+Build process currently uses AVR-Libc 1.7.1. 
+
+\section disclaimer Disclaimers
+
+<b>This page is not affiliated nor endorsed by/with Atmel</b>.
+
+The following are registered trademarks or trademarks of Atmel Corporation or its subsidiaries:
+
+\li Atmel®
+\li AVR logo
+\li ATmega
+\li AVR Studio®
+\li STK®
+\li And others 
+
+Other terms and product names may be trademarks of others or even Atmel Corporation. 
+
+\section license AVR-drv License
+
+AVR-drv is licensed under the "Modified BSD License".
+
+\verbatim
+Portions of AVR-drv are Copyright (c) 2008-2011
+Frédéric Nadeau
+François-Pierre Pépin,
+Sy Sech Vong
+   All rights reserved.
+
+   Redistribution and use in source and binary forms,
+   with or without modification, are permitted provided
+   that the following conditions are met:
+
+   1.Redistributions of source code must retain the above
+   copyright notice, this list of conditions and the following
+   disclaimer.
+
+   2.Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+
+   3.Neither the name of the AVR-DRV nor the names of its
+   contributors may be used to endorse or promote products derived
+   from this software without specific prior written permission.
+
+   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+   "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+   LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+   A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+   OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+   SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+   LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+   DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+   THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+\endverbatim
+
+*/

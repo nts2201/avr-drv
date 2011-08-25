@@ -1,4 +1,4 @@
-/* Copyright (c) 2009-2010 Frédéric Nadeau
+/* Copyright (c) 2009-2011 Frédéric Nadeau
    All rights reserved.
 
    Redistribution and use in source and binary forms,
@@ -30,6 +30,7 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 /*! \file spi.h
+ \defgroup drv_spi <spi.h>: Serial Peripheral Interface
  \brief API for Atmel SPI module.
 
  \author Frédéric Nadeau
@@ -39,27 +40,45 @@
 
 #include <stdint.h>
 
-
-typedef enum spi_op_mode_e
+/*! \ingroup drv_spi
+ * List of available operation mode for the SPI module.
+ */
+enum spi_op_mode_e
 {
     spi_op_mode_single_master = 0, /*!< SPI act as a single master on bus.
-     Chip Select pin will be configured as output to prevent fallback to
+     Chip Select pin will be configured as output to prevent fall back to
      slave mode.*/
     spi_op_mode_multi_mMaster, /*!< SPI is configured as master but can fall back
      as slave if Chip Select pin is driven low. */
     spi_op_mode_slave, /*! SPI is configured as slave and will become active when
      Chip select is driven low. */
-} spi_op_mode_t;
+};
 
-typedef enum spi_mode_e
+/*! \ingroup drv_spi
+ * Operation mode typedef for the SPI module.
+ */
+typedef enum spi_op_mode_e spi_op_mode_t;
+
+/*! \ingroup drv_spi
+ * List of available SPI mode.
+ */
+enum spi_mode_e
 {
     spi_mode_0 = 0, /*!< CPOL = 0, CPHA = 0 */
     spi_mode_1, /*!< CPOL = 0, CPHA = 1 */
     spi_mode_2, /*!< CPOL = 1, CPHA = 0 */
     spi_mode_3 /*!< CPOL = 1, CPHA = 1 */
-} spi_mode_t;
+};
 
-typedef enum spi_prescaler_e
+/*! \ingroup drv_spi
+ * SPI mode typedef.
+ */
+typedef enum spi_mode_e spi_mode_t;
+
+/*! \ingroup drv_spi
+ * List of available prescalers for the SPI module.
+ */
+enum spi_prescaler_e
 {
     spi_prescaler_2 = 0,/*!< OSCCLK/2 */
     spi_prescaler_4, /*!< OSCCLK/4 */
@@ -68,29 +87,39 @@ typedef enum spi_prescaler_e
     spi_prescaler_32, /*!< OSCCLK/32 */
     spi_prescaler_64, /*!< OSCCLK/64 */
     spi_prescaler_128 /*!< OSCCLK/128 */
-} spi_prescaler_t;
+};
 
-/*! \fn void spi_enable(void)
+/*! \ingroup drv_spi
+ * Prescalers typedef for the SPI module.
+ */
+typedef enum spi_prescaler_e spi_prescaler_t;
+
+/*! \ingroup drv_spi
+ *  \fn void spi_enable(void)
  *  \brief Enable SPI block.
  */
 void spi_enable(void);
 
-/*! \fn void spi_disable(void)
+/*! \ingroup drv_spi
+ *  \fn void spi_disable(void)
  *  \brief Disable SPI block.
  */
 void spi_disable(void);
 
-/*! \fn void spi_int_enable(void)
+/*! \ingroup drv_spi
+ *  \fn void spi_int_enable(void)
  *  \brief Enable interrupt for SPI block.
  */
 void spi_int_enable(void);
 
-/*! \fn void spi_int_disable(void)
+/*! \ingroup drv_spi
+ *  \fn void spi_int_disable(void)
  *  \brief Disable interrupt for SPI block.
  */
 void spi_int_disable(void);
 
-/*! \fn void spi_init(_Bool isMsb, spi_op_mode_t masterSlaveMode, spi_mode_t mode, spi_prescaler_t scaler)
+/*! \ingroup drv_spi
+ *  \fn void spi_init(_Bool isMsb, spi_op_mode_t masterSlaveMode, spi_mode_t mode, spi_prescaler_t scaler)
  *  \brief  Configure the SPI port.
  *
  *  \param  isMsb \c true if MSB fist, \c false for LSB first.
@@ -100,21 +129,24 @@ void spi_int_disable(void);
  */
 void spi_init(_Bool isMsb, spi_op_mode_t masterSlaveMode, spi_mode_t mode, spi_prescaler_t scaler);
 
-/*! \fn void spi_set_operation_mode(spi_op_mode_t mode)
+/*! \ingroup drv_spi
+ *  \fn void spi_set_operation_mode(spi_op_mode_t mode)
  *  \brief Configure SPI in Slave or Master operation mode.
  *
  *  \param  mode use #spi_op_mode_t to select master or slave mode.
  */
 void spi_set_operation_mode(spi_op_mode_t mode);
 
-/*! \fn void spi_set_mode(spi_mode_t mode)
+/*! \ingroup drv_spi
+ *  \fn void spi_set_mode(spi_mode_t mode)
  *  \brief Configure SPI operation mode.
  *
  *  \param  mode use #spi_mode_t, see Atmel documentation.
  */
 void spi_set_mode(spi_mode_t mode);
 
-/*! \fn void spiSetMsbLsb(_Bool isMsb)
+/*! \ingroup drv_spi
+ *  \fn void spiSetMsbLsb(_Bool isMsb)
  *  \brief Configure data order
  *
  * Use to see data spi_set_msb_lsb in Big Endian or Little Endian
@@ -122,21 +154,24 @@ void spi_set_mode(spi_mode_t mode);
  */
 void spi_set_msb_lsb(_Bool isMsb);
 
-/*! \fn void spi_set_prescaler(spi_prescaler_t scaler)
+/*! \ingroup drv_spi
+ *  \fn void spi_set_prescaler(spi_prescaler_t scaler)
  *  \brief Configure SPI clock to be use in Master mode.
  *
  *  \param  scaler Division factor, use #spi_prescaler_t to select clock source.
  */
 void spi_set_prescaler(spi_prescaler_t scaler);
 
-/*! \fn void spi_transfer(uint8_t ubDataOut, uint8_t *pubDataIn)
+/*! \ingroup drv_spi
+ *  \fn void spi_transfer(uint8_t ubDataOut, uint8_t *pubDataIn)
  *  \brief  Send byte over SPI bus.
  *  \param  ubDataOut Data to be send.
  *  \param  pubDataIn Pointer to 8 bit data space.  Red value will be saved at specified address.
  */
 void spi_transfer(uint8_t ubDataOut, uint8_t *pubDataIn);
 
-/*! \fn void spi_transferISR(uint8_t ubDataOut, uint8_t *pubDataIn)
+/*! \ingroup drv_spi
+ *  \fn void spi_transferISR(uint8_t ubDataOut, uint8_t *pubDataIn)
  *  \brief Start a new byte transfer and get last byte in, use only in ISR function.
  *  \param ubDataOut Data to be send.
  *  \param  pubDataIn Pointer to 8 bit data space.

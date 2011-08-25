@@ -4,12 +4,14 @@ FORMAT = ihex
 
 OBJDIR = ../buildDir
 OUTDIR = ../avr-drv
+OUTDIR_LIB = $(OUTDIR)/lib
+OUTDIR_HEADER = $(OUTDIR)/include
 
 OPT = s
 DEBUG = dwarf-2
 CSTANDARD = -std=gnu99
 
-EXTRAINCDIRS = $(OUTDIR)/inc
+EXTRAINCDIRS = $(OUTDIR_HEADER)
 
 
 #---------------- Compiler Options C ----------------
@@ -69,4 +71,6 @@ RSYNC = rsync
 # Add target processor to flags.
 ALL_CFLAGS = -I. $(CFLAGS)
 
-
+# Generic rule to copy header files
+$(OUTDIR_HEADER)/%.h :
+	$(COPY) $*.h $(OUTDIR_HEADER)

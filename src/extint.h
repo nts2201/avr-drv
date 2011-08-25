@@ -29,9 +29,10 @@
    (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 /*! \file extint.h
+ \defgroup drv_extint <extint.h>: External Interrupt
  \brief Function definition for External Interrupt module.
 
- \todo Add support for device with fewer than 8 external interrupt
+ \todo Add support for device with fewer/more than 8 external interrupt
  \todo Validate any edge capability for other devices
 
  \author Frédéric Nadeau
@@ -40,10 +41,11 @@
 #define __EXTINT_H_
 
 #if defined(__DOXYGEN__)
-/*! List of external interrupt sense control.
+/*! \ingroup drv_extint
+ *  List of external interrupt sense control.
  *
- * Some device do not implement all possibility.
- * */
+ *  Some device do not implement all possibility.
+ */
 enum extint_sense_ctrl_e
 {
     extint_sense_ctrl_lowLevel, /*!< Low level on INT0 pin generates an interrupt request. */
@@ -52,7 +54,9 @@ enum extint_sense_ctrl_e
     extint_sense_ctrl_risingEdge /*!< Change from 0 to 1 on INT0 pin generates an interrupt request. */
 };
 
-/*! List of external interrupt sense control typedef. */
+/*! \ingroup drv_extint
+ *  External interrupt sense control typedef.
+ */
 typedef extint_sense_ctrl_e extint_sense_ctrl_t;
 #else
 typedef enum extint_sense_ctrl_e
@@ -70,9 +74,29 @@ typedef enum extint_sense_ctrl_e
 }extint_sense_ctrl_t;
 #endif
 
+/*! \ingroup drv_extint
+ *  \fn void extint_set_sense_control(extint_sense_ctrl_t senseCtrl, uint8_t pin)
+ *  \brief Set sense control for a specific external interrupt pin.
+ *
+ *  \param senseCtrl see #extint_sense_ctrl_t.
+ *  \param pin Affected external interrupt pin. Range from 0 to 7.
+ */
 void extint_set_sense_control(extint_sense_ctrl_t senseCtrl, uint8_t pin);
 
+/*! \ingroup drv_extint
+ *  \fn void extint_int_enable(uint8_t pin)
+ *  \brief Enable interrupt for a specific external interrupt pin.
+ *
+ *  \param pin Affected external interrupt pin. Range from 0 to 7.
+ */
 void extint_int_enable(uint8_t pin);
+
+/*! \ingroup drv_extint
+ *  \fn void extint_int_disable(uint8_t pin)
+ *  \brief Disable interrupt for a specific external interrupt pin.
+ *
+ *  \param pin Affected external interrupt pin. Range from 0 to 7.
+ */
 void extint_int_disable(uint8_t pin);
 
 #endif /*__EXTINT_H_*/
