@@ -111,6 +111,3 @@ $(OUTDIR_LIB)/%/libextint.a: $(EXTINT_OBJS)
 # Create object files directory
 $(shell mkdir -p $(EXTINT_OBJDIRS))
 $(shell mkdir -p $(EXTINT_OUTDIRS))
-
-# Listing of phony EXTINT_TARGETS.
-.PHONY : all clean

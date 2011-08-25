@@ -15,7 +15,7 @@ include Makefile.twi.mk
 include Makefile.twiInt.mk
 include Makefile.usart.mk
 
-all: iopin adc can extint spi tmrcnt0 tmrcnt1 tmrcnt2 tmrcnt3 tmrcnt4 tmrcnt5 twi twiInt usart 
+all: iopin adc can errno extint spi tmrcnt0 tmrcnt1 tmrcnt2 tmrcnt3 tmrcnt4 tmrcnt5 twi twiInt usart 
 
 adc: $(ADC_TARGETS) $(ADC_HEADER)
 
@@ -28,7 +28,9 @@ iopin:
 	$(RSYNC) -r --exclude=.svn ./example/ $(OUTDIR)/example
 	mkdir -p $(OUTDIR)/include/util
 	$(RSYNC) -r --exclude=.svn ./util/ $(OUTDIR)/include/util
-	
+
+errno: $(ERRNO_HEADER)
+
 extint: $(EXTINT_TARGETS) $(EXTINT_HEADER)
 
 spi: $(SPI_TARGETS) $(SPI_HEADER)
@@ -60,4 +62,4 @@ $(shell mkdir -p $(OUTDIR))
 $(shell mkdir -p $(OUTDIR_HEADER))
 
 # Listing of phony.
-.PHONY : all clean adc can iopin tmrcnt0 tmrcnt1 tmrcnt2 tmrcnt3 tmrcnt4 tmrcnt5
+.PHONY : all clean adc can errno extint spi iopin tmrcnt0 tmrcnt1 tmrcnt2 tmrcnt3 tmrcnt4 tmrcnt5 twi twiInt usart
