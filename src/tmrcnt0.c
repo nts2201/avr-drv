@@ -1,4 +1,4 @@
-/* Copyright (c) 2010 Frédéric Nadeau
+/* Copyright (c) 2010-2011 Frédéric Nadeau
    All rights reserved.
 
    Redistribution and use in source and binary forms,
@@ -29,8 +29,7 @@
    (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-//\TODO Need review to support ATtiny48/88
-
+#include <stdbool.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <avr/io.h>
@@ -397,14 +396,16 @@ tmrcnt_init_3(0, CLK_SEL_REG, CLK_SEL_REG_MASK, CLK_SEL_REG_OFFSET, WGM_0_1_REG)
 || defined(__AVR_ATtiny2313A__) \
 || defined(__AVR_ATtiny4313__)
 tmrcnt_init_7(0, CLK_SEL_REG, CLK_SEL_REG_MASK, CLK_SEL_REG_OFFSET, WGM_0_1_REG, WGM_2_REG);
-#else
-void tmrcnt0_init(tmrcnt0_clk_select_t prescale)
+#elif defined(__AVR_ATmega8__)
+void tmrcnt0_init(tmrcnt0_clk_src_t prescale)
 {
     /* Force timer to stop */
     CLK_SEL_REG &= ~CLK_SEL_REG_MASK;
 
     CLK_SEL_REG |= (prescale<<CLK_SEL_REG_OFFSET);
 }
+#else
+#	error "Device need verirication"
 #endif
 
 tmrcnt_get_timer(0, 8);
