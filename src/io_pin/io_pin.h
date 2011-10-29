@@ -28,6 +28,36 @@
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE. */
 
+/** \file */
+/** \defgroup drv_io_pin <io_pin/io_pin.h> AVR device-specific I/O PIN definition
+
+\code
+#include <io_pin/io_pin.h>
+\endcode
+
+This header file defines missing elements from AVR-libc's <avr/io.h>.
+It gives port definitions(PORTx, DDRx, PINx) to pins alternate
+functions.
+
+\warning Headers are script generated from Atmel's XML which are known to
+contains errors. Open an issue if you find anything wrong in io_pin headers.
+The project keeps track of changes made to Atmel's XML in order to provide the
+most accurate information. Atmel has been informed for most error found in their
+XML and they are slow to react(XML are taken from AVR Studio releases, which is not
+that often), if they react at all.
+
+\code
+#include <io_pin/io_pin.h>
+
+void twi_enable_pullup(void)
+{
+    SDA_PORT |= _BV(SDA_BIT);
+    SCL_PORT |= _BV(SCL_BIT);
+}
+\endcode
+
+
+*/
 
 #ifndef _AVR_IO_PIN_H_
 #define _AVR_IO_PIN_H_ 1
