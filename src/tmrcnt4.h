@@ -32,18 +32,18 @@
 #ifndef TMR_CNT_4_H_
 #define TMR_CNT_4_H_
 
-#include <stdbool.h>
+#include <tmrcnt.h>
 
 typedef enum tmrcnt4_clk_select_e
 {
-    tmrcnt4_clk_src_halted = 0,
-    tmrcnt4_clk_src_clkio,
-    tmrcnt4_clk_src_clkio_8,
-    tmrcnt4_clk_src_clkio_64,
-    tmrcnt4_clk_src_clkio_256,
-    tmrcnt4_clk_src_clkio_1024,
-    tmrcnt4_clk_src_ext_clk_falling_edge,
-    tmrcnt4_clk_src_ext_clk_rising_edge,
+    tmrcnt4_clk_select_halted = 0,
+    tmrcnt4_clk_select_clkio,
+    tmrcnt4_clk_select_clkio_8,
+    tmrcnt4_clk_select_clkio_64,
+    tmrcnt4_clk_select_clkio_256,
+    tmrcnt4_clk_select_clkio_1024,
+    tmrcnt4_clk_select_ext_clk_falling_edge,
+    tmrcnt4_clk_select_ext_clk_rising_edge,
 } tmrcnt4_clk_select_t;
 
 typedef enum tmrcnt4_wgm_e
@@ -65,21 +65,6 @@ typedef enum tmrcnt4_wgm_e
     tmrcnt4_wgm_fast_pwm_ocr4a_top_top
 } tmrcnt4_wgm_t;
 
-typedef enum tmrcnt4_com_e
-{
-    tmrcnt4_com_port_disconnected = 0,
-    tmrcnt4_com_normal_toggle_0c4a_compare_match = 1,
-    tmrcnt4_com_ctc_toggle_0c4a_compare_match = 1,
-    tmrcnt4_com_normal_clear_0c4a_compare_match = 2,
-    tmrcnt4_com_pwm_phase_correct_clear_0c4a_upcounting_set_0c4a_downcounting = 2,
-    tmrcnt4_com_ctc_clear_0c4a_compare_match = 2,
-    tmrcnt4_com_fast_pwm_clear_0c4a_compare_match_set_0c4a_top = 2,
-    tmrcnt4_com_normal_set_0c4a_compare_match = 3,
-    tmrcnt4_com_pwm_phase_correct_set_0c4a_upcounting_clear_0c4a_downcounting = 3,
-    tmrcnt4_com_ctc_set_0c4a_compare_match = 3,
-    tmrcnt4_com_fast_pwm_set_0c4a_compare_match_clear_0c4a_top = 3,
-} tmrcnt4_com_t;
-
 void tmrcnt4_init (tmrcnt4_wgm_t mode, tmrcnt4_clk_select_t prescale);
 
 uint16_t tmrcnt4_get_timer(void);
@@ -89,9 +74,9 @@ void tmrcnt4_overflow_int_enable(void);
 void tmrcnt4_overflow_int_disable(void);
 _Bool tmrcnt4_is_overflow_int_flag_set(void);
 
-void tmrcnt4_oca_set_pin_mode(tmrcnt4_com_t mode);
-void tmrcnt4_ocb_set_pin_mode(tmrcnt4_com_t mode);
-void tmrcnt4_occ_set_pin_mode(tmrcnt4_com_t mode);
+void tmrcnt4_oca_set_pin_mode(tmrcnt_com_t mode);
+void tmrcnt4_ocb_set_pin_mode(tmrcnt_com_t mode);
+void tmrcnt4_occ_set_pin_mode(tmrcnt_com_t mode);
 
 void tmrcnt4_oca_set_pin_as_ouput(_Bool isOutput);
 void tmrcnt4_ocb_set_pin_as_ouput(_Bool isOutput);

@@ -32,18 +32,18 @@
 #ifndef TMR_CNT_5_H_
 #define TMR_CNT_5_H_
 
-#include <stdbool.h>
+#include <tmrcnt.h>
 
 typedef enum tmrcnt5_clk_select_e
 {
-    tmrcnt5_clk_src_halted = 0,
-    tmrcnt5_clk_src_clkio,
-    tmrcnt5_clk_src_clkio_8,
-    tmrcnt5_clk_src_clkio_64,
-    tmrcnt5_clk_src_clkio_256,
-    tmrcnt5_clk_src_clkio_1024,
-    tmrcnt5_clk_src_ext_clk_falling_edge,
-    tmrcnt5_clk_src_ext_clk_rising_edge,
+    tmrcnt5_clk_select_halted = 0,
+    tmrcnt5_clk_select_clkio,
+    tmrcnt5_clk_select_clkio_8,
+    tmrcnt5_clk_select_clkio_64,
+    tmrcnt5_clk_select_clkio_256,
+    tmrcnt5_clk_select_clkio_1024,
+    tmrcnt5_clk_select_ext_clk_falling_edge,
+    tmrcnt5_clk_select_ext_clk_rising_edge,
 } tmrcnt5_clk_select_t;
 
 typedef enum tmrcnt5_wgm_e
@@ -65,21 +65,6 @@ typedef enum tmrcnt5_wgm_e
     tmrcnt5_wgm_fast_pwm_ocr5a_top_top
 } tmrcnt5_wgm_t;
 
-typedef enum tmrcnt5_com_e
-{
-    tmrcnt5_com_port_disconnected = 0,
-    tmrcnt5_com_normal_toggle_0c5a_compare_match = 1,
-    tmrcnt5_com_ctc_toggle_0c5a_compare_match = 1,
-    tmrcnt5_com_normal_clear_0c5a_compare_match = 2,
-    tmrcnt5_com_pwm_phase_correct_clear_0c5a_upcounting_set_0c5a_downcounting = 2,
-    tmrcnt5_com_ctc_clear_0c5a_compare_match = 2,
-    tmrcnt5_com_fast_pwm_clear_0c5a_compare_match_set_0c5a_top = 2,
-    tmrcnt5_com_normal_set_0c5a_compare_match = 3,
-    tmrcnt5_com_pwm_phase_correct_set_0c5a_upcounting_clear_0c5a_downcounting = 3,
-    tmrcnt5_com_ctc_set_0c5a_compare_match = 3,
-    tmrcnt5_com_fast_pwm_set_0c5a_compare_match_clear_0c5a_top = 3,
-} tmrcnt5_com_t;
-
 void tmrcnt5_init (tmrcnt5_wgm_t mode, tmrcnt5_clk_select_t prescale);
 
 uint16_t tmrcnt5_get_timer(void);
@@ -89,9 +74,9 @@ void tmrcnt5_overflow_int_enable(void);
 void tmrcnt5_overflow_int_disable(void);
 _Bool tmrcnt5_is_overflow_int_flag_set(void);
 
-void tmrcnt5_oca_set_pin_mode(tmrcnt5_com_t mode);
-void tmrcnt5_ocb_set_pin_mode(tmrcnt5_com_t mode);
-void tmrcnt5_occ_set_pin_mode(tmrcnt5_com_t mode);
+void tmrcnt5_oca_set_pin_mode(tmrcnt_com_t mode);
+void tmrcnt5_ocb_set_pin_mode(tmrcnt_com_t mode);
+void tmrcnt5_occ_set_pin_mode(tmrcnt_com_t mode);
 
 #if !defined(__AVR_ATmega128RFA1__)
 void tmrcnt5_oca_set_pin_as_ouput(_Bool isOutput);

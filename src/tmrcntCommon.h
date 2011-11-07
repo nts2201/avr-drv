@@ -32,7 +32,7 @@
 #ifndef __TMR_CNT_COMMON_H__
 #define __TMR_CNT_COMMON_H__
 
-#define tmrcnt_init_15wgm(id); void tmrcnt##id##_init(tmrcnt##id##_wgm_t mode, tmrcnt##id##_clk_src_t prescale) \
+#define tmrcnt_init_15wgm(id); void tmrcnt##id##_init(tmrcnt##id##_wgm_t mode, tmrcnt##id##_clk_select_t prescale) \
 { \
         /*Force timer to stop*/ \
     TCCR##id##B &= ~(_BV(CS##id##2) | _BV(CS##id##1) | _BV(CS##id##0)); \
@@ -136,7 +136,7 @@
     TCCR##id##B |= (prescale << CS##id##0); \
 }
 
-#define tmrcnt_init_3(id, clkSelReg, clkSelRegMask, clkSelOffset, wgm_0_1_reg) void tmrcnt##id##_init(tmrcnt##id##_wgm_t wgm, tmrcnt##id##_clk_src_t prescale) \
+#define tmrcnt_init_3(id, clkSelReg, clkSelRegMask, clkSelOffset, wgm_0_1_reg) void tmrcnt##id##_init(tmrcnt##id##_wgm_t wgm, tmrcnt##id##_clk_select_t prescale) \
 { \
     clkSelReg &= ~clkSelRegMask; \
 \
@@ -169,7 +169,7 @@
 }
 
 
-#define tmrcnt_init_7(id, clkSelReg, clkSelRegMask, clkSelOffset, wgm_0_1_reg, wgm_2_reg) void tmrcnt##id##_init(tmrcnt##id##_wgm_t wgm, tmrcnt##id##_clk_src_t prescale) \
+#define tmrcnt_init_7(id, clkSelReg, clkSelRegMask, clkSelOffset, wgm_0_1_reg, wgm_2_reg) void tmrcnt##id##_init(tmrcnt##id##_wgm_t wgm, tmrcnt##id##_clk_select_t prescale) \
 { \
     clkSelReg &= ~clkSelRegMask; \
 \
@@ -242,7 +242,7 @@
     return bit_is_set(TIFR##regSufix, TOV##id) == 0 ? false : true; \
 }
 
-#define tmrcnt_oc_set_pin_mode(id, LTR, ltr); void tmrcnt##id##_oc##ltr##_set_pin_mode(tmrcnt##id##_com_t mode) \
+#define tmrcnt_oc_set_pin_mode(id, LTR, ltr); void tmrcnt##id##_oc##ltr##_set_pin_mode(tmrcnt_com_t mode) \
 { \
     TCCR##id##LTR &= ~(_BV(COM##id##LTR##1) | _BV(COM##id##LTR##0)); \
     TCCR##id##LTR |= (mode << COM##id##LTR##0); \
