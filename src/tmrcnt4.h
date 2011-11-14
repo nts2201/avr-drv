@@ -29,6 +29,13 @@
    (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
+/*! \file tmrcnt4.h
+ \defgroup drv_tmrcnt4 <tmrcnt1.h>: Timer/Counter 4
+ \brief API for Atmel Timer/Counter 4.
+
+ \author Frédéric Nadeau
+ */
+
 #ifndef TMR_CNT_4_H_
 #define TMR_CNT_4_H_
 

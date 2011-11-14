@@ -30,7 +30,6 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 /*! \file tmrcnt.h
- \defgroup drv_tmrcnt <tmrcnt.h>: Timer/Counter common definition
  \brief Common definition for multilple Atmel Timer/Counter.
 
  \author Frédéric Nadeau

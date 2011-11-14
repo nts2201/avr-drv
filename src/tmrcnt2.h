@@ -30,6 +30,7 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 /*! \file tmrcnt2.h
+ \defgroup drv_tmrcnt2 <tmrcnt2.h>: Timer/Counter 2
  \brief API for Atmel Timer Counter 2.
 
  \author Frédéric Nadeau

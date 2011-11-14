@@ -29,7 +29,8 @@
  \brief Function definition for USART baud rate calculation.
  */
 
-/*! \fn int usart_baud_rate_get_ubrb(uint32_t uiBaudRate, uint32_t uiClk, uint8_t ubTol, usart_mode_t mode, uint16_t* puwUbrr)
+/*! \ingroup drv_usart
+ *  \fn int usart_baud_rate_get_ubrb(uint32_t uiBaudRate, uint32_t uiClk, uint8_t ubTol, usart_mode_t mode, uint16_t* puwUbrr)
  *  \brief  Compute value for UBRR.
  *
  *  \param  uiBaudRate Desired baud rate.

@@ -30,6 +30,7 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 /*! \file usart.h
+ \defgroup drv_usart <usart.h>: USART
  \brief Function and type definitions for USART module.
 
  \author Frédéric Nadeau

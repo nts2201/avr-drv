@@ -30,7 +30,7 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 /*! \file twi.h
- \defgroup drv_twi <spi.h>: Two Wire Interface
+ \defgroup drv_twi <twi.h>: Two Wire Interface
  \brief API for Atmel TWI module.
 
  \author Frédéric Nadeau
